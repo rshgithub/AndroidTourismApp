@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F3F3F3"
+    tools:context=".ConfirmPayment">
+
+    <ImageView
+        android:id="@+id/cart"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:tint="@color/purple_500"
+        app:srcCompat="@drawable/ic_baseline_shopping_basket_24"
+        tools:ignore="VectorDrawableCompat" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/text_view25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:fontFamily="@font/montserrat"
+        android:text="booking info"
+        android:textColor="#001327"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_62sdp"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+        android:background="@drawable/payment"
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view25"
+        tools:ignore="DuplicateIds">
+
+        <ImageView
+            android:id="@+id/image_view6"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_62sdp"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/bed1" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/hotel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-2dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="Lilian de hotel no.1"
+            android:textColor="#001327"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.058"
+            app:layout_constraintStart_toEndOf="@+id/image_view6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="/Night"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.019"
+            app:layout_constraintStart_toEndOf="@+id/price_hotel"
+            app:layout_constraintTop_toBottomOf="@+id/person_count" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/person_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="4"
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.004"
+            app:layout_constraintStart_toEndOf="@+id/image_view6"
+            app:layout_constraintTop_toBottomOf="@+id/hotel_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/person_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="Rooms Available"
+            android:textSize="@dimen/_7sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintStart_toEndOf="@+id/person_num"
+            app:layout_constraintTop_toBottomOf="@+id/hotel_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/price_hotel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-3dp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="200"
+            android:textColor="#C3D61B"
+            android:textSize="@dimen/_8sdp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/image_view2"
+            app:layout_constraintTop_toBottomOf="@+id/person_num" />
+
+        <ImageView
+            android:id="@+id/image_view2"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            app:layout_constraintStart_toEndOf="@+id/image_view6"
+            app:layout_constraintTop_toBottomOf="@+id/person_num"
+            app:srcCompat="@drawable/ic_baseline_attach_money_24"
+            tools:ignore="VectorDrawableCompat" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:background="@drawable/payment"
+        android:elevation="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_layout1"
+        tools:ignore="MissingConstraints">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginTop="21dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Chick In"
+            android:textColor="#0E4C75"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chikin_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/montserrat"
+            android:text="May 20, 2021"
+            android:textColor="#001327"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view33" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view41"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Total Amount"
+            android:textColor="#001327"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view14" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="176dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Chick Out"
+            android:textColor="#0E4C75"
+            android:textSize="@dimen/_9sdp"
+            app:layout_constraintStart_toEndOf="@+id/text_view33"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chikout_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="135dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/montserrat"
+            android:text="13-05-2020"
+            android:textColor="#001327"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/chikin_date"
+            app:layout_constraintTop_toBottomOf="@+id/text_view35" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="#42000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chikin_date" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="100"
+            android:textColor="#001327"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/image_view4"
+            app:layout_constraintTop_toBottomOf="@+id/view14" />
+
+        <View
+            android:id="@+id/view9"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="8dp"
+            android:background="#42000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/count" />
+
+        <ImageView
+            android:id="@+id/add"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginStart="147dp"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintStart_toEndOf="@+id/text_view14"
+            app:layout_constraintTop_toBottomOf="@+id/view8"
+            app:layout_constraintVertical_bias="0.518"
+            app:srcCompat="@drawable/ic_baseline_add_box_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <ImageView
+            android:id="@+id/min"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintStart_toEndOf="@+id/count"
+            app:layout_constraintTop_toBottomOf="@+id/view8"
+            app:srcCompat="@drawable/ic_baseline_indeterminate_check_box_24"
+            tools:ignore="VectorDrawableCompat" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Rooms Count"
+            android:textColor="#001327"
+            android:textSize="@dimen/_9ssp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/view9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view8"
+            app:layout_constraintVertical_bias="0.357" />
+
+        <ImageView
+            android:id="@+id/image_view4"
+            android:layout_width="@dimen/_14sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_marginStart="135dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@+id/text_view41"
+            app:layout_constraintTop_toBottomOf="@+id/view14"
+            app:srcCompat="@drawable/ic_baseline_attach_money_24"
+            app:tint="#001327"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/montserrat"
+            android:text="0"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/add"
+            app:layout_constraintTop_toBottomOf="@+id/view8" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/day_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="0"
+            android:textColor="#001327"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Nights"
+            android:textColor="#001327"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintStart_toEndOf="@+id/day_count"
+            app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="20"
+            android:textColor="#000000"
+            android:textSize="@dimen/_9ssp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/text_view2"
+            app:layout_constraintTop_toBottomOf="@+id/view10" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Offer"
+            android:textColor="#001327"
+            android:textSize="@dimen/_9ssp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view10" />
+
+        <View
+            android:id="@+id/view10"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginTop="8dp"
+            android:background="#42000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/room_price" />
+
+        <TextView
+            android:id="@+id/room_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="178dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat"
+            android:text="400$"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/text_view15"
+            app:layout_constraintTop_toBottomOf="@+id/view9" />
+
+        <View
+            android:id="@+id/view14"
+            android:layout_width="@dimen/_260sdp"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="#42000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/book_now"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="@dimen/_16sdp"
+        android:layout_marginRight="@dimen/_16sdp"
+
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/booknow"
+        android:fontFamily="@font/montserrat"
+        android:text="Book Now"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_layout2"
+        tools:ignore="NotSibling" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_to_cart"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/booknow"
+        android:fontFamily="@font/montserrat"
+        android:text="Add To Cart"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book_now"
+        tools:ignore="NotSibling" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/edit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="21dp"
+        android:background="@drawable/booknow"
+        android:fontFamily="@font/montserrat"
+        android:text="Edit"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/book_now"
+        tools:ignore="NotSibling" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

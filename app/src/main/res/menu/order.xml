@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Hotel"
+        android:icon="@drawable/ic_baseline_home_work_24"
+        android:iconTint="#0E4C75"
+        android:title="Hotels"
+    />
+    <item
+        android:id="@+id/Restaurants"
+        android:icon="@drawable/ic_baseline_restaurant_menu_24"
+        android:iconTint="#0E4C75"
+        android:title="Restaurants" />
+</menu>

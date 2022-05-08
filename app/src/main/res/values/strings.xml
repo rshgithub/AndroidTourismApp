@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">pablo</string>
+
+    <string name="Sign"><u>Create New Account</u></string>
+    <string name="text">
+       Before It Was Destroyed, This Mosque Was One Of The Oldest Standing Mosques In The World. It Served
+        As A Rest Stop For Travelers, Arab Caravans On Trade Routes Through Syria And Pilgrims Traveling To Mecca.
+        The Travelers Used The Central Courtyard Of The Mosque As A Marketplace As Well As A Place To Sleep. </string>
+
+
+    <string name="mosque_details">
+    It is a long established fact that a reader will be distracted by the readable content of a page when
+        looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+        of letters, as opposed .</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="search">search</string>
+    <string name="click_here">Click here!</string>
+    <string name="more_details">More Details</string>
+    <string name="bt_supported_card_types_description">bt_supported_card_types_description</string>
+
+</resources>

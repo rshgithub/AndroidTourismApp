@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.RestaurantsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F6F9FA"
+        >
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView44"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="51dp"
+            android:layout_toEndOf="@+id/imageView13"
+            android:layout_toRightOf="@+id/imageView13"
+            android:fontFamily="@font/montserrat"
+            android:text="Today's Fresh Recipes"
+            android:textColor="@color/purple_500"
+            android:textSize="@dimen/_12ssp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recyclerview"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginLeft="@dimen/_8sdp"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/imageView13"
+            android:layout_toRightOf="@+id/imageView13"
+            android:fontFamily="@font/montserrat"
+            android:text="Restaurants"
+            android:textColor="@color/purple_500"
+            android:textSize="@dimen/_12ssp" />
+
+        <ImageView
+            android:id="@+id/imageView13"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="19dp"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="51dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/fire" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_below="@+id/recyclerview"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/earth" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_180sdp"
+            android:layout_below="@+id/imageView13"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_240sdp"
+            android:layout_below="@+id/textView6"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp" />
+
+    </RelativeLayout>
+
+</FrameLayout>

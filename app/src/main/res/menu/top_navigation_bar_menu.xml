@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/Hotels"
+        android:title="Hotels" />
+<!--    <item-->
+<!--        android:id="@+id/Restaurants"-->
+<!--        android:title="Restaurants" />-->
+
+    <item
+        android:id="@+id/Mosque"
+        android:title="Mosque" />
+    <item
+        android:id="@+id/Churches"
+        android:title="Churches" />
+</menu>
