@@ -2,6 +2,7 @@ package com.example.pablo.interfaces;
 
 
 import com.example.pablo.model.bookingInfo.CartExample;
+import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.example.pablo.model.cart.Test;
 import com.example.pablo.model.churches.ChurchesExample;
 import com.example.pablo.model.edit.EditExample;
@@ -118,6 +119,7 @@ public interface Service {
             @Field("check_out") String check_out,
             @Field("room_count") String room_count,
             @Field("room_id") int room_id,
+            @Field("_method") String _method,
             @Header("Authorization") String token);
 
     //clear all cart
@@ -127,6 +129,11 @@ public interface Service {
     //get hotels orders
     @GET("getAuthHotelOrders")
     Call<OrdersExample> getHotelOrders(@Header("Authorization") String token);
+
+
+   //buy order
+    @POST("buyAllAuthOrderItems")
+    Call<BuyOrderExample> BuyOrder(@Header("Authorization") String token);
 
     //**************************************************************************
     //mosque
@@ -156,7 +163,7 @@ public interface Service {
     Call<List<RegisterResponse>> getOrders(@Path("userId") int id);
 
     //get orders restaurant
-    @GET("Orders")
+    @GET("hotelOrders")
     Call<List<RestaurantsExam>> getRestaurantOrders();
 
     //get orders hotel

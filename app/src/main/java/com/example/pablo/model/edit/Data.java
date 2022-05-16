@@ -2,6 +2,8 @@
 package com.example.pablo.model.edit;
 
 import java.io.Serializable;
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,40 +13,34 @@ public class Data implements Serializable
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("user_id")
+    @SerializedName("name")
     @Expose
-    private Integer userId;
-    @SerializedName("order_id")
+    private String name;
+    @SerializedName("capacity")
     @Expose
-    private Integer orderId;
-    @SerializedName("room_id")
+    private String capacity;
+    @SerializedName("details")
     @Expose
-    private Integer roomId;
-    @SerializedName("check_in")
+    private String details;
+    @SerializedName("hotel_id")
     @Expose
-    private String checkIn;
-    @SerializedName("check_out")
+    private Integer hotelId;
+    @SerializedName("has_offer")
     @Expose
-    private String checkOut;
-    @SerializedName("room_count")
+    private String hasOffer;
+    @SerializedName("available_rooms")
     @Expose
-    private String roomCount;
-    @SerializedName("total_nights")
+    private String availableRooms;
+    @SerializedName("price_per_night")
     @Expose
-    private Integer totalNights;
-    @SerializedName("room_price_per_night")
+    private String pricePerNight;
+    @SerializedName("room_hotel_name")
     @Expose
-    private Integer roomPricePerNight;
-    @SerializedName("room_has_offer")
+    private String roomHotelName;
+    @SerializedName("room_images")
     @Expose
-    private Integer roomHasOffer;
-    @SerializedName("savings_per_room")
-    @Expose
-    private Integer savingsPerRoom;
-    @SerializedName("order_total_price")
-    @Expose
-    private Integer orderTotalPrice;
-    private final static long serialVersionUID = 7803397889782050701L;
+    private List<String> roomImages = null;
+    private final static long serialVersionUID = -7673935371544885098L;
 
     public Integer getId() {
         return id;
@@ -54,92 +50,76 @@ public class Data implements Serializable
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 
-    public Integer getRoomId() {
-        return roomId;
+    public String getDetails() {
+        return details;
     }
 
-    public void setRoomId(Integer roomId) {
-        this.roomId = roomId;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public String getCheckIn() {
-        return checkIn;
+    public Integer getHotelId() {
+        return hotelId;
     }
 
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn;
+    public void setHotelId(Integer hotelId) {
+        this.hotelId = hotelId;
     }
 
-    public String getCheckOut() {
-        return checkOut;
+    public String getHasOffer() {
+        return hasOffer;
     }
 
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut;
+    public void setHasOffer(String hasOffer) {
+        this.hasOffer = hasOffer;
     }
 
-    public String getRoomCount() {
-        return roomCount;
+    public String getAvailableRooms() {
+        return availableRooms;
     }
 
-    public void setRoomCount(String roomCount) {
-        this.roomCount = roomCount;
+    public void setAvailableRooms(String availableRooms) {
+        this.availableRooms = availableRooms;
     }
 
-    public Integer getTotalNights() {
-        return totalNights;
+    public String getPricePerNight() {
+        return pricePerNight;
     }
 
-    public void setTotalNights(Integer totalNights) {
-        this.totalNights = totalNights;
+    public void setPricePerNight(String pricePerNight) {
+        this.pricePerNight = pricePerNight;
     }
 
-    public Integer getRoomPricePerNight() {
-        return roomPricePerNight;
+    public String getRoomHotelName() {
+        return roomHotelName;
     }
 
-    public void setRoomPricePerNight(Integer roomPricePerNight) {
-        this.roomPricePerNight = roomPricePerNight;
+    public void setRoomHotelName(String roomHotelName) {
+        this.roomHotelName = roomHotelName;
     }
 
-    public Integer getRoomHasOffer() {
-        return roomHasOffer;
+    public List<String> getRoomImages() {
+        return roomImages;
     }
 
-    public void setRoomHasOffer(Integer roomHasOffer) {
-        this.roomHasOffer = roomHasOffer;
-    }
-
-    public Integer getSavingsPerRoom() {
-        return savingsPerRoom;
-    }
-
-    public void setSavingsPerRoom(Integer savingsPerRoom) {
-        this.savingsPerRoom = savingsPerRoom;
-    }
-
-    public Integer getOrderTotalPrice() {
-        return orderTotalPrice;
-    }
-
-    public void setOrderTotalPrice(Integer orderTotalPrice) {
-        this.orderTotalPrice = orderTotalPrice;
+    public void setRoomImages(List<String> roomImages) {
+        this.roomImages = roomImages;
     }
 
 }

@@ -61,7 +61,7 @@ public class RoomActivity extends AppCompatActivity {
         adapter = new RoomAdapter(getApplicationContext(), new MyInterface() {
             @Override
             public void onItemClick(int Id) {
-                Intent intent = new Intent(getBaseContext(), ConfirmPayment.class);
+                Intent intent = new Intent(getBaseContext(), BookingInfo.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
             }

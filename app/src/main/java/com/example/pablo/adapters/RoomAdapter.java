@@ -2,6 +2,7 @@ package com.example.pablo.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pablo.Constraints;
 import com.example.pablo.activity.BookingInfo;
-import com.example.pablo.activity.ConfirmPayment;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.RoomItemBinding;
@@ -48,7 +48,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
 
         holder.binding.room.setText(list.get(position).getName());
         holder.binding.roomNum.setText(list.get(position).getCapacity());
-        holder.binding.roomPrice.setText(list.get(position).getPricePerNight());
+        holder.binding.roomPrice.setText(list.get(position).getPricePerNight()+"");
         holder.binding.availableRoom.setText(list.get(position).getAvailableRooms()+"");
 
 //        Glide.with(context).load(list.get(position).getRoomsExam().getImage1())
@@ -78,6 +78,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 Intent intent = new Intent(context, BookingInfo.class);
                 intent.putExtra(Constraints.ROOM_PAGE_KEY,Constraints.ROOM_PAGE_VAL);
                 intent.putExtra("roomId", list.get(position).getId());
+                Log.e("id",list.get(position).getId()+"");
                 context.startActivity(intent);
             }
         });

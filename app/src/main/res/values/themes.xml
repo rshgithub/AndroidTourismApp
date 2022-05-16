@@ -46,4 +46,12 @@
         <item name="cornerSizeTopLeft">10dp</item>
         <item name="cornerSizeBottomLeft">10dp</item>
     </style>
+
+    <style name="counterText">
+        <item name="android:textColor">@color/purple_500</item>
+    </style>
+
+    <style name="counterOverride">
+        <item name="android:textColor">#C60000</item>
+    </style>
 </resources>

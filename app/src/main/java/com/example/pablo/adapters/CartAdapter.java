@@ -54,6 +54,13 @@ public class CartAdapter  extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
             holder.binding.hotelRoomName.setText(list.get(position).getRoomCount() + " Room Count");
             holder.binding.dateTime.setText(list.get(position).getCheckIn() +" - "+ list.get(position).getCheckOut());
 
+            int count = list.get(position).getOrderTotalPrice();
+            int c=0;
+            for (int i=0;i<count;i++){
+                c += count;
+
+            }
+        Log.e("count",c+"       " +list.get(position).getOrderTotalPrice()+"");
             holder.binding.removeItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -71,20 +78,28 @@ public class CartAdapter  extends RecyclerView.Adapter<CartAdapter.ViewHolder>{
                 public void onClick(View view) {
 
                     Intent intent = new Intent(context,BookingInfo.class);
-              //      intent.putExtra(Constraints.EDIT_ORDER_ITEM_KEY,Constraints.EDIT_ORDER_ITEM_VAL);
-//                    intent.putExtra("CHECKIN",list.get(position).getCheckIn());
-//                    intent.putExtra("CHECKOUT",list.get(position).getCheckOut());
-//                    intent.putExtra("DAYCOUNT",list.get(position).getRoomCount()+"");
-//                    intent.putExtra("PRICE",list.get(position).getOrderTotalPrice()+"");
                     intent.putExtra("editId",list.get(position).getId());
+                    intent.putExtra("roomId",list.get(position).getRoomId());
+                    intent.putExtra("CHECKIN", list.get(position).getCheckIn());
+                    intent.putExtra("CHECKOUT", list.get(position).getCheckOut());
+                    intent.putExtra("DAYCOUNT", list.get(position).getTotalNights());
+                    intent.putExtra("PRICE", list.get(position).getOrderTotalPrice());
+
+                    Log.e("ID",list.get(position).getId()+"");
+
+                    String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                    delete(list.get(position).getId(),"Bearer " + token);
+                    list.remove(position);
+                    notifyDataSetChanged();
+                    notifyItemRemoved(position);
+
                     view.getContext().startActivity(intent);
                 }
             });
 
 
-
-
     }
+
 
 
 

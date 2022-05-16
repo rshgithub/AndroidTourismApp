@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Pablo"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.Cart"></activity>
+        <activity android:name=".Payment"></activity>
+        <activity android:name=".activity.Cart" />
         <activity android:name=".Cart" />
         <activity android:name=".activity.BookingInfo" />
         <activity android:name=".details_activities.ChurchesDetails" />
@@ -31,7 +32,6 @@
 
         <activity android:name=".details_activities.RestaurantsDetails" />
         <activity android:name=".details_activities.MosqueDetails" />
-        <activity android:name=".activity.ConfirmPayment" />
         <activity android:name=".activity.RoomActivity" />
         <activity android:name=".details_activities.HotelsDetails" />
         <activity android:name=".fragments.TopNavigationBarActivity" />

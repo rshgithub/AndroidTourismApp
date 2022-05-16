@@ -1,11 +1,13 @@
 package com.example.pablo.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,19 +105,44 @@ public class HotelsOrderFragment extends Fragment {
 
     private void getOrders() {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-        service.getHotelOrders("Bearer " + token).enqueue(new Callback<OrdersExample>() {
+//        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = "Bearer 55|LV7UB9w21a2vM9zWaR6LyotacuTGf8XwVgVtjYT0";//"No name defined" is the default value.
+        Log.e("token",token);
+        Toast.makeText(getActivity(), token+"", Toast.LENGTH_SHORT).show();
+
+        service.getHotelOrders(token).enqueue(new Callback<OrdersExample>() {
             @Override
             public void onResponse(Call<OrdersExample> call, Response<OrdersExample> response) {
 
-                if (response.body() != null) {
-                  //  list = response.body().getData();
-                    hotelsOrderAdapter.setData(list);
+                if (response.isSuccessful()) {
+                    Log.e("response","response");
+                   List<Datum>  datum=response.body().getData();
+                    SharedPreferences SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                    SharedPreferences.Editor EDIT = SP.edit();
+                   int userId=SP.getInt("userId",0);
+
+                    for (int i = 0; i <datum.size() ; i++) {
+                        Toast.makeText(getActivity(), "50", Toast.LENGTH_SHORT).show();
+
+//                        if (datum.get(i).getUserId()==userId){
+                        if (datum.get(i).getUserId()==50){
+                            Toast.makeText(getActivity(), "50", Toast.LENGTH_SHORT).show();
+                            list = response.body().getData().get(i).getHotelOrderItems();
+                            hotelsOrderAdapter.setData(list);
+                        }
+                    }
+
+
+                }else {
+                    Log.e("else token",token);
+
+                    Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
 
                 }
             }
             @Override
             public void onFailure(Call<OrdersExample> call, Throwable t) {
+                t.printStackTrace();
                 Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
             }
         });

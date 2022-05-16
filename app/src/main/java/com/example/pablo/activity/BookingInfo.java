@@ -1,4 +1,4 @@
-  package com.example.pablo.activity;
+package com.example.pablo.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +16,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.pablo.Cart;
 import com.example.pablo.Constraints;
+import com.example.pablo.Payment;
 import com.example.pablo.adapters.CartAdapter;
 import com.example.pablo.adapters.RoomAdapter;
 import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.databinding.ActivityBookingInfoBinding;
 import com.example.pablo.interfaces.Service;
+import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.google.gson.Gson;
@@ -41,15 +43,16 @@ public class BookingInfo extends AppCompatActivity {
     SimpleDateFormat sdf;
     ActivityBookingInfoBinding binding;
     Service service;
-    int offerId , roomId , orderItemId ;
+    int roomId, orderItemId;
     int tot;
     int totals;
-    Date date2 = null;
-    Date date3 = null;
-    private int Item_Id = -1;
-    public static String CHECKIN,CHECKOUT,DAYCOUNT,PRICE;
+    Date date2;
+    Date date3;
+    String checkInDate, checkOutDate;
+    public static String CHECKIN, CHECKOUT, DAYCOUNT, PRICE;
     Bundle extras;
     Intent intent;
+    boolean isTrue = true;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -58,71 +61,41 @@ public class BookingInfo extends AppCompatActivity {
         binding = ActivityBookingInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        CHECKIN = binding.chikinDate.getText().toString();
-        CHECKOUT = binding.chikoutDate.getText().toString();
-        DAYCOUNT = binding.count.getText().toString();
-        PRICE = binding.totalMoney.getText().toString();
-
         service = Service.ApiClient.getRetrofitInstance();
 
-//        intent = getIntent();
-//        if (getIntent().getIntExtra("roomId", 0) == 0 ){
-//            offerId =  getIntent().getIntExtra("roomId", 0);
-//            getRoomDetails(offerId);
-////            extras = getIntent().getExtras();
-////            if (extras != null   ) {
-////                CHECKIN = extras.getString("CHECKIN");
-////                CHECKOUT = extras.getString("CHECKOUT");
-////                DAYCOUNT = extras.getString("DAYCOUNT");
-////                PRICE = extras.getString("PRICE");
-////
-////                binding.chikinDate.setText(CHECKIN);
-////                binding.chikoutDate.setText(CHECKOUT);
-////                binding.count.setText(DAYCOUNT);
-////                binding.totalMoney.setText(PRICE);
-////                editRoomDetails();
-////            }
-//        }else if(intent.getIntExtra(Constraints.EDIT_ORDER_ITEM_KEY,0) == 1){
-//            orderItemId = intent.getIntExtra(Constraints.ORDER_ITEM_ID_KEY,0);
-//            editRoomDetails(orderItemId);
+//        if (getIntent().getIntExtra("roomId", 0) == 0) {
+//            roomId = getIntent().getIntExtra("roomId", 0);
+//            getRoomDetails(roomId);
+//            Log.e("offerId", roomId + "");
 //
-//        }
-
-//        if(getIntent().getIntExtra("roomId", 0) == 0){
-//            offerId = getIntent().getIntExtra("roomId", 0);
-//            getRoomDetails(offerId);
-//            Log.e("offerId",offerId+"");
-//
-//        }else if(getIntent().getIntExtra("editId", 0)==1){
+//        } else if (getIntent().getIntExtra("editId", 0) == 1) {
 //
 //            orderItemId = getIntent().getIntExtra("editId", 0);
 //            editRoomDetails(orderItemId);
-//            Log.e("orderItemId",orderItemId+"");
+//            Log.e("orderItemId", orderItemId + "");
 //        }
 
+//       // if (getIntent().getIntExtra("roomId", 0) == isTrue)
         if (getIntent() != null) {
-            offerId = getIntent().getIntExtra("roomId", 0);
-        //    getRoomDetails(offerId);
+            roomId = getIntent().getIntExtra("roomId", 0);
+           getRoomDetails(roomId);
         }
         //cart
         if (getIntent() != null ) {
             orderItemId = getIntent().getIntExtra("editId", 0);
             editRoomDetails(orderItemId);
+           // getData();
         }
-
-        binding.bookNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-            }
-        });
-
 
 
         binding.edit.setVisibility(View.GONE);
 
+        binding.edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
         binding.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,8 +105,6 @@ public class BookingInfo extends AppCompatActivity {
         });
 
 
-//-------------------------------cart button----------------------------------------------
-
         binding.cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +113,13 @@ public class BookingInfo extends AppCompatActivity {
             }
         });
 
+        binding.bookNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getBaseContext(), Payment.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -156,16 +134,13 @@ public class BookingInfo extends AppCompatActivity {
         String count = binding.count.getText().toString();
 
 
-        service.bookInfo(check_in, checkout, count, offerId + "", "Bearer " + token).enqueue(new Callback<CartExample>() {
+        service.bookInfo(check_in, checkout, count, roomId + "", "Bearer " + token).enqueue(new Callback<CartExample>() {
             @Override
             public void onResponse(Call<CartExample> call, retrofit2.Response<CartExample> response) {
                 Log.e("response code", response.code() + "");
 
                 if (response.isSuccessful()) {
                     Toast.makeText(BookingInfo.this, "success", Toast.LENGTH_SHORT).show();
-
-
-
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
@@ -194,10 +169,10 @@ public class BookingInfo extends AppCompatActivity {
                 if (response.body() != null && extras == null) {
 
                     binding.hotelName.setText(response.body().getData().getName());
-                    binding.priceHotel.setText(response.body().getData().getPricePerNight());
+                    binding.priceHotel.setText(response.body().getData().getPricePerNight() + "");
                     binding.personNum.setText(response.body().getData().getAvailableRooms() + "");
-                    binding.roomPrice.setText(response.body().getData().getPricePerNight());
-                    binding.totalMoney.setText(response.body().getData().getPricePerNight());
+                    binding.roomPrice.setText(response.body().getData().getPricePerNight() + "");
+                    binding.totalMoney.setText(response.body().getData().getPricePerNight() + "");
                     if (response.body().getData().getHasOffer() == null) {
                         binding.offer.setText("0");
                     } else {
@@ -205,7 +180,6 @@ public class BookingInfo extends AppCompatActivity {
                     }
 
                     // Glide.with(BookingInfo.this).load(response.body().getImage()).circleCrop().into(binding.imageView6);
-
 
 
 //-----------------------------room count---------------------------------------
@@ -266,9 +240,10 @@ public class BookingInfo extends AppCompatActivity {
                             //total price
                             int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
                             int Count = Integer.parseInt((binding.dayCount.getText().toString()));
+
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
-                                binding.totalMoney.setText(tot+ "");
+                                binding.totalMoney.setText(tot + "");
 
                             } else {
                                 int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
@@ -322,7 +297,7 @@ public class BookingInfo extends AppCompatActivity {
                             int Count = Integer.parseInt((binding.dayCount.getText().toString()));
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
-                                binding.totalMoney.setText(tot+ "");
+                                binding.totalMoney.setText(tot + "");
 
                             } else {
                                 int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
@@ -370,17 +345,16 @@ public class BookingInfo extends AppCompatActivity {
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        String check_in = binding.chikinDate.getText().toString();
-        String checkout = binding.chikoutDate.getText().toString();
+
         String count = binding.count.getText().toString();
 
-        service.editItem(orderItemId,check_in, checkout,count,offerId,"Bearer " + token).enqueue(new Callback<EditExample>() {
+        service.editItem(orderItemId, checkInDate, checkOutDate, count, roomId, "put", "Bearer " + token).enqueue(new Callback<EditExample>() {
             @Override
             public void onResponse(Call<EditExample> call, Response<EditExample> response) {
                 Log.e("response code", response.code() + "");
-                if (response.isSuccessful()){
-                    Toast.makeText(BookingInfo.this, "success", Toast.LENGTH_SHORT).show();
-                    
+                if (response.isSuccessful()) {
+                    Toast.makeText(BookingInfo.this, response.message(), Toast.LENGTH_SHORT).show();
+
 //-----------------------------room count---------------------------------------
 
 
@@ -439,12 +413,13 @@ public class BookingInfo extends AppCompatActivity {
                             //total price
                             int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
                             int Count = Integer.parseInt((binding.dayCount.getText().toString()));
-                            if (response.body().getData().getRoomHasOffer() == null) {
+
+                            if (response.body().getData().getHasOffer()==null) {
                                 tot = Count * Price;
-                                binding.totalMoney.setText(tot+ "");
+                                binding.totalMoney.setText(tot + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getRoomHasOffer() + "");
+                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
                                 int x = tot - totals;
@@ -493,12 +468,12 @@ public class BookingInfo extends AppCompatActivity {
                             //total price
                             int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
                             int Count = Integer.parseInt((binding.dayCount.getText().toString()));
-                            if (response.body().getData().getRoomHasOffer() == null) {
+                            if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
-                                binding.totalMoney.setText(tot+ "");
+                                binding.totalMoney.setText(tot + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getRoomHasOffer() + "");
+                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
                                 int x = tot - totals;
@@ -520,8 +495,8 @@ public class BookingInfo extends AppCompatActivity {
 
 
                     Log.e("Success", new Gson().toJson(response.body()));
-                }}
-
+                }
+            }
 
 
             @Override
@@ -531,8 +506,29 @@ public class BookingInfo extends AppCompatActivity {
 
         });
 
-}
+    }
 
+    private void getData() {
+        CHECKIN = binding.chikinDate.getText().toString();
+        CHECKOUT = binding.chikoutDate.getText().toString();
+        DAYCOUNT = binding.count.getText().toString();
+        PRICE = binding.totalMoney.getText().toString();
 
+            roomId =  getIntent().getIntExtra("roomId", 0);
+            getRoomDetails(roomId);
+            extras = getIntent().getExtras();
+            if (extras != null   ) {
+                CHECKIN = extras.getString("CHECKIN");
+                CHECKOUT = extras.getString("CHECKOUT");
+                DAYCOUNT = extras.getString("DAYCOUNT");
+                PRICE = extras.getString("PRICE");
+
+                binding.chikinDate.setText(CHECKIN);
+                binding.chikoutDate.setText(CHECKOUT);
+                binding.count.setText(DAYCOUNT);
+                binding.totalMoney.setText(PRICE);
+
+            }
+    }
 
 }

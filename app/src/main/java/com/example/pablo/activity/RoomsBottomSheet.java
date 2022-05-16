@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -17,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pablo.Cart;
 import com.example.pablo.R;
-import com.example.pablo.activity.ConfirmPayment;
-import com.example.pablo.activity.Login;
 import com.example.pablo.adapters.RoomAdapter;
 import com.example.pablo.databinding.ActivityRoomBinding;
 import com.example.pablo.interfaces.MyInterface;
@@ -74,7 +71,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         adapter = new RoomAdapter(getActivity(), new MyInterface() {
             @Override
             public void onItemClick(int Id) {
-                Intent intent = new Intent(getActivity(), ConfirmPayment.class);
+                Intent intent = new Intent(getActivity(), BookingInfo.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
             }

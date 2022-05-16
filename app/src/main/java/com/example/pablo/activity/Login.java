@@ -68,23 +68,21 @@ public class Login extends AppCompatActivity {
                                 //token
                                 EDIT.putString(TokenKey,"Bearer " + response.body().getData().getToken());
                                 EDIT.putInt(USERKey,response.body().getData().getUser().getId());
-                                Log.e("Success",TokenKey);
-
                                 EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
                                 EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
-                                Toast.makeText(Login.this, ""+response.body().getData().getToken(), Toast.LENGTH_SHORT).show();
                                 EDIT.apply();
 
                                 Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getBaseContext(), "Welcome" , Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
 
                                 Log.e("Success", new Gson().toJson(response.body()));
 
                             } else {
+
                                 String errorMessage = parseError(response);
-//                                UtilsMethods.createFailSnackbar(binding.parent, errorMessage).show();
                                 Log.e("errorMessage", errorMessage + "");
+
                             }
 
 
@@ -124,11 +122,9 @@ public class Login extends AppCompatActivity {
             JSONArray jsonArray = jsonObject2.getJSONArray("password");
             String s = jsonArray.getString(0);
 
-//            errorMsg = jObjError.getString("message");
-//            Util.Logd(jObjError.getString("errorMessage"));
+
             return s;
         } catch (Exception e) {
-//            Util.Logd(e.getMessage());
         }
         return errorMsg;
     }

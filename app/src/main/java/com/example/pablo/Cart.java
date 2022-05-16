@@ -8,11 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.pablo.activity.BookingInfo;
 import com.example.pablo.activity.Login;
 import com.example.pablo.adapters.CartAdapter;
 import com.example.pablo.databinding.ActivityCartBinding;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
+import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.example.pablo.model.cart.Test;
 import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.reservations.Datum;
@@ -53,6 +55,13 @@ public class Cart extends AppCompatActivity {
             }
         });
 
+        binding.pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buyOrder();
+            }
+        });
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),
                 LinearLayoutManager.VERTICAL, false);
@@ -65,6 +74,7 @@ public class Cart extends AppCompatActivity {
             }
         });
 
+       // binding.count.setText();
 
         service= Service.ApiClient.getRetrofitInstance();
         getRoomsCart();
@@ -130,35 +140,6 @@ public class Cart extends AppCompatActivity {
 
     }
 
-
-//    //edit
-//    public static void edit(int id, String token){
-//        service.editItem(id,token).enqueue(new Callback<EditExample>() {
-//            @Override
-//            public void onResponse(Call<EditExample> call, Response<EditExample> response) {
-//
-//                if (response.isSuccessful()){
-//
-//                    Log.e("code",response.code()+"");
-//                    Log.e("code",response.body().getData().getId()+"");
-//
-//                }else {
-//                    Log.e("code",response.code()+"");
-//                    Log.e("code",response.errorBody()+"");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<EditExample> call, Throwable t) {
-//
-//                t.printStackTrace();
-//                Log.e("code",t.getMessage()+"");
-//            }
-//        });
-//
-//    }
-
-
     //clear
     public void clear( String token){
 
@@ -187,5 +168,29 @@ public class Cart extends AppCompatActivity {
 
     }
 
+    public void buyOrder(){
+        Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
+        service.BuyOrder("Bearer success  " + token).enqueue(new Callback<BuyOrderExample>() {
+            @Override
+            public void onResponse(Call<BuyOrderExample> call, retrofit2.Response<BuyOrderExample> response) {
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(Cart.this, response.message() , Toast.LENGTH_SHORT).show();
+                } else {
+                    String errorMessage = parseError(response);
+                    Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(Cart.this, "" + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BuyOrderExample> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(Cart.this, "on failure" , Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

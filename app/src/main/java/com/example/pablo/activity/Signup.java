@@ -55,11 +55,6 @@ public class Signup extends AppCompatActivity {
                 Input_Password = binding.password.getText().toString();
                 Input_Address = binding.address.getText().toString();
 
-                EDIT.putString(FullNameKey, Input_Name);
-                EDIT.putString(EmailKey, Input_Email);
-                EDIT.putString(PassKey, Input_Password);
-                EDIT.putString(AddressKey, Input_Address);
-                EDIT.apply();
 
                 if (!Input_Name.isEmpty() && !Input_Email.isEmpty() && !Input_Password.isEmpty() && !Input_Address.isEmpty()) {
 
@@ -70,20 +65,28 @@ public class Signup extends AppCompatActivity {
                     user.setPassword(Input_Password);
                     user.setPasswordConfirmation(Input_Password);
                     user.setAddress(Input_Address);
+
                     Service.ApiClient.getRetrofitInstance().register("application/json", user).enqueue(new Callback<Example>() {
                         @Override
                         public void onResponse(Call<Example> call, retrofit2.Response<Example> response) {
                             Log.e("response code", response.code() + "");
                             if (response.isSuccessful()) {
+                                EDIT.putInt("userId", response.body().getData().getUser().getId());
+                                EDIT.putString(FullNameKey, response.body().getData().getUser().getName());
+                                EDIT.putString(EmailKey, response.body().getData().getUser().getEmail());
+                                EDIT.putString(AddressKey, response.body().getData().getUser().getAddress());
+
                                 Intent intent = new Intent(getBaseContext(), Login.class);
                                 startActivity(intent);
-                                Toast.makeText(getBaseContext(), "Welcome" , Toast.LENGTH_LONG).show();
+                                Toast.makeText(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
                                 Log.e("Success", new Gson().toJson(response.body()));
+
                             } else {
+//                                Toast.makeText(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
                                 String errorMessage = parseError(response);
-//                                UtilsMethods.createFailSnackbar(binding.parent, errorMessage).show();
                                 Log.e("errorMessage", errorMessage + "");
                             }
+                            EDIT.apply();
 
 
                         }
@@ -91,12 +94,10 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<Example> call, Throwable t) {
                             t.printStackTrace();
+                            Toast.makeText(getBaseContext(), "Empty", Toast.LENGTH_SHORT).show();
 
                         }
                     });
-
-                } else {
-                    Toast.makeText(getBaseContext(), "Empty", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -112,27 +113,11 @@ public class Signup extends AppCompatActivity {
             JSONArray jsonArray = jsonObject2.getJSONArray("password");
             String s = jsonArray.getString(0);
 
-//            errorMsg = jObjError.getString("message");
-//            Util.Logd(jObjError.getString("errorMessage"));
             return s;
         } catch (Exception e) {
-//            Util.Logd(e.getMessage());
         }
         return errorMsg;
     }
-
-
-//    public static String parseError(Response<?> response) {
-//        try {
-//            Gson gson = new Gson();
-//            Errors one = gson.fromJson(new Gson().toJson(response.body()), Errors.class);
-//            return one.getPassword().get(0);
-//        } catch (Exception e) {
-////            Util.Logd(e.getMessage());
-//            Log.e("Exception", response.toString());
-//        }
-//        return "";
-//    }
 
     public void restoreResult() {
         String Full = SP.getString(FullNameKey, "");

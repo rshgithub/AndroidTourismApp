@@ -24,12 +24,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.e("onMessageReceived","Done");
 
         if (message.getNotification() != null) {
-            Log.d("TAG", "Message Notification Body: " + message.getNotification().getTitle());
-            Log.d("TAG", "Message Notification Body: " + message.getNotification().getBody());
+            Log.e("TAG", "Message Notification Title: " + message.getNotification().getTitle());
+            Log.e("TAG", "Message Notification Body: " + message.getNotification().getBody());
         }
 
         if (message.getData().size() > 0) {
-            Log.d("TAG", "Message data payload: " +
+            Log.e("TAG", "Message data payload: " +
                     message.getData());
             Map<String, String> params = message.getData();
             JSONObject object = new JSONObject(params);

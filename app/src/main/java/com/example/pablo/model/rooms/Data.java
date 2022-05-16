@@ -1,11 +1,14 @@
 
 package com.example.pablo.model.rooms;
 import java.io.Serializable;
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data implements Serializable
 {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -23,17 +26,20 @@ public class Data implements Serializable
     private Integer hotelId;
     @SerializedName("has_offer")
     @Expose
-        private Integer hasOffer;
+    private Integer hasOffer;
     @SerializedName("available_rooms")
     @Expose
     private Integer availableRooms;
     @SerializedName("price_per_night")
     @Expose
-    private String pricePerNight;
+    private Integer pricePerNight;
     @SerializedName("room_hotel_name")
     @Expose
     private String roomHotelName;
-    private final static long serialVersionUID = -7025485148811939976L;
+    @SerializedName("room_images")
+    @Expose
+    private List<String> roomImages = null;
+    private final static long serialVersionUID = -2227721003271658643L;
 
     public Integer getId() {
         return id;
@@ -91,11 +97,11 @@ public class Data implements Serializable
         this.availableRooms = availableRooms;
     }
 
-    public String getPricePerNight() {
+    public Integer getPricePerNight() {
         return pricePerNight;
     }
 
-    public void setPricePerNight(String pricePerNight) {
+    public void setPricePerNight(Integer pricePerNight) {
         this.pricePerNight = pricePerNight;
     }
 
@@ -105,6 +111,14 @@ public class Data implements Serializable
 
     public void setRoomHotelName(String roomHotelName) {
         this.roomHotelName = roomHotelName;
+    }
+
+    public List<String> getRoomImages() {
+        return roomImages;
+    }
+
+    public void setRoomImages(List<String> roomImages) {
+        this.roomImages = roomImages;
     }
 
 }

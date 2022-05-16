@@ -18,7 +18,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
-        android:background="#F6F9FA"
+        android:background="#F8F8FA"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true" />
 
