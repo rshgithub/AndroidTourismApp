@@ -71,7 +71,7 @@ public class Signup extends AppCompatActivity {
                         public void onResponse(Call<Example> call, retrofit2.Response<Example> response) {
                             Log.e("response code", response.code() + "");
                             if (response.isSuccessful()) {
-                                EDIT.putInt("userId", response.body().getData().getUser().getId());
+                                EDIT.putLong("userId", response.body().getData().getUser().getId());
                                 EDIT.putString(FullNameKey, response.body().getData().getUser().getName());
                                 EDIT.putString(EmailKey, response.body().getData().getUser().getEmail());
                                 EDIT.putString(AddressKey, response.body().getData().getUser().getAddress());

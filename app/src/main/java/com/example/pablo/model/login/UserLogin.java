@@ -10,32 +10,29 @@ public class UserLogin implements Serializable
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("user_role")
+    @Expose
+    private Long userRole;
     @SerializedName("email")
     @Expose
     private String email;
-    @SerializedName("email_verified_at")
-    @Expose
-    private Object emailVerifiedAt;
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("created_at")
+    @SerializedName("user_avatar")
     @Expose
-    private String createdAt;
-    @SerializedName("updated_at")
-    @Expose
-    private String updatedAt;
-    private final static long serialVersionUID = -6517286223146130540L;
+    private String userAvatar;
+    private final static long serialVersionUID = 5240964928728647790L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -47,20 +44,20 @@ public class UserLogin implements Serializable
         this.name = name;
     }
 
+    public Long getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Long userRole) {
+        this.userRole = userRole;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Object getEmailVerifiedAt() {
-        return emailVerifiedAt;
-    }
-
-    public void setEmailVerifiedAt(Object emailVerifiedAt) {
-        this.emailVerifiedAt = emailVerifiedAt;
     }
 
     public String getAddress() {
@@ -71,20 +68,12 @@ public class UserLogin implements Serializable
         this.address = address;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getUserAvatar() {
+        return userAvatar;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUserAvatar(String userAvatar) {
+        this.userAvatar = userAvatar;
     }
 
 }

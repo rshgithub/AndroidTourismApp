@@ -8,18 +8,19 @@ import com.google.gson.annotations.SerializedName;
 public class HotelOrderItem implements Serializable
 {
 
+
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private Long userId;
     @SerializedName("order_id")
     @Expose
-    private Integer orderId;
+    private Long orderId;
     @SerializedName("room_id")
     @Expose
-    private Integer roomId;
+    private Long roomId;
     @SerializedName("check_in")
     @Expose
     private String checkIn;
@@ -28,53 +29,53 @@ public class HotelOrderItem implements Serializable
     private String checkOut;
     @SerializedName("room_count")
     @Expose
-    private Integer roomCount;
+    private Long roomCount;
     @SerializedName("total_nights")
     @Expose
-    private Integer totalNights;
+    private Long totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Integer roomPricePerNight;
+    private Long roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
-    private Integer roomHasOffer;
+    private Long roomHasOffer;
     @SerializedName("savings_per_room")
     @Expose
-    private Integer savingsPerRoom;
+    private Long savingsPerRoom;
     @SerializedName("order_total_price")
     @Expose
-    private Integer orderTotalPrice;
-    private final static long serialVersionUID = -199566738758100675L;
+    private Long orderTotalPrice;
+    private final static long serialVersionUID = 5024669894850887283L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public Integer getRoomId() {
+    public Long getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(Integer roomId) {
+    public void setRoomId(Long roomId) {
         this.roomId = roomId;
     }
 
@@ -94,51 +95,51 @@ public class HotelOrderItem implements Serializable
         this.checkOut = checkOut;
     }
 
-    public Integer getRoomCount() {
+    public Long getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(Integer roomCount) {
+    public void setRoomCount(Long roomCount) {
         this.roomCount = roomCount;
     }
 
-    public Integer getTotalNights() {
+    public Long getTotalNights() {
         return totalNights;
     }
 
-    public void setTotalNights(Integer totalNights) {
+    public void setTotalNights(Long totalNights) {
         this.totalNights = totalNights;
     }
 
-    public Integer getRoomPricePerNight() {
+    public Long getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Integer roomPricePerNight) {
+    public void setRoomPricePerNight(Long roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 
-    public Integer getRoomHasOffer() {
+    public Long getRoomHasOffer() {
         return roomHasOffer;
     }
 
-    public void setRoomHasOffer(Integer roomHasOffer) {
+    public void setRoomHasOffer(Long roomHasOffer) {
         this.roomHasOffer = roomHasOffer;
     }
 
-    public Integer getSavingsPerRoom() {
+    public Long getSavingsPerRoom() {
         return savingsPerRoom;
     }
 
-    public void setSavingsPerRoom(Integer savingsPerRoom) {
+    public void setSavingsPerRoom(Long savingsPerRoom) {
         this.savingsPerRoom = savingsPerRoom;
     }
 
-    public Integer getOrderTotalPrice() {
+    public Long getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(Integer orderTotalPrice) {
+    public void setOrderTotalPrice(Long orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 

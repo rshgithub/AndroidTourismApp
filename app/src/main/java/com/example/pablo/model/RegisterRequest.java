@@ -24,6 +24,9 @@ public class RegisterRequest implements Serializable
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("role")
+    @Expose
+    private String role;
     private final static long serialVersionUID = -6094150931949342326L;
 
     public String getName() {
@@ -32,6 +35,14 @@ public class RegisterRequest implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

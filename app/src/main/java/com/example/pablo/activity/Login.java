@@ -67,7 +67,7 @@ public class Login extends AppCompatActivity {
                             if (response.isSuccessful()){
                                 //token
                                 EDIT.putString(TokenKey,"Bearer " + response.body().getData().getToken());
-                                EDIT.putInt(USERKey,response.body().getData().getUser().getId());
+                                EDIT.putLong(USERKey,response.body().getData().getUser().getId());
                                 EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
                                 EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
                                 EDIT.apply();

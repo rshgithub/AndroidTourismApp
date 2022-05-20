@@ -78,6 +78,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 Intent intent = new Intent(context, BookingInfo.class);
                 intent.putExtra(Constraints.ROOM_PAGE_KEY,Constraints.ROOM_PAGE_VAL);
                 intent.putExtra("roomId", list.get(position).getId());
+                intent.putExtra("fromRoom", true);
                 Log.e("id",list.get(position).getId()+"");
                 context.startActivity(intent);
             }

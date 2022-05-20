@@ -8,51 +8,50 @@ import com.google.gson.annotations.SerializedName;
 
 public class Datum implements Serializable
 {
-
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private Long userId;
     @SerializedName("status")
     @Expose
-    private Integer status;
+    private Long status;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
     @SerializedName("total_price")
     @Expose
-    private Integer totalPrice;
+    private Long totalPrice;
     @SerializedName("order_items_count")
     @Expose
-    private Integer orderItemsCount;
+    private Long orderItemsCount;
     @SerializedName("hotel_order_items")
     @Expose
     private List<HotelOrderItem> hotelOrderItems = null;
-    private final static long serialVersionUID = 591415264468376928L;
+    private final static long serialVersionUID = 7071437592702857026L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getStatus() {
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Long status) {
         this.status = status;
     }
 
@@ -64,19 +63,19 @@ public class Datum implements Serializable
         this.createdAt = createdAt;
     }
 
-    public Integer getTotalPrice() {
+    public Long getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Long totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public Integer getOrderItemsCount() {
+    public Long getOrderItemsCount() {
         return orderItemsCount;
     }
 
-    public void setOrderItemsCount(Integer orderItemsCount) {
+    public void setOrderItemsCount(Long orderItemsCount) {
         this.orderItemsCount = orderItemsCount;
     }
 

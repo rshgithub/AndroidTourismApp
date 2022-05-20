@@ -52,7 +52,7 @@ public class BookingInfo extends AppCompatActivity {
     public static String CHECKIN, CHECKOUT, DAYCOUNT, PRICE;
     Bundle extras;
     Intent intent;
-    boolean isTrue = true;
+    boolean fromRoom;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -62,15 +62,19 @@ public class BookingInfo extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         service = Service.ApiClient.getRetrofitInstance();
-
+////from room adapter
 //        if (getIntent().getIntExtra("roomId", 0) == 0) {
 //            roomId = getIntent().getIntExtra("roomId", 0);
 //            getRoomDetails(roomId);
 //            Log.e("offerId", roomId + "");
 //
-//        } else if (getIntent().getIntExtra("editId", 0) == 1) {
+//        }
+//        //from cart
+//        else if (getIntent().getIntExtra("editId", 0) == 1) {
 //
+//            roomId = getIntent().getIntExtra("roomId", 0);
 //            orderItemId = getIntent().getIntExtra("editId", 0);
+//            getRoomDetails(roomId);
 //            editRoomDetails(orderItemId);
 //            Log.e("orderItemId", orderItemId + "");
 //        }
@@ -78,15 +82,14 @@ public class BookingInfo extends AppCompatActivity {
 //       // if (getIntent().getIntExtra("roomId", 0) == isTrue)
         if (getIntent() != null) {
             roomId = getIntent().getIntExtra("roomId", 0);
-           getRoomDetails(roomId);
+            fromRoom = getIntent().getBooleanExtra("fromRoom", true);
+            getRoomDetails(roomId);
+            orderItemId = getIntent().getIntExtra("editId", 0);
+            if (orderItemId != 0)
+                editRoomDetails(orderItemId);
         }
         //cart
-        if (getIntent() != null ) {
-            orderItemId = getIntent().getIntExtra("editId", 0);
-            editRoomDetails(orderItemId);
-           // getData();
-        }
-
+        Toast.makeText(this, fromRoom+"", Toast.LENGTH_SHORT).show();
 
         binding.edit.setVisibility(View.GONE);
 
@@ -414,7 +417,7 @@ public class BookingInfo extends AppCompatActivity {
                             int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
                             int Count = Integer.parseInt((binding.dayCount.getText().toString()));
 
-                            if (response.body().getData().getHasOffer()==null) {
+                            if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
                                 binding.totalMoney.setText(tot + "");
 
@@ -514,21 +517,21 @@ public class BookingInfo extends AppCompatActivity {
         DAYCOUNT = binding.count.getText().toString();
         PRICE = binding.totalMoney.getText().toString();
 
-            roomId =  getIntent().getIntExtra("roomId", 0);
-            getRoomDetails(roomId);
-            extras = getIntent().getExtras();
-            if (extras != null   ) {
-                CHECKIN = extras.getString("CHECKIN");
-                CHECKOUT = extras.getString("CHECKOUT");
-                DAYCOUNT = extras.getString("DAYCOUNT");
-                PRICE = extras.getString("PRICE");
+        roomId = getIntent().getIntExtra("roomId", 0);
+        getRoomDetails(roomId);
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            CHECKIN = extras.getString("CHECKIN");
+            CHECKOUT = extras.getString("CHECKOUT");
+            DAYCOUNT = extras.getString("DAYCOUNT");
+            PRICE = extras.getString("PRICE");
 
-                binding.chikinDate.setText(CHECKIN);
-                binding.chikoutDate.setText(CHECKOUT);
-                binding.count.setText(DAYCOUNT);
-                binding.totalMoney.setText(PRICE);
+            binding.chikinDate.setText(CHECKIN);
+            binding.chikoutDate.setText(CHECKOUT);
+            binding.count.setText(DAYCOUNT);
+            binding.totalMoney.setText(PRICE);
 
-            }
+        }
     }
 
 }

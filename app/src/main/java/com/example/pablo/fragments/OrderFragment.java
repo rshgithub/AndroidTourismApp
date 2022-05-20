@@ -1,19 +1,41 @@
 package com.example.pablo.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.pablo.R;
+import com.example.pablo.activity.Login;
+import com.example.pablo.adapters.HotelsOrderAdapter;
 import com.example.pablo.databinding.FragmentOrderBinding;
+import com.example.pablo.interfaces.Service;
+import com.example.pablo.model.orders.Datum;
+import com.example.pablo.model.orders.HotelOrderItem;
+import com.example.pablo.model.orders.OrdersExample;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Login.USERKey;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +44,10 @@ import com.google.android.material.navigation.NavigationBarView;
  */
 public class OrderFragment extends Fragment {
     FragmentOrderBinding binding;
-
+    Service service;
+    HotelsOrderAdapter hotelsOrderAdapter;
+    RecyclerView recyclerView;
+    List<HotelOrderItem> list;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,27 +91,60 @@ public class OrderFragment extends Fragment {
         binding = FragmentOrderBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.topNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.Restaurants) {
-                    openFragment(RestaurantsOrderFragment.newInstance());
-                } else {
-                    openFragment(HotelsOrderFragment.newInstance());
-                }
-                return true;
-            }
-        });
-        openFragment(RestaurantsOrderFragment.newInstance());
-        return view;
 
+        list = new ArrayList<>() ;
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        binding.recyclerview.setLayoutManager(linearLayoutManager);
+        hotelsOrderAdapter = new HotelsOrderAdapter(getActivity());
+
+        binding.recyclerview.setAdapter(hotelsOrderAdapter);
+
+        service = Service.ApiClient.getRetrofitInstance();
+
+        getOrders();
+
+        return view;
     }
 
-    void openFragment(Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
-                .beginTransaction();
-        fragmentTransaction.replace(R.id.viewpager, fragment);
-        fragmentTransaction.commit();
+    private void getOrders() {
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
+        Toast.makeText(getActivity(), token+"", Toast.LENGTH_SHORT).show();
+
+        service.getHotelOrders(token).enqueue(new Callback<OrdersExample>() {
+            @Override
+            public void onResponse(Call<OrdersExample> call, Response<OrdersExample> response) {
+
+                if (response.isSuccessful()) {
+                    Log.e("response","response");
+                    List<Datum> datum=response.body().getData();
+                    SharedPreferences SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                    Long userId=SP.getLong(USERKey,0);
+
+                    for (int i = 0; i <datum.size() ; i++) {
+
+                        if (datum.get(i).getUserId()==userId){
+                            list = response.body().getData().get(i).getHotelOrderItems();
+                            hotelsOrderAdapter.setData(list);
+                        }
+                    }
+
+
+                }else {
+                    Log.e("else token",token);
+
+                    Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+            @Override
+            public void onFailure(Call<OrdersExample> call, Throwable t) {
+                t.printStackTrace();
+                Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

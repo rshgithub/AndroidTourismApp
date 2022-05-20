@@ -31,6 +31,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Login.USERKey;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,9 +106,8 @@ public class HotelsOrderFragment extends Fragment {
 
     private void getOrders() {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-//        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-        String token = "Bearer 55|LV7UB9w21a2vM9zWaR6LyotacuTGf8XwVgVtjYT0";//"No name defined" is the default value.
-        Log.e("token",token);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
         Toast.makeText(getActivity(), token+"", Toast.LENGTH_SHORT).show();
 
         service.getHotelOrders(token).enqueue(new Callback<OrdersExample>() {
@@ -118,15 +118,11 @@ public class HotelsOrderFragment extends Fragment {
                     Log.e("response","response");
                    List<Datum>  datum=response.body().getData();
                     SharedPreferences SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                    SharedPreferences.Editor EDIT = SP.edit();
-                   int userId=SP.getInt("userId",0);
+                   Long userId=SP.getLong(USERKey,0);
 
                     for (int i = 0; i <datum.size() ; i++) {
-                        Toast.makeText(getActivity(), "50", Toast.LENGTH_SHORT).show();
 
-//                        if (datum.get(i).getUserId()==userId){
-                        if (datum.get(i).getUserId()==50){
-                            Toast.makeText(getActivity(), "50", Toast.LENGTH_SHORT).show();
+                        if (datum.get(i).getUserId()==userId){
                             list = response.body().getData().get(i).getHotelOrderItems();
                             hotelsOrderAdapter.setData(list);
                         }
