@@ -1,20 +1,20 @@
 
-package com.example.pablo.model.edit;
+package com.example.pablo.model.cart;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data implements Serializable
+public class HotelOrderItem implements Serializable
 {
+
     @SerializedName("id")
     @Expose
     private Long id;
     @SerializedName("user_id")
     @Expose
-    private Object userId;
+    private Long userId;
     @SerializedName("order_id")
     @Expose
     private Long orderId;
@@ -29,7 +29,7 @@ public class Data implements Serializable
     private String checkOut;
     @SerializedName("room_count")
     @Expose
-    private String roomCount;
+    private Long roomCount;
     @SerializedName("total_nights")
     @Expose
     private Long totalNights;
@@ -45,7 +45,7 @@ public class Data implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Long orderTotalPrice;
-    private final static long serialVersionUID = -3569648249116656474L;
+    private final static long serialVersionUID = 5024669894850887283L;
 
     public Long getId() {
         return id;
@@ -55,11 +55,11 @@ public class Data implements Serializable
         this.id = id;
     }
 
-    public Object getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Object userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -95,11 +95,11 @@ public class Data implements Serializable
         this.checkOut = checkOut;
     }
 
-    public String getRoomCount() {
+    public Long getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(String roomCount) {
+    public void setRoomCount(Long roomCount) {
         this.roomCount = roomCount;
     }
 

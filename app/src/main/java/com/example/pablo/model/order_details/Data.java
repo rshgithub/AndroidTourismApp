@@ -1,14 +1,13 @@
 
-package com.example.pablo.model.edit;
+package com.example.pablo.model.order_details;
 
 import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data implements Serializable
 {
+
     @SerializedName("id")
     @Expose
     private Long id;
@@ -29,7 +28,7 @@ public class Data implements Serializable
     private String checkOut;
     @SerializedName("room_count")
     @Expose
-    private String roomCount;
+    private Long roomCount;
     @SerializedName("total_nights")
     @Expose
     private Long totalNights;
@@ -45,7 +44,7 @@ public class Data implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Long orderTotalPrice;
-    private final static long serialVersionUID = -3569648249116656474L;
+    private final static long serialVersionUID = 5717132536541508099L;
 
     public Long getId() {
         return id;
@@ -95,11 +94,11 @@ public class Data implements Serializable
         this.checkOut = checkOut;
     }
 
-    public String getRoomCount() {
+    public Long getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(String roomCount) {
+    public void setRoomCount(Long roomCount) {
         this.roomCount = roomCount;
     }
 

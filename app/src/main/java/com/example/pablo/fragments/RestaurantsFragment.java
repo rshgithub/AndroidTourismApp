@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class RestaurantsFragment extends Fragment {
 
         restaurantsAdapter = new RestaurantsAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), RestaurantsDetails.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
@@ -106,7 +107,7 @@ public class RestaurantsFragment extends Fragment {
         });
         freshRecipesAdapter = new FreshRecipesAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
 //                Intent intent = new Intent(getActivity(), RestaurantsDetails.class);
 //                intent.putExtra(Item_KEY, Id);
 //                startActivity(intent);

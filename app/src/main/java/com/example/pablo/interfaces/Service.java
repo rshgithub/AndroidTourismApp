@@ -3,7 +3,6 @@ package com.example.pablo.interfaces;
 
 import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.model.buyorder.BuyOrderExample;
-import com.example.pablo.model.cart.Test;
 import com.example.pablo.model.churches.ChurchesExample;
 import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.hotels.HotelsExample;
@@ -15,12 +14,12 @@ import com.example.pablo.model.churches.Data;
 import com.example.pablo.model.login.ExampleLogin;
 import com.example.pablo.model.RestaurantsExam;
 import com.example.pablo.model.mosques.MosqueExample;
+import com.example.pablo.model.order_details.OrderDetailsExample;
 import com.example.pablo.model.orders.OrdersExample;
 import com.example.pablo.model.register.Example;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.example.pablo.model.users.UsersExample;
 import com.example.pablo.reservations.Datum;
-import com.example.pablo.reservations.ReservationsExample;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,7 +42,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
@@ -88,7 +86,7 @@ public interface Service {
 
     //room
     @GET("hotel_rooms/{id}")
-    Call<RoomsExample> getRoomDetails(@Path("id") int id, @Header("Authorization") String token);
+    Call<RoomsExample> getRoomDetails(@Path("id") Long id, @Header("Authorization") String token);
 
     //booking info
     @FormUrlEncoded
@@ -104,21 +102,21 @@ public interface Service {
 
     //room_reservations
     @GET("getAuthOrderItems")
-    Call<Test> getCart(@Header("Authorization") String token);
+    Call<com.example.pablo.model.cart.CartExample> getCart(@Header("Authorization") String token);
 
     //delete item from cart
     @DELETE("orders/{id}")
-    Call<Datum> deleteItem(@Path("id") int itemId, @Header("Authorization") String token);
+    Call<Datum> deleteItem(@Path("id") Long itemId, @Header("Authorization") String token);
 
     //edit item from cart
     @FormUrlEncoded
     @POST("orders/{id}")
     Call<EditExample> editItem(
-            @Path("id") int itemId,
+            @Path("id") Long itemId,
             @Field("check_in") String check_in,
             @Field("check_out") String check_out,
             @Field("room_count") String room_count,
-            @Field("room_id") int room_id,
+            @Field("room_id") Long  room_id,
             @Field("_method") String _method,
             @Header("Authorization") String token);
 
@@ -130,8 +128,12 @@ public interface Service {
     @GET("getAuthHotelOrders")
     Call<OrdersExample> getHotelOrders(@Header("Authorization") String token);
 
+    //delete item from cart
+    @DELETE("orders/{id}")
+    Call<OrderDetailsExample> getHotelOrdersDetails(@Path("id") Long itemId, @Header("Authorization") String token);
 
-   //buy order
+
+    //buy order
     @POST("buyAllAuthOrderItems")
     Call<BuyOrderExample> BuyOrder(@Header("Authorization") String token);
 
@@ -155,7 +157,7 @@ public interface Service {
     //******************************************************************************
     //get user details from
     @GET("users/{id}")
-    Call<UsersExample> getUserDetails(@Path("id") int id, @Header("Authorization") String token);
+    Call<UsersExample> getUserDetails(@Path("id") Long id, @Header("Authorization") String token);
 
     //******************************************************************************
     //get orders test

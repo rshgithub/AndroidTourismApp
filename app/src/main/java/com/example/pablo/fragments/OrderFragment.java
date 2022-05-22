@@ -3,28 +3,24 @@ package com.example.pablo.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.pablo.R;
+import com.example.pablo.OrdersDetailsBottomSheet;
 import com.example.pablo.activity.Login;
 import com.example.pablo.adapters.HotelsOrderAdapter;
 import com.example.pablo.databinding.FragmentOrderBinding;
+import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.orders.Datum;
-import com.example.pablo.model.orders.HotelOrderItem;
 import com.example.pablo.model.orders.OrdersExample;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +38,12 @@ import static com.example.pablo.activity.Login.USERKey;
  * Use the {@link OrderFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OrderFragment extends Fragment {
+public class OrderFragment extends Fragment implements OrdersDetailsBottomSheet.ListenerBottomSheet {
     FragmentOrderBinding binding;
     Service service;
     HotelsOrderAdapter hotelsOrderAdapter;
-    RecyclerView recyclerView;
-    List<HotelOrderItem> list;
+    List<Datum> list;
+    public final static String ORDER_ID = "Order_id" ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -94,8 +90,9 @@ public class OrderFragment extends Fragment {
 
         list = new ArrayList<>() ;
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         binding.recyclerview.setLayoutManager(linearLayoutManager);
+
         hotelsOrderAdapter = new HotelsOrderAdapter(getActivity());
 
         binding.recyclerview.setAdapter(hotelsOrderAdapter);
@@ -118,22 +115,33 @@ public class OrderFragment extends Fragment {
             public void onResponse(Call<OrdersExample> call, Response<OrdersExample> response) {
 
                 if (response.isSuccessful()) {
-                    Log.e("response","response");
+                    Log.e("response",response.code()+"");
+
                     List<Datum> datum=response.body().getData();
+
+                    //user id
                     SharedPreferences SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
                     Long userId=SP.getLong(USERKey,0);
 
-                    for (int i = 0; i <datum.size() ; i++) {
+                    for (int i = 0; i < datum.size() ; i++) {
+                       if (datum.get(i).getUserId()==userId){
+                            list = response.body().getData();
+                            hotelsOrderAdapter.setData(list, new MyInterface() {
+                                @Override
+                                public void onItemClick(Long Id) {
+                                  Toast.makeText(getActivity(), response.message(), Toast.LENGTH_SHORT).show();
 
-                        if (datum.get(i).getUserId()==userId){
-                            list = response.body().getData().get(i).getHotelOrderItems();
-                            hotelsOrderAdapter.setData(list);
-                        }
+//                                    OrdersDetailsBottomSheet bottomSheet = new OrdersDetailsBottomSheet();
+//                                    bottomSheet.show(getActivity().getSupportFragmentManager(), "orderDetails");
+                                }
+                            });
+                            Log.e("orders", i+"");
+
+                       }
                     }
 
 
                 }else {
-                    Log.e("else token",token);
 
                     Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
 
@@ -142,9 +150,15 @@ public class OrderFragment extends Fragment {
             @Override
             public void onFailure(Call<OrdersExample> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    @Override
+    public void onButtonClicked(String text) {
+
+    }
+
 
 }

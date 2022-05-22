@@ -15,7 +15,25 @@ public class OrdersExample implements Serializable
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
-    private final static long serialVersionUID = 614483572356553181L;
+    private final static long serialVersionUID = -3180721530650557332L;
+
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public OrdersExample() {
+    }
+
+    /**
+     * 
+     * @param data
+     * @param message
+     */
+    public OrdersExample(String message, List<Datum> data) {
+        super();
+        this.message = message;
+        this.data = data;
+    }
 
     public String getMessage() {
         return message;

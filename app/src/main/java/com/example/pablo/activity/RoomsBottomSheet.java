@@ -38,8 +38,6 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
     List<Data> list ;
     RoomAdapter adapter;
     public static final String Item_KEY = "hotel_key";
-    int ProductId ;
-    ActivityRoomBinding binding;
     Service service;
     RecyclerView recyclerView;
     ImageView cart;
@@ -52,17 +50,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         recyclerView = v.findViewById(R.id.recyclerview);
         cart = v.findViewById(R.id.cart);
 
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), Cart.class);
-                startActivity(intent);
-            }
-        });
 
-        if (getActivity().getIntent() != null) {
-            ProductId = getActivity().getIntent().getIntExtra("room_id",0);
-        }
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
@@ -70,7 +58,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
         adapter = new RoomAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), BookingInfo.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
@@ -104,7 +92,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onFailure(Call<List<Data>> call, Throwable t) {
                 Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
-                Log.e("erorr", t.getMessage());
+                Log.e("error", t.getMessage());
 
             }
         });

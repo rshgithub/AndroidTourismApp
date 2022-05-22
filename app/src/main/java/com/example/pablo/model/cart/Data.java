@@ -1,12 +1,12 @@
 
-package com.example.pablo.model.orders;
+package com.example.pablo.model.cart;
 
 import java.io.Serializable;
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Datum implements Serializable
-{
+public class Data extends CartExample implements Serializable{
 
     @SerializedName("id")
     @Expose
@@ -26,33 +26,7 @@ public class Datum implements Serializable
     @SerializedName("order_items_count")
     @Expose
     private Long orderItemsCount;
-    private final static long serialVersionUID = -2088476388058600487L;
-
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Datum() {
-    }
-
-    /**
-     * 
-     * @param createdAt
-     * @param totalPrice
-     * @param id
-     * @param orderItemsCount
-     * @param userId
-     * @param status
-     */
-    public Datum(Long id, Long userId, Long status, String createdAt, Long totalPrice, Long orderItemsCount) {
-        super();
-        this.id = id;
-        this.userId = userId;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.totalPrice = totalPrice;
-        this.orderItemsCount = orderItemsCount;
-    }
+    private final static long serialVersionUID = -3366296286020082887L;
 
     public Long getId() {
         return id;

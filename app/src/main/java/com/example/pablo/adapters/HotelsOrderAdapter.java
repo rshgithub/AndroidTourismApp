@@ -1,31 +1,34 @@
 package com.example.pablo.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.pablo.R;
+import com.example.pablo.OrdersDetailsBottomSheet;
 import com.example.pablo.databinding.HotelOrderBinding;
+import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.model.orders.Datum;
-import com.example.pablo.model.orders.HotelOrderItem;
 
 import java.util.List;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
-public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> {
-    private List<HotelOrderItem> list  ;
+
+public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> implements OrdersDetailsBottomSheet.ListenerBottomSheet {
+    public List<Datum> list  ;
     Context context;
+    public static MyInterface listener ;
+    public FragmentActivity context4;
 
-    public HotelsOrderAdapter(Context context){
+
+    public HotelsOrderAdapter(Context context ){
         this.context= context;
-
     }
 
 
@@ -40,16 +43,24 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
     public void onBindViewHolder(HotelsOrderAdapter.ViewHolder holder, int position) {
 
 //        holder.binding.hotelName.setText(list.get(position).getName());
-        holder.binding.room.setText(list.get(position).getCheckIn()+" - "+list.get(position).getCheckOut());
-        holder.binding.price.setText(list.get(position).getOrderTotalPrice()+"");
-        holder.binding.count.setText(list.get(position).getRoomCount()+"");
+        holder.binding.room.setText(list.get(position).getCreatedAt()+"");
+        holder.binding.price.setText(list.get(position).getTotalPrice()+"");
+        holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
 
-//        Glide.with(context).load(list.get(position).getImage())
-//                .transition(withCrossFade())
-//                .circleCrop()
-//                .apply(new RequestOptions().transform(new RoundedCorners(20))
-//                        .error(R.drawable.applogo_background).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-//                .into((holder).binding.image);
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+             //  listener.onItemClick(list.get(position).getId());
+
+                OrdersDetailsBottomSheet bottomSheet = new OrdersDetailsBottomSheet();
+                bottomSheet.show(((FragmentActivity) context).getSupportFragmentManager(), "orderDetails");
+
+            }
+        });
+
 
 
     }
@@ -59,18 +70,25 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
         return list!=null?list.size():0;
     }
 
-//
-    public void setData(List<HotelOrderItem> list) {
+
+    public void setData(List<Datum> list, MyInterface listener) {
         this.list = list;
+        this.listener=listener;
+
         notifyDataSetChanged();
     }
+
+    @Override
+    public void onButtonClicked(String text) {
+
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
        HotelOrderBinding binding;
         public ViewHolder(HotelOrderBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-
         }
 
 

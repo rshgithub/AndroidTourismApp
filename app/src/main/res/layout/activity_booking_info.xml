@@ -457,24 +457,6 @@
         app:layout_constraintTop_toBottomOf="@+id/book_now"
         tools:ignore="NotSibling" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/edit"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="21dp"
-        android:background="@drawable/booknow"
-        android:fontFamily="@font/montserrat"
-        android:text="Edit"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/book_now"
-        tools:ignore="NotSibling" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

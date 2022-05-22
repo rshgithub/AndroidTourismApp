@@ -8,15 +8,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.pablo.activity.BookingInfo;
 import com.example.pablo.activity.Login;
 import com.example.pablo.adapters.CartAdapter;
 import com.example.pablo.databinding.ActivityCartBinding;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.buyorder.BuyOrderExample;
-import com.example.pablo.model.cart.Test;
-import com.example.pablo.model.edit.EditExample;
+import com.example.pablo.model.cart.CartExample;
+import com.example.pablo.model.cart.HotelOrderItem;
 import com.example.pablo.reservations.Datum;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ import static com.example.pablo.activity.Login.parseError;
 
 public class Cart extends AppCompatActivity {
 
-    List<com.example.pablo.model.cart.Datum> list ;
+    List<HotelOrderItem> list ;
     CartAdapter adapter;
     ActivityCartBinding binding;
     static Service service;
@@ -42,7 +41,7 @@ public class Cart extends AppCompatActivity {
         binding = ActivityCartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        list =new ArrayList<com.example.pablo.model.cart.Datum>();
+        list =new ArrayList<>();
 
         binding.deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +68,7 @@ public class Cart extends AppCompatActivity {
 
         adapter = new CartAdapter(this, new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
 
             }
         });
@@ -89,13 +88,13 @@ public class Cart extends AppCompatActivity {
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
         //here put room model class or hotel model ???
-        service.getCart("Bearer " + token).enqueue(new Callback<Test>() {
+        service.getCart("Bearer " + token).enqueue(new Callback<CartExample>() {
             @Override
-            public void onResponse(Call<Test> call, Response<Test> response) {
+            public void onResponse(Call<CartExample> call, Response<CartExample> response) {
                 Log.e("response code", response.code() + "");
 
                 if (response.body() != null) {
-                    list = response.body().getData();
+                    list = response.body().getHotelOrderItems();
                    adapter.setData(list);
                 }
                 else {
@@ -105,7 +104,7 @@ public class Cart extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<Test> call, Throwable t) {
+            public void onFailure(Call<CartExample> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
 
@@ -114,7 +113,7 @@ public class Cart extends AppCompatActivity {
     }
 
     //delete
-    public static void delete(int id, String token){
+    public static void delete(Long id, String token){
         service.deleteItem(id,token).enqueue(new Callback<Datum>() {
             @Override
             public void onResponse(Call<Datum> call, Response<Datum> response) {

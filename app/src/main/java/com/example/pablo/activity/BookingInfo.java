@@ -43,9 +43,9 @@ public class BookingInfo extends AppCompatActivity {
     SimpleDateFormat sdf;
     ActivityBookingInfoBinding binding;
     Service service;
-    int roomId, orderItemId;
-    int tot;
-    int totals;
+    Long roomId, orderItemId;
+    Long tot;
+    Long totals;
     Date date2;
     Date date3;
     String checkInDate, checkOutDate;
@@ -80,25 +80,27 @@ public class BookingInfo extends AppCompatActivity {
 //        }
 
 //       // if (getIntent().getIntExtra("roomId", 0) == isTrue)
+
+
         if (getIntent() != null) {
-            roomId = getIntent().getIntExtra("roomId", 0);
-            fromRoom = getIntent().getBooleanExtra("fromRoom", true);
+            roomId = getIntent().getLongExtra("roomId", 0);
+           // fromRoom = getIntent().getBooleanExtra("fromRoom", true);
             getRoomDetails(roomId);
-            orderItemId = getIntent().getIntExtra("editId", 0);
-            if (orderItemId != 0)
-                editRoomDetails(orderItemId);
+
+//            orderItemId = getIntent().getIntExtra("editId", 0);
+//            if (orderItemId != 0)
+//                editRoomDetails(orderItemId);
+        }
+
+        if (getIntent() != null) {
+            orderItemId = getIntent().getLongExtra("editId", 0);
+            editRoomDetails(orderItemId);
+
         }
         //cart
-        Toast.makeText(this, fromRoom+"", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, fromRoom+"", Toast.LENGTH_SHORT).show();
 
-        binding.edit.setVisibility(View.GONE);
 
-        binding.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         binding.addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +161,7 @@ public class BookingInfo extends AppCompatActivity {
         });
     }
 
-    private void getRoomDetails(int roomId) {
+    private void getRoomDetails(Long roomId) {
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
@@ -241,8 +243,8 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
-                            int Count = Integer.parseInt((binding.dayCount.getText().toString()));
+                                Long Price =  Long.valueOf((binding.priceHotel.getText().toString()));
+                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
 
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
@@ -252,7 +254,7 @@ public class BookingInfo extends AppCompatActivity {
                                 int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
-                                int x = tot - totals;
+                                Long x = tot - totals;
                                 binding.totalMoney.setText(x + "");
 
                             }
@@ -296,8 +298,8 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
-                            int Count = Integer.parseInt((binding.dayCount.getText().toString()));
+                            Long Price = Long.valueOf(((binding.priceHotel.getText().toString())));
+                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price;
                                 binding.totalMoney.setText(tot + "");
@@ -306,7 +308,7 @@ public class BookingInfo extends AppCompatActivity {
                                 int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
-                                int x = tot - totals;
+                                Long x = tot - totals;
                                 binding.totalMoney.setText(x + "");
 
                             }
@@ -343,7 +345,7 @@ public class BookingInfo extends AppCompatActivity {
 
     }
 
-    private void editRoomDetails(int orderItemId) {
+    private void editRoomDetails(Long orderItemId) {
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
@@ -414,18 +416,18 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
-                            int Count = Integer.parseInt((binding.dayCount.getText().toString()));
+                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
+                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
 
-                            if (response.body().getData().getHasOffer() == null) {
+                            if (response.body().getData().getRoomHasOffer() == null) {
                                 tot = Count * Price;
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
+                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
-                                int x = tot - totals;
+                                Long x = tot - totals;
                                 binding.totalMoney.setText(x + "");
 
                             }
@@ -469,17 +471,17 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            int Price = Integer.parseInt((binding.priceHotel.getText().toString()));
-                            int Count = Integer.parseInt((binding.dayCount.getText().toString()));
-                            if (response.body().getData().getHasOffer() == null) {
+                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
+                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+                            if (response.body().getData().getRoomHasOffer() == null) {
                                 tot = Count * Price;
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
+                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
                                 tot = Count * Price;
                                 totals = tot * (offer / 100);
-                                int x = tot - totals;
+                                Long x = tot - totals;
                                 binding.totalMoney.setText(x + "");
 
                             }
@@ -517,7 +519,7 @@ public class BookingInfo extends AppCompatActivity {
         DAYCOUNT = binding.count.getText().toString();
         PRICE = binding.totalMoney.getText().toString();
 
-        roomId = getIntent().getIntExtra("roomId", 0);
+        roomId = getIntent().getLongExtra("roomId", 0);
         getRoomDetails(roomId);
         extras = getIntent().getExtras();
         if (extras != null) {

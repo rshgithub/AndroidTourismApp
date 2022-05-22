@@ -11,13 +11,13 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pablo.Constraints;
 import com.example.pablo.activity.BookingInfo;
 import com.example.pablo.activity.Login;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.RoomCartBinding;
-import com.example.pablo.model.cart.Datum;
+import com.example.pablo.model.cart.CartExample;
+import com.example.pablo.model.cart.HotelOrderItem;
 
 import java.util.List;
 
@@ -27,12 +27,10 @@ import static com.example.pablo.Cart.delete;
 import static com.example.pablo.activity.Login.PREF_NAME;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
-    private List<Datum> list;
+    private List<HotelOrderItem> list;
     Context context;
-    Service service;
     MyInterface myInterface;
     public static String NAME, CHECKIN, CHECKOUT, DAYCOUNT, PRICE;
-    public static final String Item_KEY = "room_key";
 
     public CartAdapter(Context context, MyInterface myInterface) {
         this.context = context;
@@ -55,13 +53,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.binding.hotelRoomName.setText(list.get(position).getRoomCount() + " Room Count");
         holder.binding.dateTime.setText(list.get(position).getCheckIn() + " - " + list.get(position).getCheckOut());
 
-        int count = list.get(position).getOrderTotalPrice();
-        int c = 0;
-        for (int i = 0; i < list.size(); i++) {
-            c += count;
-        }
-        Log.e("count", c + "");
-        Toast.makeText(context, "" + c, Toast.LENGTH_SHORT).show();
+//        int count = list.get(position).getOrderTotalPrice();
+//        int c = 0;
+//        for (int i = 0; i < list.size(); i++) {
+//            c += count;
+//        }
+//        Log.e("count", c + "");
+//        Toast.makeText(context, "" + c, Toast.LENGTH_SHORT).show();
 
         holder.binding.removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 intent.putExtra("CHECKOUT", list.get(position).getCheckOut());
                 intent.putExtra("DAYCOUNT", list.get(position).getTotalNights());
                 intent.putExtra("PRICE", list.get(position).getOrderTotalPrice());
-                intent.putExtra("fromRoom", false);
+               // intent.putExtra("fromRoom", false);
 
                 Log.e("ID", list.get(position).getId() + "");
 
@@ -110,7 +108,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     }
 
 
-    public void setData(List<com.example.pablo.model.cart.Datum> list) {
+    public void setData(List<HotelOrderItem> list) {
         this.list = list;
         notifyDataSetChanged();
     }

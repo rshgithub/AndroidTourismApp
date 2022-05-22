@@ -101,7 +101,7 @@ public class ChurchesFragment extends Fragment {
         recyclerView2.setLayoutManager(linearLayoutManager2);
         churchesAdapter = new ChurchesAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), MosqueDetails.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
@@ -109,7 +109,7 @@ public class ChurchesFragment extends Fragment {
         });
         popularChurchesAdapter = new PopularChurchesAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), MosqueDetails.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);

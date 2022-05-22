@@ -109,7 +109,7 @@ public class MosqueFragment extends Fragment {
 
         mosqueAdapter = new MosqueAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), MosqueDetails.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
@@ -117,7 +117,7 @@ public class MosqueFragment extends Fragment {
         });
         popularMosquesAdapter = new popularMosquesAdapter(getActivity(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getActivity(), MosqueDetails.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);

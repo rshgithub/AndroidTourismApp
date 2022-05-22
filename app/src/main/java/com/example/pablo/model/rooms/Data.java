@@ -8,10 +8,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Data implements Serializable
 {
-
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -23,29 +22,29 @@ public class Data implements Serializable
     private String details;
     @SerializedName("hotel_id")
     @Expose
-    private Integer hotelId;
+    private Long hotelId;
     @SerializedName("has_offer")
     @Expose
-    private Integer hasOffer;
+    private Long hasOffer;
     @SerializedName("available_rooms")
     @Expose
-    private Integer availableRooms;
+    private Long availableRooms;
     @SerializedName("price_per_night")
     @Expose
-    private Integer pricePerNight;
+    private Long pricePerNight;
     @SerializedName("room_hotel_name")
     @Expose
     private String roomHotelName;
     @SerializedName("room_images")
     @Expose
     private List<String> roomImages = null;
-    private final static long serialVersionUID = -2227721003271658643L;
+    private final static long serialVersionUID = 6063706772096967567L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -73,35 +72,35 @@ public class Data implements Serializable
         this.details = details;
     }
 
-    public Integer getHotelId() {
+    public Long getHotelId() {
         return hotelId;
     }
 
-    public void setHotelId(Integer hotelId) {
+    public void setHotelId(Long hotelId) {
         this.hotelId = hotelId;
     }
 
-    public Integer getHasOffer() {
+    public Long getHasOffer() {
         return hasOffer;
     }
 
-    public void setHasOffer(Integer hasOffer) {
+    public void setHasOffer(Long hasOffer) {
         this.hasOffer = hasOffer;
     }
 
-    public Integer getAvailableRooms() {
+    public Long getAvailableRooms() {
         return availableRooms;
     }
 
-    public void setAvailableRooms(Integer availableRooms) {
+    public void setAvailableRooms(Long availableRooms) {
         this.availableRooms = availableRooms;
     }
 
-    public Integer getPricePerNight() {
+    public Long getPricePerNight() {
         return pricePerNight;
     }
 
-    public void setPricePerNight(Integer pricePerNight) {
+    public void setPricePerNight(Long pricePerNight) {
         this.pricePerNight = pricePerNight;
     }
 

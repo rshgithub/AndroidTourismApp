@@ -60,7 +60,7 @@ public class RoomActivity extends AppCompatActivity {
 
         adapter = new RoomAdapter(getApplicationContext(), new MyInterface() {
             @Override
-            public void onItemClick(int Id) {
+            public void onItemClick(Long Id) {
                 Intent intent = new Intent(getBaseContext(), BookingInfo.class);
                 intent.putExtra(Item_KEY, Id);
                 startActivity(intent);
@@ -93,7 +93,7 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Data>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "null", Toast.LENGTH_SHORT).show();
-                Log.e("erorr", t.getMessage());
+                Log.e("error", t.getMessage());
 
             }
         });

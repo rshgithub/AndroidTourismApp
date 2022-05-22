@@ -53,6 +53,27 @@ public class AccountFragment extends Fragment {
     Service service;
     int AccountId;
 
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
+                                Intent data = result.getData();
+                                Log.e("data", data.getDataString() + "");
+                                File file = null;
+                                try {
+                                    file = FileUtil.from(getActivity(), data.getData());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                getUserImage(file);
+                            }
+                        }
+                    });
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -109,24 +130,25 @@ public class AccountFragment extends Fragment {
         binding.camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityResultLauncher<Intent> someActivityResultLauncher =
-                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                                new ActivityResultCallback<ActivityResult>() {
-                                    @Override
-                                    public void onActivityResult(ActivityResult result) {
-                                        if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
-                                            Intent data = result.getData();
-                                            Log.e("data", data.getDataString() + "");
-                                            File file = null;
-                                            try {
-                                                file = FileUtil.from(getActivity(), data.getData());
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            getUserImage(file);
-                                        }
-                                    }
-                                });
+
+//                ActivityResultLauncher<Intent> someActivityResultLauncher =
+//                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+//                                new ActivityResultCallback<ActivityResult>() {
+//                                    @Override
+//                                    public void onActivityResult(ActivityResult result) {
+//                                        if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
+//                                            Intent data = result.getData();
+//                                            Log.e("data", data.getDataString() + "");
+//                                            File file = null;
+//                                            try {
+//                                                file = FileUtil.from(getActivity(), data.getData());
+//                                            } catch (IOException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                            getUserImage(file);
+//                                        }
+//                                    }
+//                                });
 
                 binding.photo.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -190,7 +212,7 @@ public class AccountFragment extends Fragment {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-        int AccountId = Login.SP.getInt(Login.USERKey, -1);
+        Long AccountId = Login.SP.getLong(Login.USERKey, -1);
 
         service.getUserDetails(AccountId, "Bearer " + token).enqueue(new Callback<UsersExample>() {
             @Override
