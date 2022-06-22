@@ -8,72 +8,61 @@ import com.google.gson.annotations.SerializedName;
 
 public class User implements Serializable
 {
-        @SerializedName("id")
-        @Expose
-        private Long id;
-        @SerializedName("name")
-        @Expose
-        private String name;
-        @SerializedName("user_role")
-        @Expose
-        private Object userRole;
-        @SerializedName("email")
-        @Expose
-        private String email;
-        @SerializedName("address")
-        @Expose
-        private String address;
-        @SerializedName("user_avatar")
-        @Expose
-        private String userAvatar;
-        private final static long serialVersionUID = 6571000668645314122L;
+    @SerializedName("id")
+    @Expose
+    private Long id;
+    @SerializedName("name")
+    @Expose
+    private String name;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("user_avatar")
+    @Expose
+    private String userAvatar;
+    private final static long serialVersionUID = 6571000668645314122L;
 
-        public Long getId() {
+    public Long getId() {
         return id;
     }
 
-        public void setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-        public String getName() {
+    public String getName() {
         return name;
     }
 
-        public void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-        public Object getUserRole() {
-        return userRole;
-    }
-
-        public void setUserRole(Object userRole) {
-        this.userRole = userRole;
-    }
-
-        public String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-        public void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-        public String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-        public void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-        public String getUserAvatar() {
+    public String getUserAvatar() {
         return userAvatar;
     }
 
-        public void setUserAvatar(String userAvatar) {
+    public void setUserAvatar(String userAvatar) {
         this.userAvatar = userAvatar;
     }
 
-    }
+}

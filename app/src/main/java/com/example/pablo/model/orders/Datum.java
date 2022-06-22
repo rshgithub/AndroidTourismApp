@@ -16,43 +16,20 @@ public class Datum implements Serializable
     private Long userId;
     @SerializedName("status")
     @Expose
-    private Long status;
-    @SerializedName("created_at")
+    private String status;
+    @SerializedName("time_count")
     @Expose
-    private String createdAt;
+    private String timeCount;
+    @SerializedName("hotel_name")
+    @Expose
+    private String hotelName;
     @SerializedName("total_price")
     @Expose
     private Long totalPrice;
     @SerializedName("order_items_count")
     @Expose
     private Long orderItemsCount;
-    private final static long serialVersionUID = -2088476388058600487L;
-
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
-    public Datum() {
-    }
-
-    /**
-     * 
-     * @param createdAt
-     * @param totalPrice
-     * @param id
-     * @param orderItemsCount
-     * @param userId
-     * @param status
-     */
-    public Datum(Long id, Long userId, Long status, String createdAt, Long totalPrice, Long orderItemsCount) {
-        super();
-        this.id = id;
-        this.userId = userId;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.totalPrice = totalPrice;
-        this.orderItemsCount = orderItemsCount;
-    }
+    private final static long serialVersionUID = -7116576093380600927L;
 
     public Long getId() {
         return id;
@@ -70,20 +47,28 @@ public class Datum implements Serializable
         this.userId = userId;
     }
 
-    public Long getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getTimeCount() {
+        return timeCount;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setTimeCount(String timeCount) {
+        this.timeCount = timeCount;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
     public Long getTotalPrice() {

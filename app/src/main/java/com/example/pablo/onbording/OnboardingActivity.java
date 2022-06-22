@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.pablo.activity.Login;
 import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityOnboardingBinding;
+import com.example.pablo.onbording_1.OnboardingPageTransformer;
 
 
 public class OnboardingActivity extends AppCompatActivity {
@@ -36,6 +37,8 @@ public class OnboardingActivity extends AppCompatActivity {
         if (view.getId() == R.id.skip) {
             if (binding.onboardingViewPager.getCurrentItem() < onboardingAdapter.getCount() - 1) {
                 binding.onboardingViewPager.setCurrentItem(binding.onboardingViewPager.getCurrentItem() + 1, true);
+                Intent i = new Intent(getBaseContext(), Login.class);
+                startActivity(i);
             }
             findViewById(R.id.skip1).setOnClickListener(new View.OnClickListener() {
                 @Override

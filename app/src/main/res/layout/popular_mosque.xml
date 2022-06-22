@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraint"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_marginEnd="@dimen/_15sdp"
+    android:clipToPadding="false"
+    android:paddingRight="@dimen/_16sdp"
     android:layout_height="wrap_content"
     android:elevation="@dimen/_15sdp"
-    android:layout_marginRight="@dimen/_15sdp">
+   >
+
+<!--    <com.flaviofaria.kenburnsview.KenBurnsView-->
+<!--        android:id="@+id/tourImage"-->
+<!--        android:layout_width="@dimen/_200sdp"-->
+<!--        android:layout_height="@dimen/_220sdp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/Mosque_imageView"
@@ -46,18 +58,6 @@
         app:srcCompat="@drawable/maps"
         tools:ignore="VectorDrawableCompat" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="20dp"
-        android:layout_height="22dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_favorite_24"
-        tools:ignore="VectorDrawableCompat" />
-
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mosque_name"
@@ -67,7 +67,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="192dp"
         android:fontFamily="@font/montserrat"
-        android:text="Al Omari Mosque"
+        android:text="@string/mosque_name"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_13ssp"
         android:textStyle="bold"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_3sdp"
         android:fontFamily="@font/montserrat"
-        android:text="Palestine - Gaza - Al Naser Street"
+        android:text="@string/location"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/_8ssp"
         app:layout_constraintEnd_toEndOf="@+id/Mosque_imageView"
@@ -110,7 +110,7 @@
         android:layout_marginTop="2dp"
         android:background="@drawable/skip"
         android:fontFamily="@font/montserrat"
-        android:text="More Details  --->"
+        android:text="@string/more_detailss"
         android:textColor="#C3D61B"
         android:textSize="@dimen/_8ssp"
         android:textStyle="bold"

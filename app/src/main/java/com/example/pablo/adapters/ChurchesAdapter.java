@@ -54,7 +54,8 @@ public class ChurchesAdapter  extends RecyclerView.Adapter<ChurchesAdapter.ViewH
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(20))
                     .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                .into((holder).binding.image);
+                        .error(R.drawable.mosqes).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into((holder).binding.image);
 
         holder.binding.imageView15.setOnClickListener(new View.OnClickListener() {
             @Override

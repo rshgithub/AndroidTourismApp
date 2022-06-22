@@ -18,15 +18,18 @@ public class HotelOrderItem implements Serializable
     @SerializedName("order_id")
     @Expose
     private Long orderId;
-    @SerializedName("room_id")
+    @SerializedName("room_name")
     @Expose
-    private Long roomId;
+    private String roomName;
     @SerializedName("check_in")
     @Expose
     private String checkIn;
     @SerializedName("check_out")
     @Expose
     private String checkOut;
+    @SerializedName("time_count")
+    @Expose
+    private String timeCount;
     @SerializedName("room_count")
     @Expose
     private Long roomCount;
@@ -45,7 +48,7 @@ public class HotelOrderItem implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Long orderTotalPrice;
-    private final static long serialVersionUID = 5024669894850887283L;
+    private final static long serialVersionUID = 3147614202124648815L;
 
     public Long getId() {
         return id;
@@ -71,12 +74,12 @@ public class HotelOrderItem implements Serializable
         this.orderId = orderId;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     public String getCheckIn() {
@@ -93,6 +96,14 @@ public class HotelOrderItem implements Serializable
 
     public void setCheckOut(String checkOut) {
         this.checkOut = checkOut;
+    }
+
+    public String getTimeCount() {
+        return timeCount;
+    }
+
+    public void setTimeCount(String timeCount) {
+        this.timeCount = timeCount;
     }
 
     public Long getRoomCount() {

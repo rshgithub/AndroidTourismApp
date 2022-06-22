@@ -5,46 +5,30 @@ import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data implements Serializable
-{
+public class Data implements Serializable{
 
     @SerializedName("id")
     @Expose
     private Long id;
     @SerializedName("user_id")
     @Expose
-    private Object userId;
-    @SerializedName("order_id")
+    private Long userId;
+    @SerializedName("status")
     @Expose
-    private Long orderId;
-    @SerializedName("room_id")
+    private String status;
+    @SerializedName("time_count")
     @Expose
-    private Long roomId;
-    @SerializedName("check_in")
+    private String timeCount;
+    @SerializedName("hotel_name")
     @Expose
-    private String checkIn;
-    @SerializedName("check_out")
+    private String hotelName;
+    @SerializedName("total_price")
     @Expose
-    private String checkOut;
-    @SerializedName("room_count")
+    private Long totalPrice;
+    @SerializedName("order_items_count")
     @Expose
-    private Long roomCount;
-    @SerializedName("total_nights")
-    @Expose
-    private Long totalNights;
-    @SerializedName("room_price_per_night")
-    @Expose
-    private Long roomPricePerNight;
-    @SerializedName("room_has_offer")
-    @Expose
-    private Long roomHasOffer;
-    @SerializedName("savings_per_room")
-    @Expose
-    private Long savingsPerRoom;
-    @SerializedName("order_total_price")
-    @Expose
-    private Long orderTotalPrice;
-    private final static long serialVersionUID = 5717132536541508099L;
+    private Long orderItemsCount;
+    private final static long serialVersionUID = -1398470121324438103L;
 
     public Long getId() {
         return id;
@@ -54,92 +38,52 @@ public class Data implements Serializable
         this.id = id;
     }
 
-    public Object getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Object userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Long getRoomId() {
-        return roomId;
+    public String getTimeCount() {
+        return timeCount;
     }
 
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
+    public void setTimeCount(String timeCount) {
+        this.timeCount = timeCount;
     }
 
-    public String getCheckIn() {
-        return checkIn;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setCheckIn(String checkIn) {
-        this.checkIn = checkIn;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
-    public String getCheckOut() {
-        return checkOut;
+    public Long getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setCheckOut(String checkOut) {
-        this.checkOut = checkOut;
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public Long getRoomCount() {
-        return roomCount;
+    public Long getOrderItemsCount() {
+        return orderItemsCount;
     }
 
-    public void setRoomCount(Long roomCount) {
-        this.roomCount = roomCount;
-    }
-
-    public Long getTotalNights() {
-        return totalNights;
-    }
-
-    public void setTotalNights(Long totalNights) {
-        this.totalNights = totalNights;
-    }
-
-    public Long getRoomPricePerNight() {
-        return roomPricePerNight;
-    }
-
-    public void setRoomPricePerNight(Long roomPricePerNight) {
-        this.roomPricePerNight = roomPricePerNight;
-    }
-
-    public Long getRoomHasOffer() {
-        return roomHasOffer;
-    }
-
-    public void setRoomHasOffer(Long roomHasOffer) {
-        this.roomHasOffer = roomHasOffer;
-    }
-
-    public Long getSavingsPerRoom() {
-        return savingsPerRoom;
-    }
-
-    public void setSavingsPerRoom(Long savingsPerRoom) {
-        this.savingsPerRoom = savingsPerRoom;
-    }
-
-    public Long getOrderTotalPrice() {
-        return orderTotalPrice;
-    }
-
-    public void setOrderTotalPrice(Long orderTotalPrice) {
-        this.orderTotalPrice = orderTotalPrice;
+    public void setOrderItemsCount(Long orderItemsCount) {
+        this.orderItemsCount = orderItemsCount;
     }
 
 }

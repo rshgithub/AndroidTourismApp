@@ -7,9 +7,9 @@
     android:elevation="6dp"
     android:layout_marginBottom="15dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/_15sdp"
+    android:layout_marginStart="@dimen/_12sdp"
     android:background="@drawable/hotel_num"
-    android:layout_marginRight="@dimen/_15sdp">
+ >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="170dp"
@@ -66,7 +66,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="Hotel no.1"
+            android:text="@string/hotel_name"
             android:textColor="@color/purple_500"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -81,7 +81,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="3dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Available Times"
+            android:text="@string/available_times"
             android:textColor="@color/green"
             android:textSize="8sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="3dp"
-            android:text="8:00am - 9:00pm"
+            android:text="@string/_8_00am_9_00pm"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/location" />
@@ -105,7 +105,7 @@
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Al Naser Street"
+            android:text="@string/location"
             android:textSize="9sp"
             android:layout_marginLeft="@dimen/_2sdp"
             android:textColor="@color/black"

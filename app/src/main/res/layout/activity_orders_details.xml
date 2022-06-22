@@ -5,270 +5,280 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/cart"
+    android:paddingBottom="@dimen/_20sdp"
+
     tools:context=".OrdersDetailsBottomSheet">
 
-    <ImageView
-        android:id="@+id/imageView19"
-        android:layout_width="152dp"
-        android:layout_height="108dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="56dp"
-        android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/boutique_franchise_hotels" />
+<!--    <com.google.android.material.imageview.ShapeableImageView-->
+<!--        app:shapeAppearanceOverlay="@style/roundedImageViewRoundedhotel"-->
+<!--        android:id="@+id/imageView19"-->
+<!--        android:layout_width="130dp"-->
+<!--        android:layout_height="90dp"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="57dp"-->
+<!--        android:scaleType="fitXY"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/boutique_franchise_hotels" />-->
 
-    <TextView
-        android:id="@+id/room_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Room Nmae"
-        android:textColor="@color/purple_500"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView19"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/room_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="64dp"-->
+<!--        android:fontFamily="@font/montserrat_bold"-->
+<!--        android:text="Room Nmae"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/imageView19"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
-    <TextView
-        android:id="@+id/total_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:text="200$"
-        android:textColor="#C80000"
-        app:layout_constraintStart_toEndOf="@+id/textView28"
-        app:layout_constraintTop_toBottomOf="@+id/hotel_name" />
+<!--    <TextView-->
+<!--        android:id="@+id/total_price"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="200$"-->
+<!--        android:textColor="#C80000"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView28"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/hotel_name" />-->
 
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Total price"
-        android:textColor="@color/purple_500"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView19"
-        app:layout_constraintTop_toBottomOf="@+id/hotel_name" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView28"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Total price"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/imageView19"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/hotel_name" />-->
 
-    <TextView
-        android:id="@+id/hotel_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/montserrat"
-        android:text="hotel name"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/imageView19"
-        app:layout_constraintTop_toBottomOf="@+id/room_name" />
+<!--    <TextView-->
+<!--        android:id="@+id/hotel_name"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="hotel name"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="13sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/imageView19"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/room_name" />-->
 
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="ChickIn Date :"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView23"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="ChickIn Date :"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView19" />-->
 
-    <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Toatel Nights:"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/room_count"
-        app:layout_constraintTop_toBottomOf="@+id/checkout" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView32"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="28dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Toatel Nights:"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/room_count"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/checkout" />-->
 
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Room Count:"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView34" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView36"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Room Count:"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView34" />-->
 
-    <TextView
-        android:id="@+id/textView38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Room Price PerNight:"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView36" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView38"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Room Price PerNight:"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView36" />-->
 
-    <TextView
-        android:id="@+id/textView40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Room savings:"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/room_offer"
-        app:layout_constraintTop_toBottomOf="@+id/price_per_nights" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView40"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginTop="26dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Room savings:"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/room_offer"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView38" />-->
 
-    <TextView
-        android:id="@+id/textView45"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Room HasOffer:"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView38" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView45"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="26dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="Room HasOffer:"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView38" />-->
 
-    <TextView
-        android:id="@+id/textView34"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="ChickOut Date :"
-        android:textColor="@color/purple_500"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+<!--    <TextView-->
+<!--        android:id="@+id/textView34"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:text="ChickOut Date :"-->
+<!--        android:textColor="@color/purple_500"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView23" />-->
 
-    <ImageView
-        android:id="@+id/imageView20"
-        android:layout_width="150dp"
-        android:layout_height="4dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?android:attr/scrollbarThumbHorizontal" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView20"-->
+<!--        android:layout_width="150dp"-->
+<!--        android:layout_height="4dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.497"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="?android:attr/scrollbarThumbHorizontal" />-->
 
-    <TextView
-        android:id="@+id/checkin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:text="13-03-2002"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/imageView19" />
+<!--    <TextView-->
+<!--        android:id="@+id/checkin"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="22dp"-->
+<!--        android:text="13-03-2002"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView23"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/imageView19" />-->
 
-    <TextView
-        android:id="@+id/checkout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="13-03-2002"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toBottomOf="@+id/checkin" />
+<!--    <TextView-->
+<!--        android:id="@+id/checkout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="24dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="13-03-2002"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView23"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/checkin" />-->
 
-    <TextView
-        android:id="@+id/room_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="14dp"
-        android:background="@drawable/amenities"
-        android:fontFamily="@font/montserrat"
-        android:padding="3dp"
-        android:text="02"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView36"
-        app:layout_constraintTop_toBottomOf="@+id/checkout" />
+<!--    <TextView-->
+<!--        android:id="@+id/room_count"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="14dp"-->
+<!--        android:background="@drawable/amenities"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="02"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="13sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView36"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/checkout" />-->
 
-    <TextView
-        android:id="@+id/price_per_nights"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/amenitiespark"
-        android:fontFamily="@font/montserrat"
-        android:padding="3dp"
-        android:text="100$"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView38"
-        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+<!--    <TextView-->
+<!--        android:id="@+id/price_per_nights"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:background="@drawable/amenitiespark"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="100$"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="13sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView38"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView32" />-->
 
-    <TextView
-        android:id="@+id/room_offer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/amenitieswifi"
-        android:fontFamily="@font/montserrat"
-        android:padding="3dp"
-        android:text="30"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView45"
-        app:layout_constraintTop_toBottomOf="@+id/textView38" />
+<!--    <TextView-->
+<!--        android:id="@+id/room_offer"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:background="@drawable/amenitieswifi"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="30"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="13sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView45"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView38" />-->
 
-    <TextView
-        android:id="@+id/room_sering"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/backgroundshape"
-        android:fontFamily="@font/montserrat"
-        android:padding="3dp"
-        android:text="60"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView40"
-        app:layout_constraintTop_toBottomOf="@+id/price_per_nights" />
+<!--    <TextView-->
+<!--        android:id="@+id/room_serving"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="12dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:background="@drawable/backgroundshape"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="60"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="13sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView40"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView38" />-->
 
-    <TextView
-        android:id="@+id/total_nights"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/ac"
-        android:fontFamily="@font/montserrat"
-        android:padding="3dp"
-        android:text="03"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textView32"
-        app:layout_constraintTop_toBottomOf="@+id/checkout" />
+<!--    <TextView-->
+<!--        android:id="@+id/total_nights"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="@drawable/ac"-->
+<!--        android:fontFamily="@font/montserrat"-->
+<!--        android:padding="3dp"-->
+<!--        android:text="03"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="13sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/textView32"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/checkout" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

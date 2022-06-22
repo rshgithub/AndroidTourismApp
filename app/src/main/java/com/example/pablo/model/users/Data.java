@@ -11,26 +11,32 @@ public class Data implements Serializable
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Long id;
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("user_role")
+    @Expose
+    private String userRole;
     @SerializedName("email")
     @Expose
     private String email;
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("file")
+    @SerializedName("user_avatar")
     @Expose
     private String userAvatar;
-    private final static long serialVersionUID = -5755299254023115641L;
+    @SerializedName("fcm_token")
+    @Expose
+    private Object fcmToken;
+    private final static long serialVersionUID = -8216221361898399010L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -40,6 +46,14 @@ public class Data implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public String getEmail() {
@@ -64,6 +78,14 @@ public class Data implements Serializable
 
     public void setUserAvatar(String userAvatar) {
         this.userAvatar = userAvatar;
+    }
+
+    public Object getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(Object fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
 }

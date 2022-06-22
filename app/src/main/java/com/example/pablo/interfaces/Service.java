@@ -1,10 +1,14 @@
 package com.example.pablo.interfaces;
 
-
+import com.example.pablo.model.amenities.Amenities;
 import com.example.pablo.model.bookingInfo.CartExample;
+import com.example.pablo.model.buy_one_order.BuyOneOrderExample;
 import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.example.pablo.model.churches.ChurchesExample;
 import com.example.pablo.model.edit.EditExample;
+import com.example.pablo.model.hotel.HotelRoom;
+import com.example.pablo.model.hotel.Hotels;
+import com.example.pablo.model.hotel.HotelsData;
 import com.example.pablo.model.hotels.HotelsExample;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.RegisterRequest;
@@ -14,12 +18,15 @@ import com.example.pablo.model.churches.Data;
 import com.example.pablo.model.login.ExampleLogin;
 import com.example.pablo.model.RestaurantsExam;
 import com.example.pablo.model.mosques.MosqueExample;
+import com.example.pablo.model.notification.Notification;
 import com.example.pablo.model.order_details.OrderDetailsExample;
 import com.example.pablo.model.orders.OrdersExample;
+import com.example.pablo.model.payment.Payment;
+import com.example.pablo.model.popular_hotels.PopularHotelsExample;
 import com.example.pablo.model.register.Example;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.example.pablo.model.users.UsersExample;
-import com.example.pablo.reservations.Datum;
+import com.example.pablo.model.reservations.Datum;
 
 import java.io.IOException;
 import java.util.List;
@@ -44,6 +51,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Service {
 
@@ -69,12 +77,12 @@ public interface Service {
 
 //***************************************************************************
 
-    //hotels
-    @GET("hotels")
-    Call<List<com.example.pablo.model.hotels.Data>> getPopularHotels(@Header("Authorization") String token);
+
+    @GET("getTopHotels")
+    Call<List<HotelsData>> getPopularHotels(@Header("Authorization") String token);
 
     @GET("hotels")
-    Call<List<com.example.pablo.model.hotels.Data>> getHotels(@Header("Authorization") String token);
+    Call<Hotels> getHotels(@Header("Authorization") String token);
 
     //hotels details
     @GET("hotels/{id}")
@@ -91,13 +99,13 @@ public interface Service {
     //booking info
     @FormUrlEncoded
     @POST("addNewOrderItem")
-    Call<CartExample>  bookInfo(
+    Call<CartExample> bookInfo(
             @Field("check_in") String check_in,
             @Field("check_out") String check_out,
             @Field("room_count") String room_count,
             @Field("room_id") String room_id,
             @Header("Authorization") String token
-     );
+    );
 
 
     //room_reservations
@@ -116,7 +124,7 @@ public interface Service {
             @Field("check_in") String check_in,
             @Field("check_out") String check_out,
             @Field("room_count") String room_count,
-            @Field("room_id") Long  room_id,
+            @Field("room_id") Long room_id,
             @Field("_method") String _method,
             @Header("Authorization") String token);
 
@@ -129,18 +137,29 @@ public interface Service {
     Call<OrdersExample> getHotelOrders(@Header("Authorization") String token);
 
     //delete item from cart
-    @DELETE("orders/{id}")
+    @GET("hotelOrders/{id}")
     Call<OrderDetailsExample> getHotelOrdersDetails(@Path("id") Long itemId, @Header("Authorization") String token);
 
-
-    //buy order
-    @POST("buyAllAuthOrderItems")
-    Call<BuyOrderExample> BuyOrder(@Header("Authorization") String token);
+    //Payment
+    @FormUrlEncoded
+    @POST("buyAllOrderItems")
+    Call<Payment> Payment(
+            @Field("number") Long number,
+            @Field("name") String name,
+            @Field("exp_month") Long exp_month,
+            @Field("exp_year") Long exp_year,
+            @Field("cvc") Long cvc,
+            @Header("Authorization") String token
+             );
 
     //**************************************************************************
     //mosque
     @GET("mosques")
     Call<List<com.example.pablo.model.mosques.Data>> getMosques(@Header("Authorization") String token);
+
+    //Top mosque
+    @GET("getTopMosques")
+    Call<List<com.example.pablo.model.mosques.Data>> getTopMosques(@Header("Authorization") String token);
 
     //mosque details
     @GET("mosques/{id}")
@@ -149,6 +168,10 @@ public interface Service {
     //churches
     @GET("churches")
     Call<List<Data>> getChurches(@Header("Authorization") String token);
+
+    //Top churches
+    @GET("getTopChurches")
+    Call<List<Data>> getTopChurches(@Header("Authorization") String token);
 
     //churches details
     @GET("churches/{id}")
@@ -164,13 +187,13 @@ public interface Service {
     @GET("Orders/{id}")
     Call<List<RegisterResponse>> getOrders(@Path("userId") int id);
 
-    //get orders restaurant
-    @GET("hotelOrders")
-    Call<List<RestaurantsExam>> getRestaurantOrders();
+    //getNotification
+    @GET("AllAuthNotifications")
+    Call<Notification> getNotification(@Header("Authorization") String token);
 
-    //get orders hotel
-//    @GET("hotel")
-//    Call<List<HotelsExam>> getHotelsOrders();
+    //get AmenitiesData
+    @GET("hotel_advantages")
+    Call<List<Amenities>> getAmenitiesData(@Header("Authorization") String token);
 
     //getFavourites
     @GET("favourite")
@@ -189,10 +212,9 @@ public interface Service {
     Call<RestaurantsExam> getRestaurantDetails(@Path("id") int id);
 
 
-
     class ApiClient {
 
-        private static final String BASE_URL = "http://54.226.80.5/api/";
+        private static final String BASE_URL = "http://54.235.12.20/api/";
 
 //        static Gson gson = new GsonBuilder()
 //                .setLenient()

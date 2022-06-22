@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pablo.R;
 import com.example.pablo.activity.BookingInfo;
 import com.example.pablo.activity.Login;
+import com.example.pablo.interfaces.BookingInterface;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.RoomCartBinding;
@@ -21,18 +23,13 @@ import com.example.pablo.model.cart.HotelOrderItem;
 
 import java.util.List;
 
-import static android.content.Context.MODE_PRIVATE;
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-import static com.example.pablo.Cart.delete;
-import static com.example.pablo.activity.Login.PREF_NAME;
-
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<HotelOrderItem> list;
     Context context;
-    MyInterface myInterface;
-    public static String NAME, CHECKIN, CHECKOUT, DAYCOUNT, PRICE;
+    BookingInterface myInterface;
 
-    public CartAdapter(Context context, MyInterface myInterface) {
+
+    public CartAdapter(Context context, BookingInterface myInterface) {
         this.context = context;
         this.myInterface = myInterface;
     }
@@ -53,53 +50,30 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.binding.hotelRoomName.setText(list.get(position).getRoomCount() + " Room Count");
         holder.binding.dateTime.setText(list.get(position).getCheckIn() + " - " + list.get(position).getCheckOut());
 
-//        int count = list.get(position).getOrderTotalPrice();
-//        int c = 0;
-//        for (int i = 0; i < list.size(); i++) {
-//            c += count;
-//        }
-//        Log.e("count", c + "");
-//        Toast.makeText(context, "" + c, Toast.LENGTH_SHORT).show();
 
-        holder.binding.removeItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-                delete(list.get(position).getId(), "Bearer " + token);
-                list.remove(position);
-                notifyDataSetChanged();
-                notifyItemRemoved(position);
-            }
-        });
+        Long count = list.get(position).getOrderTotalPrice();
+        Long c = Long.valueOf(0);
+        for (int i = 0; i < list.size(); i++) {
+            c += count;
+        }
 
-        holder.binding.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        myInterface.totalPriceOnItemClick(c);
+        myInterface.countOnItemClick(Long.valueOf(list.size()));
 
-                Intent intent = new Intent(context, BookingInfo.class);
-                intent.putExtra("editId", list.get(position).getId());
-                intent.putExtra("roomId", list.get(position).getRoomId());
-                intent.putExtra("CHECKIN", list.get(position).getCheckIn());
-                intent.putExtra("CHECKOUT", list.get(position).getCheckOut());
-                intent.putExtra("DAYCOUNT", list.get(position).getTotalNights());
-                intent.putExtra("PRICE", list.get(position).getOrderTotalPrice());
-               // intent.putExtra("fromRoom", false);
+        if(getItemCount()==0)
+        {
+//            holder.binding.empty.setVisibility(View.GONE);
+//            holder.binding.imageView26.setVisibility(View.GONE);
+        }else {
 
-                Log.e("ID", list.get(position).getId() + "");
-
-                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-                delete(list.get(position).getId(), "Bearer " + token);
-                list.remove(position);
-                notifyDataSetChanged();
-                notifyItemRemoved(position);
-
-                view.getContext().startActivity(intent);
-            }
-        });
-
-
+//            holder.binding.empty.setVisibility(View.VISIBLE);
+//            holder.binding.empty.setText("There's No Orders For You");
+//            holder.binding.imageView26.setVisibility(View.VISIBLE);
+////            holder.binding.container.setVisibility(View.GONE);
+//            holder.binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
+        }
     }
+
 
 
     @Override

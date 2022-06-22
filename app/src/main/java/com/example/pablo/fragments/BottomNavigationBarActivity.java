@@ -19,16 +19,16 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_bar);
 
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.Home) {
                     openFragment(HomeFragment.newInstance());
+                    //  finish();
                 } else if (item.getItemId() == R.id.Favorites) {
-                    openFragment(FavoritesFragment.newInstance());
-                }else if (item.getItemId() == R.id.Order) {
+                    openFragment(CartFragment.newInstance());
+                } else if (item.getItemId() == R.id.Order) {
                     openFragment(OrderFragment.newInstance());
                 } else {
                     openFragment(AccountFragment.newInstance());
@@ -38,6 +38,7 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         });
         openFragment(HomeFragment.newInstance());
     }
+
     void openFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();

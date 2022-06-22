@@ -8,6 +8,25 @@
     android:background="#F8F8FA"
     tools:context=".activity.Login">
 
+    <com.victor.loading.newton.NewtonCradleLoading
+        android:id="@+id/newton_cradle_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+<!--    <Button-->
+<!--        android:id="@+id/button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/rotateloading"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:text="start"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <View
@@ -31,7 +50,7 @@
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginEnd="@dimen/_150sdp"
         android:fontFamily="@font/baloo_bhai"
-        android:text="Pablo"
+        android:text="@string/pablo"
         android:textColor="#C3D61B"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
@@ -48,7 +67,7 @@
         android:layout_marginStart="@dimen/_28sdp"
         android:layout_marginTop="@dimen/_15sdp"
         android:fontFamily="@font/montserrat"
-        android:text="Continue with your Email"
+        android:text="@string/continue_with_your_email"
         android:textColor="#D8001327"
         android:textSize="@dimen/_11ssp"
         android:textStyle="bold"
@@ -65,7 +84,7 @@
         android:layout_height="@dimen/_38sdp"
         android:background="@drawable/shadow"
         android:ems="10"
-        android:hint="Enter Your Password"
+        android:hint="@string/enter_your_password"
         android:inputType="textPassword"
         android:padding="@dimen/_10sdp"
         android:textSize="@dimen/_11ssp"
@@ -91,9 +110,10 @@
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4"
-        app:layout_constraintVertical_bias="0.416" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.226" />
 
     <View
         android:id="@+id/view6"
@@ -124,71 +144,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_25sdp"
-        android:text="OR"
+        android:text="@string/or"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view5"
         app:layout_constraintStart_toEndOf="@+id/view6"
         app:layout_constraintTop_toBottomOf="@+id/login"
         app:layout_constraintVertical_bias="0.005" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout3"
-        android:layout_width="@dimen/_75sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:background="@drawable/shadow"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
-        android:layout_marginLeft="@dimen/_25sdp">
-
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/google" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="@dimen/_75sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:background="@drawable/shadow"
-        android:gravity="center"
-        app:layout_constraintStart_toEndOf="@+id/relativeLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
-        android:layout_marginLeft="@dimen/_20sdp">
-
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/twitter"
-            tools:srcCompat="@drawable/twitter" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout4"
-        android:layout_width="@dimen/_75sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_25sdp"
-        android:background="@drawable/shadow"
-        android:gravity="center"
-        app:layout_constraintStart_toEndOf="@+id/relativeLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/view6"
-        android:layout_marginLeft="@dimen/_20sdp">
-
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:src="@drawable/apple"
-            app:srcCompat="@drawable/apple" />
-    </RelativeLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView4"
@@ -197,7 +159,7 @@
         android:layout_marginStart="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_28sdp"
         android:fontFamily="@font/montserrat"
-        android:text="Welcome to "
+        android:text="@string/welcome_to"
         android:textColor="#001327"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
@@ -214,7 +176,7 @@
         android:layout_marginTop="@dimen/_15sdp"
         android:background="@drawable/shadow"
         android:ems="10"
-        android:hint="Enter Your Email"
+        android:hint="@string/enter_your_email"
         android:inputType="textEmailAddress"
         android:padding="@dimen/_10sdp"
         android:textSize="@dimen/_11ssp"
@@ -244,7 +206,7 @@
         android:background="@drawable/splash_btn"
         android:fontFamily="@font/montserrat"
 
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
@@ -261,7 +223,7 @@
         android:layout_marginLeft="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_25sdp"
         android:fontFamily="@font/montserrat"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="#001327"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"

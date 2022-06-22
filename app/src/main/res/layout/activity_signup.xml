@@ -11,20 +11,24 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="@dimen/_180sdp"
-        android:layout_height="@dimen/_120sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_135sdp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/undraw_collecting_fjjl" />
+        app:srcCompat="@drawable/undraw_login_re_4vu2" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_25sdp"
-        android:text="Add You Information"
+        android:text="@string/add_you_information"
         android:textColor="#001327"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
@@ -38,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_17ssp"
-        android:text="Full Name"
+        android:text="@string/full_name"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.112"
@@ -53,7 +57,7 @@
         android:background="@drawable/shadow"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="Aya Enshasy"
+        android:hint="@string/full_name"
         android:inputType="textPersonName"
         android:paddingLeft="@dimen/_10sdp"
         android:textColor="#000000"
@@ -70,7 +74,7 @@
         android:background="@drawable/shadow"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="aya123@gmail.com"
+        android:hint="@string/username_gmail_com"
         android:inputType="textEmailAddress"
         android:paddingLeft="@dimen/_10sdp"
         android:textColor="#000000"
@@ -84,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12ssp"
-        android:text="Email"
+        android:text="@string/email"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.108"
@@ -96,7 +100,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12ssp"
-        android:text="Password"
+        android:text="@string/password"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.117"
@@ -111,7 +115,7 @@
         android:background="@drawable/shadow"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="× × × × × × × × ×"
+        android:hint="@string/pass"
         android:inputType="textPassword"
         android:paddingLeft="@dimen/_10sdp"
         android:textColor="#000000"
@@ -129,7 +133,7 @@
         android:background="@drawable/shadow"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="Gaza City"
+        android:hint="@string/gaza_city"
         android:inputType="textPersonName"
         android:paddingLeft="@dimen/_10sdp"
         android:textColor="#000000"
@@ -145,12 +149,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_12ssp"
         android:fontFamily="@font/montserrat"
-        android:text="Address"
+        android:text="@string/address"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.109"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
+
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login"
@@ -158,7 +164,7 @@
         android:layout_height="@dimen/_38sdp"
         android:background="@drawable/splash_btn"
         android:fontFamily="@font/montserrat"
-        android:text="login"
+        android:text="@string/register"
         android:textColor="@color/white"
         android:textSize="@dimen/_12sdp"
         android:textStyle="bold"
@@ -167,6 +173,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/address"
         app:layout_constraintVertical_bias="0.32" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

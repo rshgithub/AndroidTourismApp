@@ -7,12 +7,15 @@
     android:background="#22000000"
     tools:context=".activity.Cart">
 
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="@dimen/_20sdp"
-        android:background="@drawable/cart"
         android:layout_marginTop="@dimen/_40sdp"
+        android:background="@drawable/cart"
+        android:elevation="@dimen/_20sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,13 +27,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Cart"
+            android:text="@string/cart"
             android:textColor="#0E4C75"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
         <Button
             android:id="@+id/delete_all"
@@ -39,20 +44,21 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:background="@drawable/delete"
-            android:text="Delete All"
+            android:text="@string/delete_all"
             android:textColor="#FFFFFF"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="70dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginBottom="@dimen/_100sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,47 +67,117 @@
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
         <TextView
+            android:id="@+id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView26"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
+            android:textColor="@color/purple_500"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView26" />
+
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="@dimen/_100sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    app:shimmer_repeat_mode="reverse"
+                    app:shimmer_shape="linear">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/cart_shimmer"></include>
+
+            <include layout="@layout/cart_shimmer"></include>
+
+            <include layout="@layout/cart_shimmer"></include>
+
+            <include layout="@layout/cart_shimmer"></include>
+
+
+        </LinearLayout>
+
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <ImageView
+            android:id="@+id/imageView26"
+            android:layout_width="368dp"
+            android:layout_height="244dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.523"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+        <TextView
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="Total Price :"
+            android:text="@string/total_price"
             android:textColor="#0E4C75"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+            app:layout_constraintBottom_toTopOf="@+id/pay"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/total_price"
-            android:layout_width="wrap_content"
+            android:layout_width="88dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/montserrat"
-            android:text="$85.00 "
+            android:text="@string/_0"
+            android:textAlignment="textEnd"
             android:textColor="#CB0000"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+            app:layout_constraintBottom_toTopOf="@+id/pay"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
             android:id="@+id/pay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/booknow"
             android:fontFamily="@font/montserrat"
-            android:text="pay by card"
+            android:text="@string/pay_by_card"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/count"
@@ -109,11 +185,16 @@
             android:layout_height="22dp"
             android:layout_marginStart="44dp"
             android:background="@drawable/count_num"
-            android:text="3"
+            android:text="@string/_0"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/pay"
             app:layout_constraintStart_toStartOf="@+id/pay"
             app:layout_constraintTop_toTopOf="@+id/pay"
             app:layout_constraintVertical_bias="0.461" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

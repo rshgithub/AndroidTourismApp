@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".details_activities.HotelsDetails">
 
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/scroll"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
     <ImageView
         android:id="@+id/hotel_img"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_300sdp"
         android:scaleType="fitXY"
-        android:src="@drawable/bed1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +57,7 @@
             android:layout_alignParentRight="true" />
 
         <ImageView
-            android:id="@+id/imageView15"
+            android:id="@+id/map"
             android:layout_width="24dp"
             android:layout_height="22dp"
             android:layout_below="@+id/view12"
@@ -59,7 +70,7 @@
             android:layout_marginRight="39dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/maps"
+            app:srcCompat="@drawable/ic_baseline_share_location_24"
             tools:ignore="VectorDrawableCompat" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -73,7 +84,6 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Hotel no.1"
             android:textColor="#001327"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold" />
@@ -103,7 +113,6 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_toEndOf="@+id/imgv"
             android:fontFamily="monospace"
-            android:text="Hotel Rate is"
             android:textColor="#001327"
             android:textSize="@dimen/_7ssp"
             android:layout_toRightOf="@+id/imgv" />
@@ -117,7 +126,6 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_toEndOf="@+id/ratetv"
             android:fontFamily="monospace"
-            android:text="200"
             android:textColor="#001327"
             android:textSize="@dimen/_7ssp"
             android:layout_marginLeft="@dimen/_5sdp"
@@ -134,7 +142,6 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_25sdp"
             android:fontFamily="monospace"
-            android:text="Palestine, Gaza, 14 street."
             android:textColor="#001327"
             android:textSize="@dimen/_7ssp" />
 
@@ -146,10 +153,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/_20sdp"
+
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_45sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Details"
             android:textColor="#001327"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
@@ -167,10 +174,10 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_20sdp"
-            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed" />
+/>
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/available_day"
+            android:id="@+id/amenities"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/details"
@@ -180,200 +187,66 @@
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Amenities"
+            android:text="@string/amenities"
             android:textColor="#001327"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/available_day"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_below="@+id/amenities"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginStart="26dp"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/amenities"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:srcCompat="@drawable/ic_baseline_restaurant_menu_24"
-            app:tint="#000000"
-            tools:ignore="VectorDrawableCompat" />
-
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/available_day"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageButton"
-            android:layout_toRightOf="@+id/imageButton"
-            android:background="@drawable/amenitiespark"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:srcCompat="@drawable/ic_baseline_directions_car_24"
-            app:tint="#000000"
-            tools:ignore="VectorDrawableCompat"
-            android:layout_marginLeft="@dimen/_9sdp" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/available_day"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageButton1"
-            android:layout_toRightOf="@+id/imageButton1"
-            android:background="@drawable/amenitieswifi"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:srcCompat="@drawable/ic_baseline_wifi_24"
-            app:tint="#000000"
-            tools:ignore="VectorDrawableCompat"
-            android:layout_marginLeft="@dimen/_9sdp" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/available_day"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageButton2"
-            android:layout_toRightOf="@+id/imageButton2"
-            android:background="@drawable/ac"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:srcCompat="@drawable/ic_baseline_call_to_action_24"
-            app:tint="#000000"
-            tools:ignore="VectorDrawableCompat"
-            android:layout_marginLeft="@dimen/_9sdp" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/available_day"
-            android:layout_marginStart="@dimen/_9sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:layout_toEndOf="@+id/imageButton3"
-            android:layout_toRightOf="@+id/imageButton2"
-            android:background="@drawable/amenitieswifi"
-            android:paddingLeft="@dimen/_15sdp"
-            android:paddingTop="@dimen/_8sdp"
-            android:paddingRight="@dimen/_15sdp"
-            android:paddingBottom="@dimen/_8sdp"
-            app:srcCompat="@drawable/ic_baseline_call_to_action_24"
-            app:tint="#000000"
-            tools:ignore="VectorDrawableCompat"
-            android:layout_marginLeft="@dimen/_9sdp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:fontFamily="@font/montserrat"
-            android:text="Restaurant"
-            android:textColor="#001327"
-            android:textSize="@dimen/_9ssp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_view25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton1"
-            android:layout_marginStart="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/textView24"
-            android:layout_toRightOf="@+id/textView24"
-            android:fontFamily="@font/montserrat"
-            android:text="Parking"
-            android:textColor="#001327"
-            android:textSize="@dimen/_9ssp"
-            android:layout_marginLeft="@dimen/_18sdp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton2"
-            android:layout_marginStart="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/text_view25"
-            android:layout_toRightOf="@+id/text_view25"
-            android:fontFamily="@font/montserrat"
-            android:text="Wi-Fi"
-            android:textColor="#001327"
-            android:textSize="@dimen/_9ssp"
-            android:layout_marginLeft="@dimen/_30sdp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView27"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton2"
-            android:layout_marginStart="@dimen/_35sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/textView26"
-            android:layout_toRightOf="@+id/textView26"
-            android:fontFamily="@font/montserrat"
-            android:text="AC"
-            android:textColor="#001327"
-            android:textSize="@dimen/_9ssp"
-            android:layout_marginLeft="@dimen/_35sdp" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView17"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imageButton2"
-            android:layout_marginStart="@dimen/_45sdp"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_toEndOf="@+id/textView27"
-            android:layout_toRightOf="@+id/textView26"
-            android:fontFamily="@font/montserrat"
-            android:text="AC"
-            android:textColor="#001327"
-            android:textSize="@dimen/_9ssp"
-            android:layout_marginLeft="@dimen/_45sdp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="@dimen/_140sdp"
             android:layout_height="@dimen/_36sdp"
-            android:layout_below="@+id/textView26"
+            android:layout_below="@+id/recyclerview"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/_90sdp"
             android:layout_marginLeft="@dimen/_90sdp"
-            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="@dimen/_90sdp"
             android:layout_marginRight="@dimen/_90sdp"
             android:background="@drawable/selectroom"
             android:fontFamily="@font/montserrat"
-            android:text="Select Room"
+            android:text="@string/select_room"
             android:textColor="#FFFFFF" />
     </RelativeLayout>
 
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shimmer_repeat_mode="reverse"
+        app:shimmer_shape="linear">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include layout="@layout/hotel_details_shimmer"></include>
+
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,14 +26,12 @@
                 android:id="@+id/photo"
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
-
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="12dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_person_24"
                 app:layout_constraintStart_toStartOf="parent"
-
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                 app:strokeColor="@color/purple_500"
@@ -109,7 +107,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:fontFamily="@font/montserrat"
-                android:text="Help &amp; Feedback"
+                android:text="Notifications"
                 android:textColor="#001327"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold"
@@ -138,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_32sdp"
                 android:fontFamily="@font/montserrat"
                 android:text="About"
                 android:textColor="#001327"
@@ -153,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_32sdp"
                 android:fontFamily="@font/montserrat"
                 android:text="Privacy Policy"
                 android:textColor="#001327"
@@ -172,7 +170,6 @@
                 android:src="@drawable/ic_baseline_notifications_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_headset_mic_24"
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageView
@@ -288,7 +285,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_34sdp"
                 android:fontFamily="@font/montserrat"
                 android:text="Sign Out"
                 android:textColor="#001327"

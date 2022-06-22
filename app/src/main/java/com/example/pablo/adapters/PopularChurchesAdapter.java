@@ -17,6 +17,7 @@ import com.example.pablo.R;
 import com.example.pablo.details_activities.ChurchesDetails;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.model.churches.Data;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -48,11 +49,15 @@ public class PopularChurchesAdapter extends RecyclerView.Adapter<PopularChurches
         holder.binding.mosqueName.setText(list.get(position).getName());
         holder.binding.locationPin.setText(list.get(position).getAddress());
 
+//        Picasso.get().load(list.get(position).getChurchImage()).into((holder).binding.MosqueImageView);
+
         Glide.with(context).load(list.get(position).getChurchImage())
                 .transition(withCrossFade())
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(20))
                         .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .error(R.drawable.mosqe).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+
                 .into((holder).binding.MosqueImageView);
 
         holder.binding.imageView15.setOnClickListener(new View.OnClickListener() {

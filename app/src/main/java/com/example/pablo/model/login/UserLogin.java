@@ -14,9 +14,6 @@ public class UserLogin implements Serializable
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("user_role")
-    @Expose
-    private Long userRole;
     @SerializedName("email")
     @Expose
     private String email;
@@ -42,14 +39,6 @@ public class UserLogin implements Serializable
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Long userRole) {
-        this.userRole = userRole;
     }
 
     public String getEmail() {

@@ -7,13 +7,21 @@
     android:orientation="vertical"
     tools:context=".details_activities.MosqueDetails">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:id="@+id/scroll"
+        android:layout_height="match_parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <ImageView
         android:id="@+id/mosque_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:background="@drawable/mark_foster_6bdwhgs7sfs_unsplash"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +64,6 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_19sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Frankish Cemetery"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_15ssp"
             android:textStyle="bold"
@@ -72,7 +79,6 @@
             android:layout_marginLeft="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_toEndOf="@+id/imageView5"
-            android:text="Palestine - Gaza - Al Naser Street"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9sdp"
             android:textStyle="bold"
@@ -101,7 +107,6 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Details"
             android:textColor="#FFFFFF"
             android:layout_marginLeft="@dimen/_20sdp" />
 
@@ -115,7 +120,6 @@
             android:layout_marginTop="12dp"
             android:layout_toEndOf="@+id/textView19"
             android:layout_toRightOf="@+id/textView19"
-            android:text="5000+ Visited"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9ssp"
             android:textStyle="normal|bold" />
@@ -140,7 +144,6 @@
                 android:minLines="2"
                 android:padding="@dimen/_2sdp"
                 android:screenReaderFocusable="true"
-                android:text="@string/text"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_9ssp"
                 app:readMoreColor="#C3D61B"
@@ -161,7 +164,6 @@
             android:background="@drawable/km"
             android:gravity="center"
             android:padding="@dimen/_3sdp"
-            android:text="3.7 Km"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_10ssp" />
 
@@ -192,7 +194,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
             android:fontFamily="@font/montserrat"
-            android:text="Available Times "
+            android:text="@string/available_times"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_10ssp" />
 
@@ -210,7 +212,6 @@
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_toEndOf="@+id/textView22"
             android:layout_toRightOf="@+id/textView22"
-            android:text="Saturday  -  Thursday"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9ssp" />
 
@@ -228,7 +229,6 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toEndOf="@+id/textView22"
             android:layout_toRightOf="@+id/textView22"
-            android:text="08:00 Am  -  3:00 Pm"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_8ssp" />
 
@@ -260,5 +260,33 @@
         android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView16"
+        app:shimmer_repeat_mode="reverse"
+        app:shimmer_shape="linear">
 
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/mosque_details_shimmer"></include>
+
+
+        </LinearLayout>
+
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

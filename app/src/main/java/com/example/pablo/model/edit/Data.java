@@ -1,4 +1,3 @@
-
 package com.example.pablo.model.edit;
 
 import java.io.Serializable;

@@ -24,10 +24,18 @@ public class RegisterRequest implements Serializable
     @SerializedName("address")
     @Expose
     private String address;
-    @SerializedName("role")
+    @SerializedName("fcm_token")
     @Expose
-    private String role;
+    private String fcm_token;
     private final static long serialVersionUID = -6094150931949342326L;
+
+    public String getFcm_token() {
+        return fcm_token;
+    }
+
+    public void setFcm_token(String fcm_token) {
+        this.fcm_token = fcm_token;
+    }
 
     public String getName() {
         return name;
@@ -35,14 +43,6 @@ public class RegisterRequest implements Serializable
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getEmail() {

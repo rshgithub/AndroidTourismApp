@@ -2,13 +2,21 @@ package com.example.pablo.fragments;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +27,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.pablo.ActivityNotification;
 import com.example.pablo.FileUtil;
+import com.example.pablo.activity.ActivityAbout;
+import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.Login;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.FragmentAccountBinding;
@@ -27,6 +38,7 @@ import com.example.pablo.model.RegisterResponse;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.users.UsersExample;
 import com.google.gson.Gson;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,21 +50,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Login.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     Service service;
-    int AccountId;
-
+    NewtonCradleLoading newtonCradleLoading;
+    boolean isConnected = false;
+    ConnectivityManager connectivityManager;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher =
             registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -68,14 +77,12 @@ public class AccountFragment extends Fragment {
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                getUserImage(file);
+                                //getUserImage(file);
                             }
                         }
                     });
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -84,16 +91,8 @@ public class AccountFragment extends Fragment {
     private String mParam2;
 
     public AccountFragment() {
-        // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AccountFragment newInstance() {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
@@ -113,16 +112,55 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        binding.About.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.Notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityNotification.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.Support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+
+        if (!isOnLine()){
+            if (isConnected){
+                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
+            }else{
+
+                Intent i = new Intent(getActivity(), NoInternetConnection.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        }
 
         service = Service.ApiClient.getRetrofitInstance();
         getAccountData();
-        getLogout();
+        binding.Out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLogout();
+            }
+        });
 
-        //Permissions
+
+        //   Permissions
         ActivityCompat.requestPermissions(getActivity(), new String[]
                 {Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
@@ -131,24 +169,24 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-//                ActivityResultLauncher<Intent> someActivityResultLauncher =
-//                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-//                                new ActivityResultCallback<ActivityResult>() {
-//                                    @Override
-//                                    public void onActivityResult(ActivityResult result) {
-//                                        if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
-//                                            Intent data = result.getData();
-//                                            Log.e("data", data.getDataString() + "");
-//                                            File file = null;
-//                                            try {
-//                                                file = FileUtil.from(getActivity(), data.getData());
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                            getUserImage(file);
-//                                        }
-//                                    }
-//                                });
+                ActivityResultLauncher<Intent> someActivityResultLauncher =
+                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                                new ActivityResultCallback<ActivityResult>() {
+                                    @Override
+                                    public void onActivityResult(ActivityResult result) {
+                                        if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
+                                            Intent data = result.getData();
+                                            Log.e("data", data.getDataString() + "");
+                                            File file = null;
+                                            try {
+                                                file = FileUtil.from(getActivity(), data.getData());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                            getUserImage(file);
+                                        }
+                                    }
+                                });
 
                 binding.photo.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -196,6 +234,11 @@ public class AccountFragment extends Fragment {
                             response.code() + "");
                     Log.d("Success", new
                             Gson().toJson(response.body()));
+                }else {
+                    String errorMessage = parseError(response);
+                    Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+
                 }
             }
 
@@ -214,24 +257,29 @@ public class AccountFragment extends Fragment {
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
         Long AccountId = Login.SP.getLong(Login.USERKey, -1);
 
-        service.getUserDetails(AccountId, "Bearer " + token).enqueue(new Callback<UsersExample>() {
+        service.getUserDetails(AccountId, token).enqueue(new Callback<UsersExample>() {
             @Override
             public void onResponse(Call<UsersExample> call, Response<UsersExample> response) {
                 Log.e("response code", response.code() + "");
 
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
+
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
                     Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).circleCrop().into(binding.photo);
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<UsersExample> call, Throwable t) {
                 t.printStackTrace();
+              Toast.makeText(getContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+
             }
 
         });
@@ -244,36 +292,86 @@ public class AccountFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.logOutUser("Bearer " + token).enqueue(new Callback<LogOutExample>() {
+        service.logOutUser(token).enqueue(new Callback<LogOutExample>() {
             @Override
             public void onResponse(Call<LogOutExample> call, Response<LogOutExample> response) {
                 Log.e("response code", response.code() + "");
 
-                if (response.body() != null) {
+                if (response.isSuccessful()) {
+                   Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
 
-                    binding.Out.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(), Login.class);
-                            startActivity(intent);
-                            Toast.makeText(getActivity(), "Logged out Successfully", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    Intent intent = new Intent(getActivity(), Login.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_LONG).show();
 
 
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+
                 }
             }
 
             @Override
             public void onFailure(Call<LogOutExample> call, Throwable t) {
                 t.printStackTrace();
+               Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+
+
             }
 
         });
 
 
+    }
+
+    //------------------------*No Internet Connection*----------------------------
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void registerNetworkCallback(){
+
+
+        try {
+
+            connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
+
+                @Override
+                public void onAvailable(@NonNull Network network) {
+                    isConnected = true;
+                }
+
+                @Override
+                public void onLost(@NonNull Network network) {
+                    isConnected = false;
+                }
+            });
+
+
+
+
+        }catch (Exception e){
+
+            isConnected = false;
+
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerNetworkCallback();
+    }
+
+    public boolean isOnLine(){
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo==null || !networkInfo.isAvailable() || !networkInfo.isConnected()){
+            return false;
+        }
+        return true;
     }
 }

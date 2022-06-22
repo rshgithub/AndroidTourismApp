@@ -59,6 +59,8 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(10))
                         .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .error(R.drawable.mosqes).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+
                 .into((holder).binding.image);
 
         holder.binding.imageView15.setOnClickListener(new View.OnClickListener() {

@@ -23,11 +23,15 @@ public class LoginRequest implements Serializable
     @SerializedName("address")
     @Expose
     private String address;
+    @SerializedName("fcm_token")
+    @Expose
+    private String fcm_token;
     private final static long serialVersionUID = -6094150931949342326L;
 
-    public LoginRequest(String email, String password) {
+    public LoginRequest(String email, String password,String fcm_token) {
         this.email = email;
         this.password = password;
+        this.fcm_token = fcm_token;
     }
 
     public String getName() {

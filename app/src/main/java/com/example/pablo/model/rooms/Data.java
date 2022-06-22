@@ -13,7 +13,7 @@ public class Data implements Serializable
     private Long id;
     @SerializedName("name")
     @Expose
-    private String name;
+    private Object name;
     @SerializedName("capacity")
     @Expose
     private String capacity;
@@ -38,7 +38,7 @@ public class Data implements Serializable
     @SerializedName("room_images")
     @Expose
     private List<String> roomImages = null;
-    private final static long serialVersionUID = 6063706772096967567L;
+    private final static long serialVersionUID = 8037720816848664657L;
 
     public Long getId() {
         return id;
@@ -48,11 +48,11 @@ public class Data implements Serializable
         this.id = id;
     }
 
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Object name) {
         this.name = name;
     }
 
