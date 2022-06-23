@@ -23,7 +23,7 @@
         android:theme="@style/Theme.Pablo"
         android:usesCleartextTraffic="true"
         tools:replace="android:theme">
-        <activity android:name=".ActivityNotification"></activity>
+        <activity android:name=".activity.ActivityNotification"></activity>
         <activity android:name=".activity.ActivitySupport" />
         <activity android:name=".activity.ActivityAbout" />
         <activity android:name=".activity.NoInternetConnection" />
@@ -38,7 +38,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".details_activities.RestaurantsDetails" />
         <activity android:name=".details_activities.MosqueDetails" />
         <activity android:name=".details_activities.HotelsDetails" />
         <activity android:name=".fragments.TopNavigationBarActivity" />

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -142,6 +143,8 @@ public class HotelOrdersDetails extends AppCompatActivity {
 
         adapter = new OrderDetailsAdapter(this);
         binding.recyclerview.setAdapter(adapter);
+
+
 
     }
 

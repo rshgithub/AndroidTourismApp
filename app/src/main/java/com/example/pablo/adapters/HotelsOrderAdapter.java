@@ -15,16 +15,16 @@ import com.example.pablo.model.order_details.HotelOrderItem;
 import com.example.pablo.model.orders.Datum;
 import com.example.pablo.model.orders.OrdersExample;
 
+import java.util.HashSet;
 import java.util.List;
 
 
 
 public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> {
-
     public List<Datum> list  ;
     Context context;
     public static String ORDERDETAILS = "order_id";
-
+;
 
     public HotelsOrderAdapter(Context context ){
         this.context= context;
@@ -45,7 +45,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
         holder.binding.date.setText(list.get(position).getTimeCount()+"");
         holder.binding.price.setText(list.get(position).getTotalPrice()+"");
         holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
-       holder.binding.hotelName.setText(list.get(position).getHotelName());
+        holder.binding.hotelName.setText(list.get(position).getHotelName());
 
 
 
@@ -65,6 +65,8 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
 
 
     }
+
+
 
     @Override
     public int getItemCount() {

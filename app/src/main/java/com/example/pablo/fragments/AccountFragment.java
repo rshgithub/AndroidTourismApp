@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -27,7 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.pablo.ActivityNotification;
+import com.example.pablo.activity.ActivityNotification;
 import com.example.pablo.FileUtil;
 import com.example.pablo.activity.ActivityAbout;
 import com.example.pablo.activity.NoInternetConnection;
@@ -180,6 +179,8 @@ public class AccountFragment extends Fragment {
                                             File file = null;
                                             try {
                                                 file = FileUtil.from(getActivity(), data.getData());
+                                               // changeUserImage();
+
                                             } catch (IOException e) {
                                                 e.printStackTrace();
                                             }
@@ -374,4 +375,36 @@ public class AccountFragment extends Fragment {
         }
         return true;
     }
+    File file;
+
+
+    private void updateUserImage() {
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");
+
+        MultipartBody.Part body = null;
+        if (file != null) {
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        }
+        Call<RegisterResponse> call = service.updateUserImage("application/json", body,token);
+        call.enqueue(new Callback<RegisterResponse>() {
+            @Override
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                Log.d("response code", response.code() + "");
+                if (response.isSuccessful()) {
+                    Log.d("success", "success");
+
+                } else {
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                Log.d("onFailure", t.getMessage() + "");
+                call.cancel();
+            }
+        });
+    }
+
 }

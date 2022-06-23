@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import com.example.pablo.model.ImageExam;
 import com.example.pablo.R;
 import com.example.pablo.interfaces.Service;
-import com.example.pablo.adapters.FoodOfferAdapter;
 import com.example.pablo.adapters.PopularHotelsAdapter;
 import com.example.pablo.adapters.SliderAdapter;
 import com.example.pablo.databinding.FragmentHomeBinding;
@@ -36,7 +35,6 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     List<ImageExam> list;
-    FoodOfferAdapter foodOfferAdapter;
     ProgressDialog progressDialog;
     FragmentHomeBinding binding;
     PopularHotelsAdapter popularHotelsAdapter;
@@ -98,9 +96,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView2.setLayoutManager(linearLayoutManager2);
 
-        foodOfferAdapter = new FoodOfferAdapter(getActivity());
         popularHotelsAdapter = new PopularHotelsAdapter(getActivity());
-        recyclerView.setAdapter(foodOfferAdapter);
         recyclerView2.setAdapter(popularHotelsAdapter);
         serves = Service.ApiClient.getRetrofitInstance();
 
@@ -119,7 +115,6 @@ public class HomeFragment extends Fragment {
                 } else if (item.getItemId() == R.id.Mosque) {
                     openFragment(MosqueFragment.newInstance());
                 }else if (item.getItemId() == R.id.Restaurants) {
-                    openFragment(RestaurantsFragment.newInstance());
                 } else {
                     openFragment(ChurchesFragment.newInstance());
 
@@ -183,10 +178,10 @@ public class HomeFragment extends Fragment {
     //slider
     private void imageSliderRun() {
         int[] images = {R.drawable.boutique_franchise_hotels, R.drawable.mosqe, R.drawable.close_woman};
-        SliderAdapter sliderAdapter = new SliderAdapter(images);
-        binding.imageSlider.setSliderAdapter(sliderAdapter);
-        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
-        binding.imageSlider.startAutoCycle();
+//        SliderAdapter sliderAdapter = new SliderAdapter(images);
+//        binding.imageSlider.setSliderAdapter(sliderAdapter);
+//        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
+//        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
+//        binding.imageSlider.startAutoCycle();
     }
 }

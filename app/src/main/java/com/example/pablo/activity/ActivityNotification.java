@@ -1,4 +1,4 @@
-package com.example.pablo;
+package com.example.pablo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;

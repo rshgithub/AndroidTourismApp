@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -126,6 +127,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel channel = new NotificationChannel(channelId, messageTitle, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(messageBody);
             channel.enableVibration(true);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            MediaPlayer mp= MediaPlayer.create(getBaseContext(), R.raw.notification);
+            mp.start();
             channel.setSound(sound, audioAttributes);
             notificationManager.createNotificationChannel(channel);
             notificationBuilder.setChannelId(channelId);

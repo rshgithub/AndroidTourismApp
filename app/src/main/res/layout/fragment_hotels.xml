@@ -26,24 +26,23 @@
             android:id="@+id/hotel_img"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_16sdp"
-            app:srcCompat="@drawable/fire"
             android:layout_below="@+id/view12"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/_18sdp"
-            android:layout_marginLeft="@dimen/_18sdp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="15dp"
             android:contentDescription="TODO"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
 
+            app:layout_constraintTop_toBottomOf="@+id/searchView3"
+            app:srcCompat="@drawable/fire"
             tools:ignore="VectorDrawableCompat" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/popular"
             android:textColor="#0E4C75"
@@ -51,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/hotel_img"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/searchView3" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview1"
@@ -121,34 +120,33 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_225sdp"
-            android:elevation="@dimen/_10sdp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/hotels_background"
+            android:elevation="@dimen/_10sdp"
             android:padding="@dimen/_8sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView1"
-            app:layout_constraintVertical_bias="1.0"
-            >
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintVertical_bias="1.0">
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:nestedScrollingEnabled="false"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView1"
-            app:layout_constraintVertical_bias="1.0"
-            tools:ignore="NotSibling" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="@dimen/_10sdp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView1"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="NotSibling" />
 
 
             <com.facebook.shimmer.ShimmerFrameLayout
@@ -183,6 +181,19 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <SearchView
+            android:id="@+id/searchView3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:elevation="@dimen/_5sdp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

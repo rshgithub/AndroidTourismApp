@@ -157,7 +157,6 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
                     } else {
                         rooms_count.setText(RoomCount + "");
                     }
-                    Log.e("rooms", RoomCount + "");
                 }
             });
 

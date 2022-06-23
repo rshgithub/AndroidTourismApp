@@ -44,6 +44,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -323,4 +325,28 @@ public class HotelsFragment extends Fragment {
     private void getRetrofitInstance(){
         service = Service.ApiClient.getRetrofitInstance();
     }
+
+
+    private void search() {
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
+        service.search(token).enqueue(new Callback<HotelsData>() {
+            @Override
+            public void onResponse(Call<HotelsData> call, Response<HotelsData> response) {
+                if (response.isSuccessful()){
+                    Log.d("Success", new Gson().toJson(response.body()));
+                }
+
+
+            }
+
+            @SuppressLint("CheckResult")
+            @Override
+            public void onFailure(Call<HotelsData> call, Throwable t) {
+            }
+        });
+
+    }
+
 }

@@ -10,10 +10,6 @@ import android.view.MenuItem;
 
 import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityTopNavigationBarBinding;
-import com.example.pablo.fragments.ChurchesFragment;
-import com.example.pablo.fragments.HotelsFragment;
-import com.example.pablo.fragments.MosqueFragment;
-import com.example.pablo.fragments.RestaurantsFragment;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class TopNavigationBarActivity extends AppCompatActivity {
@@ -35,7 +31,6 @@ public class TopNavigationBarActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.Mosque) {
                     openFragment(MosqueFragment.newInstance());
                 }else if (item.getItemId() == R.id.Restaurants) {
-                    openFragment(RestaurantsFragment.newInstance());
                 } else {
                     openFragment(ChurchesFragment.newInstance());
                 }

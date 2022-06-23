@@ -139,9 +139,9 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     stopShimmer();
-                  //  Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     list = response.body().getHotelOrderItems();
-                //    noData();
+                    noData();
                     adapter.setData(list);
 
                 } else {

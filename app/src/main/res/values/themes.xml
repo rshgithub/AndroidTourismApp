@@ -27,7 +27,9 @@
 
     <style name="roundedImageViewRoundedhotel">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/_8sdp</item>
+        <item name="cornerSizeTopLeft">@dimen/_8sdp</item>
+        <item name="cornerSizeBottomLeft">@dimen/_8sdp</item>
+<!--        <item name="cornerSize">@dimen/_8sdp</item>-->
     </style>
 
     <style name="roundedImageViewMosques">

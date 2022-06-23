@@ -22,10 +22,8 @@
         android:id="@+id/imageView24"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="@drawable/order"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -40,18 +38,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/imageView19"
-        android:layout_width="130dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="10dp"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView25"
-        app:layout_constraintStart_toStartOf="@+id/imageView25"
-        app:layout_constraintTop_toTopOf="@+id/imageView25"
-        app:layout_constraintVertical_bias="0.47"
-        app:shapeAppearanceOverlay="@style/roundedImageViewRoundedhotel"
-        app:srcCompat="@drawable/boutique_franchise_hotels" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageView19"
+                android:layout_width="130dp"
+                android:layout_height="@dimen/_90sdp"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView25"
+                app:layout_constraintStart_toStartOf="@+id/imageView25"
+                app:layout_constraintTop_toTopOf="@+id/imageView25"
+                app:layout_constraintVertical_bias="0.47"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRoundedhotel"
+                app:srcCompat="@drawable/boutique_franchise_hotels" />
 
     <TextView
         android:id="@+id/total_price"

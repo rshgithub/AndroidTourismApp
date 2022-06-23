@@ -2,6 +2,9 @@ package com.example.pablo.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.example.pablo.R;
@@ -26,6 +30,8 @@ import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.RoomItemBinding;
 import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.rooms.Data;
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
+import com.smarteist.autoimageslider.SliderAnimations;
 
 
 import java.util.List;
@@ -60,29 +66,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
         holder.binding.availableRoom.setText(list.get(position).getAvailableRooms()+"");
 
 
-         Glide.with(context).load(list.get(0).getRoomImages())
-                    .transition(withCrossFade())
-                    .circleCrop()
-                    .apply(new RequestOptions().transform(new RoundedCorners(5))
-                            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                    .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into((holder).binding.img1);
+        Log.e("image1",list.get(0).getRoomImages().get(0)+"");
 
-         Glide.with(context).load(list.get(1).getRoomImages())
-                    .transition(withCrossFade())
-                    .circleCrop()
-                    .apply(new RequestOptions().transform(new RoundedCorners(5))
-                            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                    .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into((holder).binding.img2);
+//         Glide.with(context).load(list.get(1).getRoomImages()).into((holder).binding.img2);
+//
+//         Glide.with(context).load(list.get(2).getRoomImages()).into((holder).binding.img3);
 
-         Glide.with(context).load(list.get(2).getRoomImages())
-                    .transition(withCrossFade())
-                    .circleCrop()
-                    .apply(new RequestOptions().transform(new RoundedCorners(5))
-                            .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                    .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .into((holder).binding.img3);
+        Glide.with(context)
+                .load(list.get(0).getRoomImages().get(0))
+                .placeholder(R.drawable.mosqes)
+                .into(holder.binding.img1);
 
 
         listener.onItemRoomClick(list.get(position).getAvailableRooms());

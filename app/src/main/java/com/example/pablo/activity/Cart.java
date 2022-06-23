@@ -108,7 +108,7 @@ public class Cart extends AppCompatActivity {
                     stopShimmer();
                     Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     list = response.body().getHotelOrderItems();
-//                    noData();
+                    noData();
                     adapter.setData(list);
                 } else {
 

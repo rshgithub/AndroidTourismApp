@@ -47,6 +47,8 @@ public class HotelOrderItem implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Long orderTotalPrice;
+
+
     private final static long serialVersionUID = 3147614202124648815L;
 
     public Long getId() {

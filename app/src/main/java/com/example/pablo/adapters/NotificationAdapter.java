@@ -46,15 +46,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if (holder != null) {
             holder.binding.tvNotificationText.setText(list.get(position).getTitle());
             holder.binding.tvNotificationBody.setText(list.get(position).getBody());
-            holder.binding.tvNotificationHotelName.setText(list.get(position).getHotelName());
+            holder.binding.tvNotificationTime.setText(list.get(position).getTime_count());
             holder.binding.tvNotificationDate.setText(list.get(position).getCreated_at());
 
-//            String[] letters = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
-//            String color = "#";
-//            for (int i = 0; i < 6; i++ ) {
-//                color += letters[(int) Math.round(Math.random() * 15)];
-//            }
-//            System.out.println(color);
 
             if(list.get(position).getStatus()==1){
                 holder.binding.imageView22.setBackgroundResource(R.drawable.side_color);

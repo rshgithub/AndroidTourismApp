@@ -36,6 +36,7 @@ import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -138,7 +139,8 @@ public interface Service {
 
     //delete item from cart
     @GET("hotelOrders/{id}")
-    Call<OrderDetailsExample> getHotelOrdersDetails(@Path("id") Long itemId, @Header("Authorization") String token);
+    Call<OrderDetailsExample> getHotelOrdersDetails(@Path("id") Long itemId,
+                                                    @Header("Authorization") String token);
 
     //Payment
     @FormUrlEncoded
@@ -151,6 +153,17 @@ public interface Service {
             @Field("cvc") Long cvc,
             @Header("Authorization") String token
              );
+
+
+    @POST("searchHotelByName")
+    Call<HotelsData> search(@Header("Authorization") String token);
+
+
+    @POST("updateAuthAvatar")
+    Call<RegisterResponse> updateUserImage(
+            @Header("Accept") String accept
+            , @Part MultipartBody.Part image
+            , @Header("Authorization") String token);
 
     //**************************************************************************
     //mosque
@@ -199,17 +212,6 @@ public interface Service {
     @GET("favourite")
     Call<List<RestaurantsExam>> getRestaurantFavourite();
 
-    //Restaurants
-    @GET("Restaurants")
-    Call<List<RestaurantsExam>> getRestaurant();
-
-    //Restaurants
-    @GET("Restaurants")
-    Call<List<RestaurantsExam>> getFreshRecipes();
-
-    //RestaurantDetails
-    @GET("RestaurantDetails/{id}")
-    Call<RestaurantsExam> getRestaurantDetails(@Path("id") int id);
 
 
     class ApiClient {
