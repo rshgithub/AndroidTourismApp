@@ -19,7 +19,11 @@ import com.bumptech.glide.Glide;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.RoomsBottomSheet;
 import com.example.pablo.activity.Login;
+import com.example.pablo.adapters.AllHotelsAdapter;
 import com.example.pablo.adapters.AmenitiesAdapter;
+import com.example.pablo.adapters.ChurchesAdapter;
+import com.example.pablo.adapters.PopularChurchesAdapter;
+import com.example.pablo.adapters.PopularHotelsAdapter;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.ActivityHotelsDetailsBinding;
 import com.example.pablo.model.amenities.Amenities;
@@ -35,11 +39,12 @@ import retrofit2.Response;
 
 import static com.example.pablo.activity.Login.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.adapters.AllHotelsAdapter.HOTELS_ID;
 
 public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet.BottomSheetListener{
 
     ActivityHotelsDetailsBinding binding;
-    int HotelId ;
+    Long HotelId ;
     Service service;
     boolean isConnected = false;
     AmenitiesAdapter amenitiesAdapter;
@@ -50,11 +55,18 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         super.onCreate(savedInstanceState);
         binding = ActivityHotelsDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        receiveData();
+
+        if (getIntent() != null) {
+            HotelId = getIntent().getLongExtra("hotel_id",0);
+        }
+
+        Log.e("hotel_id",getIntent().getLongExtra("hotel_id",0)+"");
 
         swipeRefresh();
 
         list = new ArrayList<>() ;
+
+
 
         checkInternetConnection();
         startShimmer();
@@ -66,12 +78,17 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
 
 
 
+   //   receiveData();
     }
     private void receiveData(){
         if (getIntent() != null) {
-            HotelId =Integer.valueOf(getIntent().getStringExtra("hotel_id"));
+                HotelId =getIntent().getLongExtra("hotel_id",0);
+             //   HotelId =getIntent().getLongExtra(HOTELS_ID,0);
         }
+        Log.e("id",HotelId+"   ff");
+
     }
+
 
     private void getHotelData() {
 

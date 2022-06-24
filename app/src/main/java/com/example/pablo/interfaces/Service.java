@@ -87,7 +87,7 @@ public interface Service {
 
     //hotels details
     @GET("hotels/{id}")
-    Call<HotelsExample> getHotelsDetails(@Path("id") int id, @Header("Authorization") String token);
+    Call<HotelsExample> getHotelsDetails(@Path("id") Long id, @Header("Authorization") String token);
 
     //room
     @GET("hotel_rooms")

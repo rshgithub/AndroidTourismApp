@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.ViewHolder> {
     private List<HotelsData> list;
     Context context;
+    public final static String HOTELS_ID = "hotel_id" ;
 
     public AllHotelsAdapter(Context context) {
         this.context = context;
@@ -76,16 +78,20 @@ public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.View
                     context.startActivity(intent);
                 }
             });
-     //   }
+
 
         holder.details.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
 
-                    Intent intent = new Intent(context, HotelsDetails.class);
-                    context.startActivity(intent);
-                }
-            });
+                Intent intent = new Intent(context, HotelsDetails.class);
+                intent.putExtra("hotel_id", list.get(position).getId());
+                Log.e("idfromadapter",list.get(position).getId()+"");
+
+                context.startActivity(intent);
+
+            }
+        });
 
 
         setUpActions(holder, position);
@@ -98,8 +104,11 @@ public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.View
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, HotelsDetails.class);
-                intent.putExtra("hotel_id", list.get(position).getId()+"");
+                intent.putExtra("hotel_id", list.get(position).getId());
+                Log.e("idfromadapter",list.get(position).getId()+"");
+
                 context.startActivity(intent);
+
             }
         });
     }

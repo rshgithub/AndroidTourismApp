@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class PopularHotelsAdapter extends RecyclerView.Adapter<PopularHotelsAdap
                 }
             });
         }
+
         setUpActions(holder, position);
 
     }
@@ -82,6 +84,7 @@ public class PopularHotelsAdapter extends RecyclerView.Adapter<PopularHotelsAdap
                 Intent intent = new Intent(context, HotelsDetails.class);
                 intent.putExtra("hotel_id", list.get(position).getId());
                 context.startActivity(intent);
+
             }
         });
     }
