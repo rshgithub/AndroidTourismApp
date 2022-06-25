@@ -4,9 +4,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -17,8 +20,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +41,10 @@ import com.example.pablo.databinding.FragmentAccountBinding;
 import com.example.pablo.model.RegisterResponse;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.users.UsersExample;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 import com.google.gson.Gson;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.File;
@@ -61,26 +69,6 @@ public class AccountFragment extends Fragment {
     NewtonCradleLoading newtonCradleLoading;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
-
-    ActivityResultLauncher<Intent> someActivityResultLauncher =
-            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>() {
-                        @Override
-                        public void onActivityResult(ActivityResult result) {
-                            if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
-                                Intent data = result.getData();
-                                Log.e("data", data.getDataString() + "");
-                                File file = null;
-                                try {
-                                    file = FileUtil.from(getActivity(), data.getData());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                                //getUserImage(file);
-                            }
-                        }
-                    });
-
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -138,10 +126,10 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        if (!isOnLine()){
-            if (isConnected){
-                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
-            }else{
+        if (!isOnLine()) {
+            if (isConnected) {
+                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+            } else {
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);
                 startActivity(i);
@@ -159,98 +147,14 @@ public class AccountFragment extends Fragment {
         });
 
 
-        //   Permissions
-        ActivityCompat.requestPermissions(getActivity(), new String[]
-                {Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
 //-----------------------------start cam--------------------------------------------------
-        binding.camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ActivityResultLauncher<Intent> someActivityResultLauncher =
-                        registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                                new ActivityResultCallback<ActivityResult>() {
-                                    @Override
-                                    public void onActivityResult(ActivityResult result) {
-                                        if (result.getResultCode() == Activity.RESULT_OK) { // There are no request codes
-                                            Intent data = result.getData();
-                                            Log.e("data", data.getDataString() + "");
-                                            File file = null;
-                                            try {
-                                                file = FileUtil.from(getActivity(), data.getData());
-                                               // changeUserImage();
-
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-                                            getUserImage(file);
-                                        }
-                                    }
-                                });
-
-                binding.photo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        someActivityResultLauncher.launch(intent);
-                    }
-                });
-            }
-        });
+        changeUserImage();
 //*-----------------------------end cam--------------------------------------------------
 
 
         return view;
     }
 
-    private void getUserImage(File resourceFile) {
-        MultipartBody.Part body = null;
-        if (resourceFile != null) {
-            RequestBody requestFile =
-                    RequestBody.create(MediaType.parse("multipart/form-data"),
-                            resourceFile);
-            body = MultipartBody.Part.createFormData(
-                    // key in postman
-                    "file", resourceFile.getName(),
-                    requestFile);
-        }
-
-
-        Call<RegisterResponse> call = service.UserImage(
-                "application/json"
-                , body
-        );
-        call.enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse>
-                                           call, Response<RegisterResponse> response) {
-                Log.d("response code", response.code() +
-                        "");
-                if (response.isSuccessful() ||
-                        response.code() == 200) {
-                    Log.d("response_inside",
-                            response.code() + "");
-                    Log.d("Success", new
-                            Gson().toJson(response.body()));
-                }else {
-                    String errorMessage = parseError(response);
-                    Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<RegisterResponse>
-                                          call, Throwable t) {
-                Log.d("onFailure", t.getMessage() + "");
-                call.cancel();
-            }
-        });
-    }
 
     private void getAccountData() {
 
@@ -267,11 +171,12 @@ public class AccountFragment extends Fragment {
 
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
+                    Log.e("image",response.body().getData().getUserAvatar());
                     Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).circleCrop().into(binding.photo);
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -279,12 +184,11 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call<UsersExample> call, Throwable t) {
                 t.printStackTrace();
-              Toast.makeText(getContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
             }
 
         });
-
 
     }
 
@@ -299,7 +203,7 @@ public class AccountFragment extends Fragment {
                 Log.e("response code", response.code() + "");
 
                 if (response.isSuccessful()) {
-                   Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
 
                     Intent intent = new Intent(getActivity(), Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -310,7 +214,7 @@ public class AccountFragment extends Fragment {
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -318,7 +222,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call<LogOutExample> call, Throwable t) {
                 t.printStackTrace();
-               Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
 
             }
@@ -330,13 +234,13 @@ public class AccountFragment extends Fragment {
 
     //------------------------*No Internet Connection*----------------------------
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private void registerNetworkCallback(){
+    private void registerNetworkCallback() {
 
 
         try {
 
             connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
+            connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
 
                 @Override
                 public void onAvailable(@NonNull Network network) {
@@ -350,9 +254,7 @@ public class AccountFragment extends Fragment {
             });
 
 
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
 
             isConnected = false;
 
@@ -367,16 +269,137 @@ public class AccountFragment extends Fragment {
         registerNetworkCallback();
     }
 
-    public boolean isOnLine(){
+    public boolean isOnLine() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isAvailable() || !networkInfo.isConnected()){
+        if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
             return false;
         }
         return true;
     }
-    File file;
 
+    File file;
+    Bitmap bitmap;
+
+    // change user image
+
+    private void changeUserImage() {
+        binding.camera.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+                boolean pick = true;
+                if (pick == true) {
+                    if (!checkCameraPermission()) {
+                        requestCameraPermission();
+                    } else
+                        new ImagePicker.Builder(getActivity())
+                                .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
+                                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                                .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
+                                .start();
+
+                } else {
+                    if (!checkStoragePermission()) {
+                        requestStoragePermission();
+                    } else new ImagePicker.Builder(getActivity())
+                            .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
+                            .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                            .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
+                            .start();
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        new ImagePicker.Builder(this)
+                .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
+                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void requestStoragePermission() {
+        requestPermissions(new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void requestCameraPermission() {
+        requestPermissions(new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+    }
+
+    private boolean checkStoragePermission() {
+        boolean res2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+        return res2;
+    }
+
+    private boolean checkCameraPermission() {
+        boolean res1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED;
+        boolean res2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED;
+        return res1 && res2;
+    }
+
+    private void uploadImage() {
+
+        binding.camera.setImageBitmap(bitmap);
+        updateUserImage();
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            //Image Uri will not be null for RESULT_OK
+            Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                file = FileUtil.from(getActivity(), uri);
+                uploadImage();
+            } catch (IOException e) {
+                Log.w("TAG", "onActivityResult: CROP_IMAGE_ACTIVITY_REQUEST_CODE => ", e);
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            Toast.makeText(getActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
+        }
+
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
+            Uri uri = data.getData();
+            //this is written from a fragment.
+            CropImage.activity(uri).setAspectRatio(83, 100)
+                    .setRequestedSize(233, 280)
+                    .setGuidelines(CropImageView.Guidelines.ON).start(getActivity());
+        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == Activity.RESULT_OK) {
+                Uri resultUri = result.getUri();
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+                    uploadImage();
+                } catch (IOException e) {
+                    Log.w("TAG", "onActivityResult: CROP_IMAGE_ACTIVITY_REQUEST_CODE => ", e);
+                }
+
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Log.w("TAG", "onActivityResult: ", error);
+            }
+        }
+    }
 
     private void updateUserImage() {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -385,26 +408,28 @@ public class AccountFragment extends Fragment {
         MultipartBody.Part body = null;
         if (file != null) {
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-        }
-        Call<RegisterResponse> call = service.updateUserImage("application/json", body,token);
-        call.enqueue(new Callback<RegisterResponse>() {
-            @Override
-            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
-                Log.d("response code", response.code() + "");
-                if (response.isSuccessful()) {
-                    Log.d("success", "success");
+            body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-                } else {
+            Call<RegisterResponse> call = service.updateUserImage("application/json", body, token);
+            call.enqueue(new Callback<RegisterResponse>() {
+                @Override
+                public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                    Log.d("response code", response.code() + "");
+                    if (response.isSuccessful()) {
+                        Log.d("success", "success");
+
+                    } else {
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                Log.d("onFailure", t.getMessage() + "");
-                call.cancel();
-            }
-        });
+                @Override
+                public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                    Log.d("onFailure", t.getMessage() + "");
+                    call.cancel();
+                }
+            });
+        }else
+            Toast.makeText(getActivity(), "some thing went wrong!", Toast.LENGTH_SHORT).show();
     }
 
 }

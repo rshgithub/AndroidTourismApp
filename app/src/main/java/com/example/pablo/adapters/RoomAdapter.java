@@ -30,6 +30,7 @@ import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.RoomItemBinding;
 import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.rooms.Data;
+import com.example.pablo.model.rooms.RoomsExample;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 
@@ -39,7 +40,7 @@ import java.util.List;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
-    private List<com.example.pablo.model.rooms.Data> list  ;
+    private List<RoomsExample> list  ;
     Context context;
     private RoomsInterface listener ;
 
@@ -60,38 +61,45 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(RoomAdapter.ViewHolder holder, int position) {
 
-        holder.binding.room.setText(list.get(position).getName()+"");
-        holder.binding.roomNum.setText(list.get(position).getCapacity());
-        holder.binding.roomPrice.setText(list.get(position).getPricePerNight()+"");
-        holder.binding.availableRoom.setText(list.get(position).getAvailableRooms()+"");
+        holder.binding.room.setText(list.get(position).getData().getName()+"");
+        holder.binding.roomNum.setText(list.get(position).getData().getCapacity());
+        holder.binding.roomPrice.setText(list.get(position).getData().getPricePerNight()+"");
+        holder.binding.availableRoom.setText(list.get(position).getData().getAvailableRooms()+"");
 
 
-        Log.e("image1",list.get(0).getRoomImages().get(0)+"");
-
-//         Glide.with(context).load(list.get(1).getRoomImages()).into((holder).binding.img2);
-//
-//         Glide.with(context).load(list.get(2).getRoomImages()).into((holder).binding.img3);
-
-        Glide.with(context)
-                .load(list.get(0).getRoomImages().get(0))
-                .placeholder(R.drawable.mosqes)
-                .into(holder.binding.img1);
-
-
-        listener.onItemRoomClick(list.get(position).getAvailableRooms());
-
-
-        if (list.get(position).getAvailableRooms()==0){
+        if (list.get(position).getData().getAvailableRooms()==0){
             holder.binding.book.setEnabled(false);
-            holder.binding.book.setBackgroundDrawable(context.getResources()
-                    .getDrawable(R.drawable.disable_button));
+            holder.binding.book.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.disable_button));
+        }else{
+            holder.binding.book.setEnabled(true);
+            holder.binding.book.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.booknow));
+
         }
+
+        List<String> imgeList = list.get(position).getData().getRoomImages();
+        switch (imgeList.size()) {
+            case 1:
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
+                break;
+            case 2:
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
+                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.bed1).into(holder.binding.img2);
+                break;
+            case 3:
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
+                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.bed1).into(holder.binding.img2);
+                Glide.with(context).load(list.get(position).getData().getRoomImages().get(2)).placeholder(R.drawable.bed1).into(holder.binding.img3);
+
+        }
+
+
+        listener.onItemRoomClick(list.get(position).getData().getAvailableRooms());
 
         holder.binding.book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                listener.onItemClick(list.get(position).getId());
+                listener.onItemClick(list.get(position).getData().getId());
 
             }
         });
@@ -105,7 +113,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
     }
 
 
-    public void setData(List<com.example.pablo.model.rooms.Data> list) {
+    public void setData(List<RoomsExample> list) {
         this.list = list;
         notifyDataSetChanged();
     }

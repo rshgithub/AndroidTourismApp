@@ -27,6 +27,7 @@ import com.example.pablo.model.hotel.Hotels;
 import com.example.pablo.model.hotel.HotelsData;
 import com.example.pablo.model.hotels.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
@@ -40,7 +41,6 @@ public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.View
         this.context = context;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<HotelsData> list) {
         this.list = list;
         notifyDataSetChanged();
@@ -113,6 +113,11 @@ public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.View
         });
     }
 
+    private List<HotelsData> data = new ArrayList<>();
+    public void swapData(List<HotelsData> data) {
+        this.data.addAll(data);
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getItemCount() {

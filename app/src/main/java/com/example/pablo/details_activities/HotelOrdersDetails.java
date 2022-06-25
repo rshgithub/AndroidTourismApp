@@ -45,7 +45,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
     OrderDetailsAdapter adapter;
     ActivityHotelOrdersDetailsBinding binding;
     static Service service;
-    Long Order_Id ;
+    Long orderId ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
         Login.SP = getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");
 
-        service.getHotelOrdersDetails(Order_Id,token).enqueue(new Callback<OrderDetailsExample>() {
+        service.getHotelOrdersDetails(orderId,token).enqueue(new Callback<OrderDetailsExample>() {
             @Override
             public void onResponse(Call<OrderDetailsExample> call, Response<OrderDetailsExample> response) {
 
@@ -96,8 +96,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
                  Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
 
 
-                   binding.totalPrice.setText(response.body().getData().getTotalPrice()+"$");
-                   ////////////
+                    binding.totalPrice.setText(response.body().getData().getTotalPrice()+"$");
                     binding.date.setText(response.body().getData().getTimeCount()+"");
                     binding.count.setText(response.body().getData().getOrderItemsCount()+"");
                     binding.hotelName.setText(response.body().getData().getHotelName()+"");
@@ -150,8 +149,10 @@ public class HotelOrdersDetails extends AppCompatActivity {
 
     private void getData(){
         if (getIntent() != null) {
-            Order_Id = getIntent().getLongExtra("order_id",0);
+            orderId = getIntent().getLongExtra("order_id",0);
+
         }
+        Log.e("order",orderId+"");
     }
 
     private void getRetrofitInstance(){
@@ -163,7 +164,6 @@ public class HotelOrdersDetails extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             new Handler().postDelayed(()->{
                 swipeRefreshLayout.setRefreshing(false);
-                getData();
                 adapter();
                 getRetrofitInstance();
                 getOrderDetails();

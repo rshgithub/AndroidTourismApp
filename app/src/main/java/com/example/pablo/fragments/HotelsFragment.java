@@ -11,6 +11,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +21,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 
+import com.example.pablo.R;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.Login;
 import com.example.pablo.interfaces.Service;
@@ -32,20 +38,16 @@ import com.example.pablo.adapters.PopularHotelsAdapter;
 import com.example.pablo.databinding.FragmentHotelsBinding;
 import com.example.pablo.model.hotel.Hotels;
 import com.example.pablo.model.hotel.HotelsData;
-import com.example.pablo.model.hotels.Data;
+import com.example.pablo.model.hotel.SearchHotel;
 import com.example.pablo.model.login.DataLogin;
 import com.example.pablo.model.login.ExampleLogin;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -125,6 +127,34 @@ public class HotelsFragment extends Fragment {
         getRetrofitInstance();
         getHotel();
         getPopularHotel();
+
+        binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                checkInternetConnection();
+                startShimmer();
+                adapter();
+                getRetrofitInstance();
+                getHotel();
+                getPopularHotel();
+                return false;
+            }
+        });
+
+        binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                search(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                return true;
+            }
+        });
+
         return view;
     }
 
@@ -327,15 +357,21 @@ public class HotelsFragment extends Fragment {
     }
 
 
-    private void search() {
+    private void search(String c) {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.search(token).enqueue(new Callback<HotelsData>() {
+        String search = binding.searchView3.getQuery().toString();
+
+        service.search(token,search).enqueue(new Callback<SearchHotel>() {
             @Override
-            public void onResponse(Call<HotelsData> call, Response<HotelsData> response) {
+            public void onResponse(Call<SearchHotel> call, Response<SearchHotel> response) {
                 if (response.isSuccessful()){
-                    Log.d("Success", new Gson().toJson(response.body()));
+//                    Toast.makeText(getActivity(), " "+ search, Toast.LENGTH_SHORT).show();
+//                    list.clear();
+                    Log.e("search",response.body().getData().size()+"");
+                    allHotelsAdapter.setData(response.body().getData());
+                  //  Log.e("search",response.body().+"");
                 }
 
 
@@ -343,10 +379,11 @@ public class HotelsFragment extends Fragment {
 
             @SuppressLint("CheckResult")
             @Override
-            public void onFailure(Call<HotelsData> call, Throwable t) {
+            public void onFailure(Call<SearchHotel> call, Throwable t) {
             }
         });
 
     }
+
 
 }

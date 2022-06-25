@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/card"
     android:elevation="@dimen/_1sdp"
+    android:layout_marginBottom="@dimen/_16sdp"
     android:layout_marginEnd="@dimen/_13sdp"
     android:layout_marginStart="@dimen/_13sdp"
     app:layout_constraintEnd_toEndOf="parent"

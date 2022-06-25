@@ -9,6 +9,7 @@ import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.hotel.Hotels;
 import com.example.pablo.model.hotel.HotelsData;
+import com.example.pablo.model.hotel.SearchHotel;
 import com.example.pablo.model.hotels.HotelsExample;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.RegisterRequest;
@@ -91,7 +92,7 @@ public interface Service {
 
     //room
     @GET("hotel_rooms")
-    Call<List<com.example.pablo.model.rooms.Data>> getRoom(@Header("Authorization") String token);
+    Call<List<RoomsExample>> getRoom(@Header("Authorization") String token);
 
     //room
     @GET("hotel_rooms/{id}")
@@ -151,12 +152,13 @@ public interface Service {
             @Field("exp_month") Long exp_month,
             @Field("exp_year") Long exp_year,
             @Field("cvc") Long cvc,
+
             @Header("Authorization") String token
              );
 
 
-    @POST("searchHotelByName")
-    Call<HotelsData> search(@Header("Authorization") String token);
+    @GET("searchHotelByNameDesc")
+    Call<SearchHotel> search(@Header("Authorization") String token, @Query("data") String name);
 
 
     @POST("updateAuthAvatar")

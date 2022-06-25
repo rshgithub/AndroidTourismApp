@@ -16,16 +16,23 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pablo.R;
 import com.example.pablo.adapters.RoomAdapter;
+import com.example.pablo.fragments.BottomNavigationBarActivity;
+import com.example.pablo.fragments.CartFragment;
 import com.example.pablo.interfaces.RoomsInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.rooms.Data;
+import com.example.pablo.model.rooms.RoomsExample;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +48,7 @@ import static com.example.pablo.activity.Login.parseError;
 
 public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private BottomSheetListener mListener;
-    List<com.example.pablo.model.rooms.Data> list ;
+    List<RoomsExample> list ;
     RoomAdapter adapter;
     Service service;
     RecyclerView recyclerView;
@@ -54,7 +61,6 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_room, container, false);
         list =new ArrayList<>();
-
         recyclerView = v.findViewById(R.id.recyclerview);
         cart = v.findViewById(R.id.cart);
         rooms_count = v.findViewById(R.id.rooms_count);
@@ -79,14 +85,18 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getRoom(token).enqueue(new Callback<List<com.example.pablo.model.rooms.Data>>() {
+        service.getRoom(token).enqueue(new Callback<List<RoomsExample>>() {
             @Override
-            public void onResponse(Call<List<com.example.pablo.model.rooms.Data>> call, Response<List<com.example.pablo.model.rooms.Data>> response) {
+            public void onResponse(Call<List<RoomsExample>> call, Response<List<RoomsExample>> response) {
 
                 if (response.isSuccessful()) {
                     list = response.body();
                     adapter.setData(list);
-
+//                    if (RoomCount == null) {
+//                        rooms_count.setText("0");
+//                    } else {
+//                        rooms_count.setText(response.body().getData().getAvailableRooms());
+//                    }
 
                 }else {
 
@@ -100,7 +110,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
 
             @Override
-            public void onFailure(Call<List<com.example.pablo.model.rooms.Data>> call, Throwable t) {
+            public void onFailure(Call<List<RoomsExample>> call, Throwable t) {
 
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
@@ -152,11 +162,11 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
                 @Override
                 public void onItemRoomClick(Long RoomCount) {
-                    if (RoomCount == null) {
-                        rooms_count.setText("0");
-                    } else {
-                        rooms_count.setText(RoomCount + "");
-                    }
+//                    if (RoomCount == null) {
+//                        rooms_count.setText("0");
+//                    } else {
+//                        rooms_count.setText(RoomCount + "");
+//                    }
                 }
             });
 
@@ -169,8 +179,8 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(),Cart.class);
-                getActivity().startActivity(intent);
+                startActivity(new Intent(getActivity(),BottomNavigationBarActivity.class));
+                EventBus.getDefault().post("cart");
             }
         });
     }
@@ -193,5 +203,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
             }
         }
     }
+
+
 }
 

@@ -22,6 +22,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.pablo.R;
 import com.example.pablo.activity.Login;
 import com.example.pablo.activity.MainActivity;
+import com.example.pablo.details_activities.HotelOrdersDetails;
 import com.example.pablo.details_activities.HotelsDetails;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -51,7 +52,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e("JSON OBJECT", object.toString());
             try {
                 if (object.has("order_id")) {
-                    int postId = object.getInt("order_id");
+                    Long postId = object.getLong("order_id");
                     if (remoteMessage.getNotification() != null)
                         sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), postId );
                 }
@@ -90,16 +91,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     //This method is only generating push notification
-    private void sendNotification(String messageTitle, String messageBody, int type) {
+    private void sendNotification(String messageTitle, String messageBody, Long type) {
 
         PendingIntent contentIntent = null;
-        Intent intent = null;
+        Intent intent ;
 
-        intent = new Intent(this, MainActivity.class);
+        intent = new Intent(this, HotelOrdersDetails.class);
         intent.putExtra("order_id",type+"");
+        Log.e("order_id3",type+"");
 
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         contentIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 //        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

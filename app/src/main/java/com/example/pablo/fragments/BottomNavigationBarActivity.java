@@ -12,12 +12,16 @@ import com.example.pablo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 public class BottomNavigationBarActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_bar);
+
+        EventBus.getDefault().register(this);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -45,5 +49,10 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.viewpager1, fragment);
         fragmentTransaction.commit();
     }
-
+    @Subscribe
+     public void onEvent(String event) {
+        if (event.equals("cart")) {
+            openFragment(CartFragment.newInstance());
+        }
+    }
 }

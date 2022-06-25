@@ -581,13 +581,14 @@ public class BookingInfo extends AppCompatActivity {
             boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
             orderId = getIntent().getLongExtra("orderId", 0);
             roomId = getIntent().getLongExtra("id", 0);
-
+            Log.e("orderId1",orderId+"");
 
             if (isEdit) {
                 editRoomDetails(roomId,orderId);
             } else {
-                getRoomDetails(roomId);
+
             }
+            getRoomDetails(roomId);
         }
     }
 
