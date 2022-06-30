@@ -108,18 +108,19 @@ public class HotelsFragment extends Fragment {
         binding = FragmentHotelsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        SwipeRefreshLayout swipeRefreshLayout = binding.scroll;
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-           new Handler().postDelayed(()->{
-               swipeRefreshLayout.setRefreshing(false);
-               checkInternetConnection();
-               startShimmer();
-               adapter();
-               getRetrofitInstance();
-               getHotel();
-               getPopularHotel();
-           },1000);
-        });
+//        SwipeRefreshLayout swipeRefreshLayout = binding.scroll;
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            new Handler().postDelayed(() -> {
+//                swipeRefreshLayout.setRefreshing(false);
+//                checkInternetConnection();
+//                startShimmer();
+//                adapter();
+//                getRetrofitInstance();
+//                page = 1;
+//                getHotel();
+//                getPopularHotel();
+//            }, 1000);
+//        });
 
         checkInternetConnection();
         startShimmer();
@@ -129,8 +130,7 @@ public class HotelsFragment extends Fragment {
         getPopularHotel();
 
         binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
+                public boolean onClose( ) {
                 checkInternetConnection();
                 startShimmer();
                 adapter();
@@ -160,34 +160,50 @@ public class HotelsFragment extends Fragment {
 
 
     private void getHotel() {
-
-        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        isLoading = true;
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
 
-        service.getHotels(token).enqueue(new Callback<Hotels>() {
+        service.getHotels(token, limit, page).enqueue(new Callback<Hotels>() {
             @Override
             public void onResponse(Call<Hotels> call, Response<Hotels> response) {
 
+                binding.progress.setVisibility(View.VISIBLE);
+                binding.progress.setIndeterminate(true);
                 if (response.isSuccessful()) {
-                   list = response.body().getData();
+
+
+                    list = response.body().getData();
                     binding.shimmerLayout1.stopShimmer();
                     binding.shimmerLayout1.setVisibility(View.GONE);
                     binding.recyclerview.startLayoutAnimation();
+                    isLoading = false;
+                    if (page == 1) {
+                        allHotelsAdapter.setData(response.body().getData());
+                        binding.progress.setVisibility(View.GONE);
+                    } else
+                        allHotelsAdapter.addToList(response.body().getData());
+                    if (response.body().getLastPage() == page) {
+                        binding.progress.setVisibility(View.GONE);
+                        isLastPage = true;
+                        Log.e("lastPage", isLastPage + "");
+                    } else {
+                        binding.progress.setVisibility(View.GONE);
+                        isLastPage = false;
+                    }
 
-                    recyclerPagination(response.body());
-
-                }else {
+                    //      recyclerPagination(response.body());
+                } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
 
                 }
             }
+
             @Override
             public void onFailure(Call<Hotels> call, Throwable t) {
                 t.printStackTrace();
-
-
 
 
                 call.cancel();
@@ -196,25 +212,24 @@ public class HotelsFragment extends Fragment {
     }
 
 
-    private void recyclerPagination(Hotels hotels){
+    private void recyclerPagination(Hotels hotels) {
         if (page == 1) {
             allHotelsAdapter.setData(hotels.getData());
         } else
-            allHotelsAdapter.addToList(hotels.getData());
-        Log.e("page00",hotels.getData().get(0).getAddress()+"");
-        if (hotels.getLastPage()==page){
-            isLastPage=true;
-            Log.e("lastPage",isLastPage+"");
-        }
-        else{
-            isLastPage=false;
+        allHotelsAdapter.addToList(hotels.getData());
+        if (hotels.getLastPage() == page) {
+            isLastPage = true;
+            Log.e("lastPage", isLastPage + "");
+        } else {
+            isLastPage = false;
 
         }
+
     }
 
     private void getPopularHotel() {
 
-        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
         service.getPopularHotels(token).enqueue(new Callback<List<HotelsData>>() {
@@ -228,29 +243,30 @@ public class HotelsFragment extends Fragment {
                     popularHotelsAdapter.setData(list1);
                     Log.e("Success", new Gson().toJson(response.body()));
                     stopShimmer();
-                }else {
+                } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
 
                 }
 
             }
+
             @Override
             public void onFailure(Call<List<HotelsData>> call, Throwable t) {
                 t.printStackTrace();
-                Log.e("error",t.getMessage());
+                Log.e("error", t.getMessage());
             }
         });
     }
 
     @SuppressLint("NewApi")
-    private void registerNetworkCallback(){
+    private void registerNetworkCallback() {
 
 
         try {
 
             connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-            connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback(){
+            connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
 
                 @Override
                 public void onAvailable(@NonNull Network network) {
@@ -264,9 +280,7 @@ public class HotelsFragment extends Fragment {
             });
 
 
-
-
-        }catch (Exception e){
+        } catch (Exception e) {
 
             isConnected = false;
 
@@ -281,29 +295,29 @@ public class HotelsFragment extends Fragment {
         registerNetworkCallback();
     }
 
-    public boolean isOnLine(){
+    public boolean isOnLine() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isAvailable() || !networkInfo.isConnected()){
+        if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
             return false;
         }
         return true;
     }
 
-    private void startShimmer(){
+    private void startShimmer() {
         binding.shimmerLayout.startShimmer();
     }
 
-    private void stopShimmer(){
+    private void stopShimmer() {
         binding.shimmerLayout.stopShimmer();
         binding.shimmerLayout.setVisibility(View.GONE);
     }
 
-    private void checkInternetConnection(){
-        if (!isOnLine()){
-            if (isConnected){
-                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
-            }else{
+    private void checkInternetConnection() {
+        if (!isOnLine()) {
+            if (isConnected) {
+                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+            } else {
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);
                 startActivity(i);
@@ -313,12 +327,12 @@ public class HotelsFragment extends Fragment {
         }
     }
 
-    private void adapter(){
+    private void adapter() {
 
         exampleLogin = new ExampleLogin();
         dataLogin = new DataLogin();
 
-        list = new ArrayList<>() ;
+        list = new ArrayList<>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
@@ -328,7 +342,6 @@ public class HotelsFragment extends Fragment {
         popularHotelsAdapter = new PopularHotelsAdapter(getActivity());
         binding.recyclerview.setAdapter(allHotelsAdapter);
         binding.recyclerview1.setAdapter(popularHotelsAdapter);
-
 
 
         binding.recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -344,7 +357,8 @@ public class HotelsFragment extends Fragment {
                 Log.e("lastVisibleItem", lastVisibleItem + "");
                 if (lastVisibleItem == (totalItemCount - 1) && !isLoading && totalItemCount != 0 && !isLastPage) {
                     page++;
-                    Log.e("listSize", "done");
+                    Log.e("EnterPagination", "done");
+                    getHotel();
                 }
             }
         });
@@ -352,26 +366,26 @@ public class HotelsFragment extends Fragment {
 
     }
 
-    private void getRetrofitInstance(){
+    private void getRetrofitInstance() {
         service = Service.ApiClient.getRetrofitInstance();
     }
 
 
     private void search(String c) {
-        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
         String search = binding.searchView3.getQuery().toString();
 
-        service.search(token,search).enqueue(new Callback<SearchHotel>() {
+        service.search(token, search).enqueue(new Callback<SearchHotel>() {
             @Override
             public void onResponse(Call<SearchHotel> call, Response<SearchHotel> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), " "+ search, Toast.LENGTH_SHORT).show();
 //                    list.clear();
-                    Log.e("search",response.body().getData().size()+"");
+                    Log.e("search", response.body().getData().size() + "");
                     allHotelsAdapter.setData(response.body().getData());
-                  //  Log.e("search",response.body().+"");
+                    //  Log.e("search",response.body().+"");
                 }
 
 

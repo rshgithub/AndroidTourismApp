@@ -37,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static SharedPreferences.Editor EDIT;
     public static final String PREF_NAME = "token";
     public static final String fcmToken = "Token_K";
+    public static final String ORDER_ID = "order_id";
     String TAG = "MyFirebaseMessagingService";
 
 
@@ -97,11 +98,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent ;
 
         intent = new Intent(this, HotelOrdersDetails.class);
-        intent.putExtra("order_id",type+"");
+
         Log.e("order_id3",type+"");
 
 
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.putExtra(ORDER_ID,type);
         contentIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 //        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

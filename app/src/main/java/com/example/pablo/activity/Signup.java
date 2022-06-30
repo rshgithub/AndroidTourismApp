@@ -85,6 +85,8 @@ public class Signup extends AppCompatActivity {
                 Input_Password = binding.password.getText().toString();
                 Input_Address = binding.address.getText().toString();
 
+                binding.progress.setVisibility(View.VISIBLE);
+                binding.progress.setIndeterminate(true);
 
                 if (!Input_Name.isEmpty() && !Input_Email.isEmpty() && !Input_Password.isEmpty() && !Input_Address.isEmpty()) {
                     String fcm_token = SP.getString(MyFirebaseMessagingService.fcmToken,"");
@@ -106,6 +108,7 @@ public class Signup extends AppCompatActivity {
                         public void onResponse(Call<Example> call, retrofit2.Response<Example> response) {
                             Log.e("response code", response.code() + "");
                             if (response.isSuccessful()) {
+                                binding.progress.setVisibility(View.GONE);
 
                                 EDIT.putLong("userId", response.body().getData().getUser().getId());
                                 EDIT.putString(FullNameKey, response.body().getData().getUser().getName());

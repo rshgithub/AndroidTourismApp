@@ -48,7 +48,7 @@ import static com.example.pablo.activity.Login.parseError;
 
 public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private BottomSheetListener mListener;
-    List<RoomsExample> list ;
+    List<Data> list ;
     RoomAdapter adapter;
     Service service;
     RecyclerView recyclerView;
@@ -85,17 +85,17 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getRoom(token).enqueue(new Callback<List<RoomsExample>>() {
+        service.getRoom(token).enqueue(new Callback<List<Data>>() {
             @Override
-            public void onResponse(Call<List<RoomsExample>> call, Response<List<RoomsExample>> response) {
+            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
 
                 if (response.isSuccessful()) {
-                    list = response.body();
+                    list = (List<Data>) response.body();
                     adapter.setData(list);
-//                    if (RoomCount == null) {
+//                    if (response.body().getAvailableRooms() == null) {
 //                        rooms_count.setText("0");
 //                    } else {
-//                        rooms_count.setText(response.body().getData().getAvailableRooms());
+//                        rooms_count.setText(response.body().getAvailableRooms()+"");
 //                    }
 
                 }else {
@@ -110,7 +110,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
 
             @Override
-            public void onFailure(Call<List<RoomsExample>> call, Throwable t) {
+            public void onFailure(Call<List<Data>> call, Throwable t) {
 
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
@@ -156,6 +156,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
                 public void onItemClick(Long Id) {
                     Intent intent = new Intent(getActivity(), BookingInfo.class);
                     intent.putExtra("id", Id);
+                    Log.e("roomid",Id+"");
                     intent.putExtra("isEdit", false);
                     startActivity(intent);
                 }

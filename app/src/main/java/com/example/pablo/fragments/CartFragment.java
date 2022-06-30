@@ -139,9 +139,9 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     stopShimmer();
-                    Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+///                    Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     list = response.body().getHotelOrderItems();
-                    noData();
+//                    noData();
                     adapter.setData(list);
 
                 } else {
@@ -321,10 +321,10 @@ public class CartFragment extends Fragment {
 
                     case ItemTouchHelper.RIGHT:
                         Log.e("orderId", list.get(position).getOrderId() + "");
-                        Log.e("roomId", list.get(position).getId() + "");
+                        Log.e("roomId", list.get(position).getRoom_id() + "");
 
                         Intent intent = new Intent(getActivity(), BookingInfo.class);
-                        intent.putExtra("id", list.get(position).getId());
+                        intent.putExtra("id", list.get(position).getRoom_id());
                         intent.putExtra("orderId", list.get(position).getOrderId());
                         intent.putExtra("isEdit", true);
                         adapter.notifyDataSetChanged();

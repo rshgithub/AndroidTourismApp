@@ -1,5 +1,6 @@
 package com.example.pablo.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,12 +11,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +31,10 @@ import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.adapters.PopularChurchesAdapter;
 import com.example.pablo.adapters.ChurchesAdapter;
+import com.example.pablo.model.churches.ChurchesExample;
 import com.example.pablo.model.churches.Data;
 import com.example.pablo.databinding.FragmentChurchesBinding;
+import com.example.pablo.model.hotel.SearchHotel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +51,7 @@ public class ChurchesFragment extends Fragment {
 
     ChurchesAdapter churchesAdapter;
     FragmentChurchesBinding binding;
-    List<Data> list;
+    List<ChurchesExample> list;
     Service service;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
@@ -95,6 +100,34 @@ public class ChurchesFragment extends Fragment {
         getPopularChurches();
         startShimmer();
 
+        binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                checkInternetConnection();
+                startShimmer();
+                adapter();
+                getRetrofitInstance();
+                getChurches();
+                getPopularChurches();
+                return false;
+            }
+        });
+
+        binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                search(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                search(newText);
+                return true;
+            }
+        });
+
+
         return view;
     }
 
@@ -103,9 +136,9 @@ public class ChurchesFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getChurches(token).enqueue(new Callback<List<Data>>() {
+        service.getChurches(token).enqueue(new Callback<List<ChurchesExample>>() {
             @Override
-            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
+            public void onResponse(Call<List<ChurchesExample>> call, Response<List<ChurchesExample>> response) {
 
                 if (response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
@@ -113,12 +146,12 @@ public class ChurchesFragment extends Fragment {
 
                     stopShimmer();
                     list = response.body();
-                    popularChurchesAdapter.setdata(list);
+                    popularChurchesAdapter.setData(list);
 
                 }
             }
             @Override
-            public void onFailure(Call<List<Data>> call, Throwable t) {
+            public void onFailure(Call<List<ChurchesExample>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
@@ -130,9 +163,9 @@ public class ChurchesFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getTopChurches(token).enqueue(new Callback<List<Data>>() {
+        service.getTopChurches(token).enqueue(new Callback<List<ChurchesExample>>() {
             @Override
-            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
+            public void onResponse(Call<List<ChurchesExample>> call, Response<List<ChurchesExample>> response) {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
@@ -140,12 +173,12 @@ public class ChurchesFragment extends Fragment {
                     binding.recyclerview2.startLayoutAnimation();
 
                     list = response.body();
-                    churchesAdapter.setdata(list);
+                    churchesAdapter.setData(list);
 
                 }
             }
             @Override
-            public void onFailure(Call<List<Data>> call, Throwable t) {
+            public void onFailure(Call<List<ChurchesExample>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -274,6 +307,33 @@ public class ChurchesFragment extends Fragment {
                 startShimmer();
             },1000);
         });
+    }
+
+    private void search(String c) {
+        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
+        String search = binding.searchView3.getQuery().toString();
+
+        service.ChurchesSearch(token,search).enqueue(new Callback<ChurchesExample>() {
+            @Override
+            public void onResponse(Call<ChurchesExample> call, Response<ChurchesExample> response) {
+                if (response.isSuccessful()){
+
+                 //   Log.e("search",response.body().getData().size()+"");
+                   // churchesAdapter.setData(response.body().getData());
+                    //  Log.e("search",response.body().+"");
+                }
+
+
+            }
+
+            @SuppressLint("CheckResult")
+            @Override
+            public void onFailure(Call<ChurchesExample> call, Throwable t) {
+            }
+        });
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.pablo.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,8 +33,10 @@ import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.adapters.MosqueAdapter;
 import com.example.pablo.databinding.FragmentMosqueBinding;
+import com.example.pablo.model.hotel.SearchHotel;
 import com.example.pablo.model.mosques.Data;
 import com.example.pablo.adapters.popularMosquesAdapter;
+import com.example.pablo.model.mosques.MosqueExample;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +54,7 @@ public class MosqueFragment extends Fragment {
 
     MosqueAdapter mosqueAdapter;
     FragmentMosqueBinding binding;
-    List<Data> list;
+    List<MosqueExample> list;
     Service service;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
@@ -103,6 +107,35 @@ public class MosqueFragment extends Fragment {
         getMosque();
         getPopularMosque();
         startShimmer();
+
+
+        binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                checkInternetConnection();
+                startShimmer();
+                adapter();
+                getRetrofitInstance();
+                getMosque();
+                getPopularMosque();
+                return false;
+            }
+        });
+
+        binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+            //    search(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+             //   search(newText);
+                return true;
+            }
+        });
+
         return view;
     }
     private void getMosque() {
@@ -111,16 +144,16 @@ public class MosqueFragment extends Fragment {
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
 
-        service.getMosques(token).enqueue(new Callback<List<Data>>() {
+        service.getMosques(token).enqueue(new Callback<List<MosqueExample>>() {
             @Override
-            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
+            public void onResponse(Call<List<MosqueExample>> call, Response<List<MosqueExample>> response) {
 
                 if (response.isSuccessful()) {
                     binding.recyclerview2.startLayoutAnimation();
                     stopShimmer();
 //                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     list = response.body();
-                    mosqueAdapter.setdata(list);
+                    mosqueAdapter.setData(list);
 
                 }else {
                     String errorMessage = parseError(response);
@@ -130,7 +163,7 @@ public class MosqueFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<List<Data>> call, Throwable t) {
+            public void onFailure(Call<List<MosqueExample>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -142,17 +175,16 @@ public class MosqueFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-            service.getTopMosques(token).enqueue(new Callback<List<Data>>() {
+            service.getTopMosques(token).enqueue(new Callback<List<MosqueExample>>() {
                 @Override
-                public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
+                public void onResponse(Call<List<MosqueExample>> call, Response<List<MosqueExample>> response) {
 
                     if (response.isSuccessful()) {
-//                        Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                         stopShimmer();
                         binding.recyclerview.startLayoutAnimation();
 
                         list = response.body();
-                        popularMosquesAdapter.setdata(list);
+                        popularMosquesAdapter.setData(list);
 
                     }else {
                         String errorMessage = parseError(response);
@@ -162,7 +194,7 @@ public class MosqueFragment extends Fragment {
                     }
                 }
                 @Override
-                public void onFailure(Call<List<Data>> call, Throwable t) {
+                public void onFailure(Call<List<MosqueExample>> call, Throwable t) {
 
                     Log.e( "getMessage",t.getMessage());
                     Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -291,5 +323,34 @@ public class MosqueFragment extends Fragment {
             },1000);
         });
     }
+
+
+//    private void search(String c) {
+//        Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
+//        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+//
+//        String search = binding.searchView3.getQuery().toString();
+//
+//        service.mosqueSearch(token,search).enqueue(new Callback<SearchHotel>() {
+//            @Override
+//            public void onResponse(Call<SearchHotel> call, Response<SearchHotel> response) {
+//                if (response.isSuccessful()){
+////                    Toast.makeText(getActivity(), " "+ search, Toast.LENGTH_SHORT).show();
+////                    list.clear();
+//                    Log.e("search",response.body().getData().size()+"");
+//                    mosqueAdapter.setData(response.body().getData());
+//                    //  Log.e("search",response.body().+"");
+//                }
+//
+//
+//            }
+//
+//            @SuppressLint("CheckResult")
+//            @Override
+//            public void onFailure(Call<SearchHotel> call, Throwable t) {
+//            }
+//        });
+//
+//    }
 
 }

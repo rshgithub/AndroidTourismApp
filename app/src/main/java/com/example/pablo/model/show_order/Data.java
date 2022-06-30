@@ -1,13 +1,13 @@
-package com.example.pablo.model.edit;
+
+package com.example.pablo.model.show_order;
 
 import java.io.Serializable;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Data implements Serializable
 {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -17,6 +17,9 @@ public class Data implements Serializable
     @SerializedName("order_id")
     @Expose
     private Integer orderId;
+    @SerializedName("room_id")
+    @Expose
+    private Integer roomId;
     @SerializedName("room_name")
     @Expose
     private String roomName;
@@ -28,7 +31,7 @@ public class Data implements Serializable
     private String checkOut;
     @SerializedName("room_count")
     @Expose
-    private String roomCount;
+    private Integer roomCount;
     @SerializedName("total_nights")
     @Expose
     private Integer totalNights;
@@ -44,13 +47,13 @@ public class Data implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Integer orderTotalPrice;
-    @SerializedName("time_count")
+    @SerializedName("created_from")
     @Expose
-    private String timeCount;
+    private String createdFrom;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-    private final static long serialVersionUID = 6593304715990283261L;
+    private final static long serialVersionUID = 4002513110043620806L;
 
     public Integer getId() {
         return id;
@@ -74,6 +77,14 @@ public class Data implements Serializable
 
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
     public String getRoomName() {
@@ -100,11 +111,11 @@ public class Data implements Serializable
         this.checkOut = checkOut;
     }
 
-    public String getRoomCount() {
+    public Integer getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(String roomCount) {
+    public void setRoomCount(Integer roomCount) {
         this.roomCount = roomCount;
     }
 
@@ -148,12 +159,12 @@ public class Data implements Serializable
         this.orderTotalPrice = orderTotalPrice;
     }
 
-    public String getTimeCount() {
-        return timeCount;
+    public String getCreatedFrom() {
+        return createdFrom;
     }
 
-    public void setTimeCount(String timeCount) {
-        this.timeCount = timeCount;
+    public void setCreatedFrom(String createdFrom) {
+        this.createdFrom = createdFrom;
     }
 
     public String getCreatedAt() {

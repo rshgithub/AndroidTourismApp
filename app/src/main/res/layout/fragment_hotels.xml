@@ -55,6 +55,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview1"
             android:layout_width="match_parent"
+            android:layoutAnimation="@anim/item_layout_animation"
             android:layout_height="@dimen/_140sdp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +137,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview"
+                android:layoutAnimation="@anim/item_layout_animation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:elevation="@dimen/_10sdp"
@@ -171,6 +173,7 @@
 
                     <include layout="@layout/shimmer_hotel"></include>
 
+
                     <include layout="@layout/shimmer_hotel"></include>
 
                     <include layout="@layout/shimmer_hotel"></include>
@@ -180,18 +183,21 @@
 
             </com.facebook.shimmer.ShimmerFrameLayout>
 
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:layout_marginTop="-40dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@color/green"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerview" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-<!--        <ImageView-->
-<!--            android:id="@+id/imageView4"-->
-<!--            android:layout_width="42dp"-->
-<!--            android:layout_height="45dp"-->
-<!--            android:layout_marginTop="72dp"-->
-<!--            android:layout_marginEnd="28dp"-->
-<!--            android:src="@drawable/apple"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView3"

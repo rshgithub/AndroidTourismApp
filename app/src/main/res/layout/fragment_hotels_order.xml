@@ -12,6 +12,7 @@
         android:background="@drawable/hotels_background"
         android:padding="@dimen/_10sdp"
         android:elevation="@dimen/_5sdp"
+        android:layoutAnimation="@anim/item_layout_animation"
         android:layout_height="match_parent" />
 
 </FrameLayout>

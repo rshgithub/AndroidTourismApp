@@ -38,6 +38,7 @@ import retrofit2.Response;
 import static com.example.pablo.activity.Login.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 import static com.example.pablo.adapters.HotelsOrderAdapter.ORDERDETAILS;
+import static com.example.pablo.fcm.MyFirebaseMessagingService.ORDER_ID;
 
 public class HotelOrdersDetails extends AppCompatActivity {
 
@@ -53,7 +54,11 @@ public class HotelOrdersDetails extends AppCompatActivity {
         binding = ActivityHotelOrdersDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (getIntent() != null) {
+            orderId = getIntent().getLongExtra(ORDER_ID,0);
+        }
 
+        Log.e("order",orderId+"");
 
         if (!isOnLine()){
             Dialog dialog = new Dialog(getBaseContext(), R.style.NoInternet);
@@ -148,11 +153,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
     }
 
     private void getData(){
-        if (getIntent() != null) {
-            orderId = getIntent().getLongExtra("order_id",0);
 
-        }
-        Log.e("order",orderId+"");
     }
 
     private void getRetrofitInstance(){

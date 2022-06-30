@@ -114,6 +114,7 @@ public class AllHotelsAdapter extends RecyclerView.Adapter<AllHotelsAdapter.View
     }
 
     private List<HotelsData> data = new ArrayList<>();
+
     public void swapData(List<HotelsData> data) {
         this.data.addAll(data);
         notifyDataSetChanged();

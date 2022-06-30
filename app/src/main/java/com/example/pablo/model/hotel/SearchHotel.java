@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class SearchHotel implements Serializable {
 
 
-    @SerializedName("hotels")
+    @SerializedName("data")
     @Expose
     private List<HotelsData> data = null;
     @SerializedName("message")

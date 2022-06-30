@@ -50,7 +50,7 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
     @Subscribe
-     public void onEvent(String event) {
+    public void onEvent(String event) {
         if (event.equals("cart")) {
             openFragment(CartFragment.newInstance());
         }

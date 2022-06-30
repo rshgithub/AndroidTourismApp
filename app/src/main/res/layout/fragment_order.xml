@@ -55,6 +55,7 @@
             android:background="@drawable/hotels_background"
             android:elevation="@dimen/_5sdp"
             android:padding="@dimen/_10sdp"
+            android:layoutAnimation="@anim/item_layout_animation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

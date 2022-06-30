@@ -18,6 +18,9 @@ public class HotelOrderItem implements Serializable
     @SerializedName("order_id")
     @Expose
     private Long orderId;
+    @SerializedName("room_id")
+    @Expose
+    private Long room_id;
     @SerializedName("room_name")
     @Expose
     private String roomName;
@@ -154,4 +157,11 @@ public class HotelOrderItem implements Serializable
         this.orderTotalPrice = orderTotalPrice;
     }
 
+    public Long getRoom_id() {
+        return room_id;
+    }
+
+    public void setRoom_id(Long room_id) {
+        this.room_id = room_id;
+    }
 }

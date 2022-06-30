@@ -2,6 +2,7 @@ package com.example.pablo.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
@@ -16,13 +17,23 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityBookingInfoBinding;
+import com.example.pablo.fragments.BottomNavigationBarActivity;
+import com.example.pablo.fragments.CartFragment;
 import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.edit.EditExample;
+import com.example.pablo.model.edit_order.EditOrderDetails;
 import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -32,6 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Login.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
@@ -55,16 +67,60 @@ public class BookingInfo extends AppCompatActivity {
         binding = ActivityBookingInfoBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
+        binding.progress.setVisibility(View.GONE);
+
+        service = Service.ApiClient.getRetrofitInstance();
+
+
+        if (getIntent() != null) {
+
+            boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
+            orderId = getIntent().getLongExtra("orderId", 0);
+            roomId = getIntent().getLongExtra("id", 0);
+            Log.e("room1",roomId+"");
+            Log.e("orderId1",orderId+"");
+
+            if (isEdit) {
+                editRoomDetails();
+//                getRoomDetails(roomId);
+                getEditOrderDetails();
+                binding.addToCart.setVisibility(View.GONE);
+                binding.editCart.setVisibility(View.VISIBLE);
+            } else {
+                binding.addToCart.setVisibility(View.VISIBLE);
+                binding.editCart.setVisibility(View.GONE);
+                getRoomDetails(roomId);
+            }
+
+
+        }
+
+
         checkInternetConnection();
+
         startShimmer();
+
         getRetrofitInstance();
+
         getIntentData();
+
         addToCartButton();
-        cart();
+
+      //  cart();
+
+        cartIntent();
+
+       editButton();
+
 
     }
 
+
+
     private void bookNow() {
+        binding.progress.setVisibility(View.VISIBLE);
+        binding.progress.setIndeterminate(true);
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
@@ -74,13 +130,15 @@ public class BookingInfo extends AppCompatActivity {
         String count = binding.count.getText().toString();
 
 
-        service.bookInfo(check_in, checkout, count, roomId + "", token).enqueue(new Callback<CartExample>() {
+        service.bookInfo(check_in, checkout, count, roomId + "", orderId + "", token).enqueue(new Callback<CartExample>() {
             @Override
             public void onResponse(Call<CartExample> call, retrofit2.Response<CartExample> response) {
-                Log.e("response code", response.code() + "");
+                Log.e("response code", response.code() + "book");
 
                 if (response.isSuccessful()) {
                     stopShimmer();
+                    binding.progress.setVisibility(View.GONE);
+
                     Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -100,6 +158,7 @@ public class BookingInfo extends AppCompatActivity {
         });
     }
 
+
     private void getRoomDetails(Long roomId) {
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -110,7 +169,7 @@ public class BookingInfo extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<RoomsExample> call, Response<RoomsExample> response) {
-                Log.e("response code", response.code() + "");
+                Log.e("response code", response.code() + "rd");
 
                 if (response.body() != null) {
                     stopShimmer();
@@ -151,7 +210,7 @@ public class BookingInfo extends AppCompatActivity {
                         Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
                     }
 
-                    // Glide.with(BookingInfo.this).load(response.body().getImage()).circleCrop().into(binding.imageView6);
+                   Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages()).circleCrop().into(binding.imageView6);
 
 
 //-----------------------------room count---------------------------------------
@@ -162,16 +221,20 @@ public class BookingInfo extends AppCompatActivity {
                         public void onClick(View v) {
                             sum--;
                             if (sum < 1) {
-                                sum = 1;
-                                return;
+                                binding.min.setEnabled(false);
+
+                               // sum = 1;
+                            }else {
+                                binding.min.setEnabled(true);
+                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+
+                                Long x =   response.body().getData().getPricePerNight()*sum*Count;
+                                binding.totalMoney.setText(x+"");
+                                binding.count.setText(sum + "");
+
                             }
 
 
-                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-
-                            Long x =   response.body().getData().getPricePerNight()*sum*Count;
-                            binding.totalMoney.setText(x+"");
-                            binding.count.setText(sum + "");
 
 
                         }
@@ -185,8 +248,9 @@ public class BookingInfo extends AppCompatActivity {
                             sum++;
 
                             if (sum > response.body().getData().getAvailableRooms()) {
-                                return;
+                                binding.add.setEnabled(false);
                             }else{
+                                binding.add.setEnabled(true);
                                 Long Count = Long.valueOf((binding.dayCount.getText().toString()));
 
                                 Long x =   response.body().getData().getPricePerNight()*sum*Count;
@@ -216,18 +280,7 @@ public class BookingInfo extends AppCompatActivity {
                             sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                             date2 = myCalendar.getTime();
-//                            Date currentDate = new Date();// get the current date
-//                            currentDate.setDate(currentDate.getDate());
-//                            date2 = currentDate;
-
                             binding.chikinDate.setText(sdf.format(date2)+"");
-//                            binding.chikinDate.setText(sdf.format(date2));
-//
-//                            //get today date
-//                            Date d = new Date();
-//                            CharSequence s  = DateFormat.format("dd-MM-yyyy", d.getTime());
-//                            binding.chikinDate.setText(s+"");
-
                             //day count
                           if (date3 != null && date2 != null) {
                                 Long day = (date3.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
@@ -284,13 +337,6 @@ public class BookingInfo extends AppCompatActivity {
                             sdf = new SimpleDateFormat(myFormat, Locale.US);
                             date3 = myCalendar1.getTime();
                             binding.chikoutDate.setText(sdf.format(date3)+"");
-
-
-                            //get tomorrow date
-//                            Date currentDate = new Date();// get the current date
-//                            currentDate.setDate(currentDate.getDate() + 1);
-//                            date3.setDate(currentDate.getDate() + 1);
-
 
                             //day count
                             if (date3 != null && date2 != null) {
@@ -356,7 +402,10 @@ public class BookingInfo extends AppCompatActivity {
 
     }
 
-    private void editRoomDetails(Long roomId,Long orderItemId) {
+
+    private void editRoomDetails() {
+        binding.progress.setVisibility(View.VISIBLE);
+        binding.progress.setIndeterminate(true);
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
@@ -364,16 +413,21 @@ public class BookingInfo extends AppCompatActivity {
 
         String count = binding.count.getText().toString();
 
-        service.editItem(orderItemId, checkInDate, checkOutDate, count,roomId , "put", token).enqueue(new Callback<EditExample>() {
+        service.editItem(orderId, checkInDate, checkOutDate, count, roomId, "put", token).enqueue(new Callback<EditExample>() {
             @Override
             public void onResponse(Call<EditExample> call, Response<EditExample> response) {
-                Log.e("response code", response.code() + "");
+                Log.e("response code", response.code() + "edr");
                 if (response.isSuccessful()) {
-//                    getRoomDetails(roomId);
                     stopShimmer();
+                    binding.progress.setVisibility(View.GONE);
+
                     Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
+
 //-----------------------------room count---------------------------------------
+
+                    binding.count.setText(response.body().getData().getRoomCount()+"");
+
 
                     binding.min.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -431,18 +485,18 @@ public class BookingInfo extends AppCompatActivity {
                             Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
                             Long Count = Long.valueOf((binding.dayCount.getText().toString()));
 
-//                            if (response.body().getData().getRoomHasOffer() == null) {
-//                                tot = Count * Price;
-//                                binding.totalMoney.setText(tot + "");
-//
-//                            } else {
-//                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
-//                                tot = Count * Price;
-//                                totals = tot * (offer / 100);
-//                                Long x = tot - totals;
-//                                binding.totalMoney.setText(x + "");
-//
-//                            }
+                            if (response.body().getData().getRoomHasOffer() == null) {
+                                tot = Count * Price;
+                                binding.totalMoney.setText(tot + "");
+
+                            } else {
+                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
+                                tot = Count * Price;
+                                totals = tot * (offer / 100);
+                                Long x = tot - totals;
+                                binding.totalMoney.setText(x + "");
+
+                            }
 
                         }
                     };
@@ -485,18 +539,18 @@ public class BookingInfo extends AppCompatActivity {
                             //total price
                             Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
                             Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-//                            if (response.body().getData().getRoomHasOffer() == null) {
-//                                tot = Count * Price;
-//                                binding.totalMoney.setText(tot + "");
-//
-//                            } else {
-//                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
-//                                tot = Count * Price;
-//                                totals = tot * (offer / 100);
-//                                Long x = tot - totals;
-//                                binding.totalMoney.setText(x + "");
-//
-//                            }
+                            if (response.body().getData().getRoomHasOffer() == null) {
+                                tot = Count * Price;
+                                binding.totalMoney.setText(tot + "");
+
+                            } else {
+                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
+                                tot = Count * Price;
+                                totals = tot * (offer / 100);
+                                Long x = tot - totals;
+                                binding.totalMoney.setText(x + "");
+
+                            }
 
 
                         }
@@ -535,6 +589,254 @@ public class BookingInfo extends AppCompatActivity {
     }
 
 
+    private void getEditOrderDetails() {
+
+        Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+
+        service.getEditOrdersDetails(orderId, token).enqueue(new Callback<EditOrderDetails>() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(Call<EditOrderDetails> call, Response<EditOrderDetails> response) {
+                Log.e("response code", response.code() + "edito");
+
+                if (response.body() != null) {
+                    stopShimmer();
+
+                    binding.count.setText(response.body().getData().getRoomCount()+"");
+                    binding.totalMoney.setText(response.body().getData().getOrderTotalPrice()+"");
+                    binding.hotelName.setText(response.body().getData().getHotelName()+"");
+                    binding.priceHotel.setText(response.body().getData().getRoomPricePerNight()+"");
+                    binding.chikinDate.setText(response.body().getData().getCheckIn()+"");
+                    binding.chikoutDate.setText(response.body().getData().getCheckOut()+"");
+                    binding.dayCount.setText(response.body().getData().getTotalNights()+"");
+                    binding.roomPrice.setText(response.body().getData().getRoomPricePerNight()+"");
+                    binding.offer.setText(response.body().getData().getRoomHasOffer()+"");
+                    binding.personNum.setText(response.body().getData().getAvailableRooms()+"");
+                    Glide.with(getBaseContext()).load(response.body().getData().getRoomImage())
+                            .error(R.drawable.mosqes).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(binding.imageView6);
+
+                //    getRoomDetails(roomId);
+//                    String myFormat = "dd-MM-yyyy"; //MMM dd, ''yyyy
+//                    sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                    Date currentDate = new Date();// get the current date
+//                    currentDate.setDate(currentDate.getDate() + 1);
+//                    binding.chikoutDate.setText(response.body().getData().getCheckOut()+"");
+//
+//                    Date currentDate1 = new Date();// get the current date
+//                    currentDate1.setDate(currentDate1.getDate());
+//                    binding.chikinDate.setText(response.body().getData().getCheckIn()+"");
+//
+//
+////                    binding.roomPrice.setText(response.body().getData().getRoomPricePerNight()+"");
+////                    binding.totalMoney.setText(response.body().getData().getOrderTotalPrice() + "");
+////                    binding.dayCount.setText(response.body().getData().getTotalNights()+"");
+//
+////                    if (response.body().getData().getRoomHasOffer() == null) {
+////                        binding.offer.setText("0");
+////                    } else {
+////                        binding.offer.setText(response.body().getData().getRoomHasOffer() + "");
+//                 //   }
+//
+//                    if(binding.count.getText().toString().equals(0)){
+//                        binding.chikinDate.setText(00+"");
+//                        binding.chikoutDate.setEnabled(false);
+//                        Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//
+////-----------------------------room count---------------------------------------
+//
+//
+//                    binding.min.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            sum--;
+//                            if (sum < 1) {
+//                                sum = 1;
+//                                return;
+//                            }
+//
+//
+//                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+//
+//                            Long x =   response.body().getData().getRoomPricePerNight()*sum*Count;
+//                            binding.totalMoney.setText(x+"");
+//                            binding.count.setText(response.body().getData().getRoomCount() + "");
+//
+//
+//                        }
+//                    });
+//                    //add
+//                    binding.add.setOnClickListener(new View.OnClickListener() {
+//
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onClick(View v) {
+//                            sum++;
+//
+////                            if (sum > response.body().getData().g()) {
+////                                return;
+////                            }else{
+//                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+//
+//                                Long x =   response.body().getData().getRoomPricePerNight()*sum*Count;
+//                                binding.totalMoney.setText(x+"");
+//                                binding.count.setText(sum + "");
+//                         //   }
+//
+//
+//
+//
+//
+//
+//                        }
+//                    });
+////-------------------------------- check in date -------------------------------------
+//                    final Calendar myCalendar = Calendar.getInstance();
+//                    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                            // TODO Auto-generated method stub
+//                            myCalendar.set(Calendar.YEAR, year);
+//                            myCalendar.set(Calendar.MONTH, monthOfYear);
+//                            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//
+//                            String myFormat = "dd-MM-yyyy"; //MMM dd, ''yyyy
+//                            sdf = new SimpleDateFormat(myFormat, Locale.US);
+//
+//                            date2 = myCalendar.getTime();
+//
+//                            binding.chikinDate.setText(sdf.format(date2)+"");
+//                            //day count
+//                            if (date3 != null && date2 != null) {
+//                                Long day = (date3.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
+//                                binding.dayCount.setText(day + "");
+//                            }
+//
+//                            //total price
+//                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
+//                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+//                            Long RoomCount = Long.valueOf((binding.count.getText().toString()));
+//
+//                            if (response.body().getData().getRoomHasOffer() == null) {
+//                                tot = Count * Price * RoomCount;
+//                                Long x =   tot*sum;
+//                                binding.totalMoney.setText(response.body().getData().getOrderTotalPrice() + "");
+//
+//                            } else {
+//                                int offer = Integer.parseInt(response.body().getData().getRoomHasOffer() + "");
+//                                tot = Count * Price* RoomCount;
+//                                totals = tot * (offer / 100);
+//                                Long x = tot - totals;
+//                                Long x1 =   x*sum;
+//                                binding.totalMoney.setText(x1 + "");
+//
+//                            }
+//
+//                        }
+//                    };
+//                    binding.chikinDate.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            new DatePickerDialog(BookingInfo.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//
+//                        }
+//                    });
+//                    binding.chikinDate.setVisibility(View.VISIBLE);
+//
+//
+////-------------------------------- check out Date -------------------------------------
+//                    final Calendar myCalendar1 = Calendar.getInstance();
+//                    DatePickerDialog.OnDateSetListener date1 = new DatePickerDialog.OnDateSetListener() {
+//                        @RequiresApi(api = Build.VERSION_CODES.N)
+//                        @Override
+//                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                            // TODO Auto-generated method stub
+//                            myCalendar1.set(Calendar.YEAR, year);
+//                            myCalendar1.set(Calendar.MONTH, monthOfYear);
+//                            myCalendar1.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//
+//
+//                            String myFormat = "dd-MM-yyyy"; //In which you need put here
+//
+//                            sdf = new SimpleDateFormat(myFormat, Locale.US);
+//                            date3 = myCalendar1.getTime();
+//                            binding.chikoutDate.setText(sdf.format(date3)+"");
+//
+//                            //day count
+//                            if (date3 != null && date2 != null) {
+//                                long day = (date3.getTime() - date2.getTime()) / (1000 * 60 * 60 * 24);
+//                                binding.dayCount.setText(day + "");
+//                            }
+//
+//                            //total price
+//                            Long Price = Long.valueOf(((binding.priceHotel.getText().toString())));
+//                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+//                            Long RoomCount = Long.valueOf((binding.dayCount.getText().toString()));
+//
+//                            if (response.body().getData().getRoomHasOffer() == 0) {
+//                                tot = Count * Price* RoomCount;
+//                                Long x =   tot*sum;
+//
+//                                binding.totalMoney.setText(x + "");
+//
+//                            } else {
+//                                int offer = Integer.parseInt(response.body().getData().getRoomHasOffer() + "");
+//                                tot = Count * Price* RoomCount;
+//                                totals = tot * (offer / 100);
+//                                Long x = tot - totals;
+//                                Long x1 =   x*sum;
+//                                binding.totalMoney.setText(x1 + "");
+//
+//                            }
+//
+//
+//                        }
+//                    };
+//                    binding.chikoutDate.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            new DatePickerDialog(BookingInfo.this, date1, myCalendar1.get(Calendar.YEAR), myCalendar1.get(Calendar.MONTH),
+//                                    myCalendar1.get(Calendar.DAY_OF_MONTH)).show();
+//                        }
+//                    });
+//                    binding.chikoutDate.setVisibility(View.VISIBLE);
+//
+
+                    Log.e("Success", new Gson().toJson(response.body()));
+                    Log.e("count", response.body().getData().getRoomCount()+"");
+                    Log.e("offer", response.body().getData().getRoomHasOffer()+"");
+                    Log.e("totalMoney", response.body().getData().getOrderTotalPrice()+"");
+                } else {
+
+                    String errorMessage = parseError(response);
+                    Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+
+                }
+            }
+
+
+
+            @Override
+            public void onFailure(Call<EditOrderDetails> call, Throwable t) {
+                t.printStackTrace();
+
+                Toast.makeText(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+
+        });
+
+
+    }
+
 
     private void startShimmer(){
         binding.shimmerLayout.startShimmer();
@@ -542,11 +844,13 @@ public class BookingInfo extends AppCompatActivity {
 
     }
 
+
     private void stopShimmer(){
         binding.shimmerLayout.stopShimmer();
         binding.shimmerLayout.setVisibility(View.GONE);
         binding.container.setVisibility(View.VISIBLE);
     }
+
 
     private void checkInternetConnection(){
         if (!isOnLine()){
@@ -562,6 +866,7 @@ public class BookingInfo extends AppCompatActivity {
         }
     }
 
+
     public boolean isOnLine(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -571,26 +876,37 @@ public class BookingInfo extends AppCompatActivity {
         return true;
     }
 
+
     private void getRetrofitInstance(){
         service = Service.ApiClient.getRetrofitInstance();
+
     }
+
 
     public void getIntentData(){
-        if (getIntent() != null) {
 
-            boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
-            orderId = getIntent().getLongExtra("orderId", 0);
-            roomId = getIntent().getLongExtra("id", 0);
-            Log.e("orderId1",orderId+"");
-
-            if (isEdit) {
-                editRoomDetails(roomId,orderId);
-            } else {
-
-            }
-            getRoomDetails(roomId);
-        }
+//        if (getIntent() != null) {
+//
+//            boolean isEdit = getIntent().getBooleanExtra("isEdit", false);
+//            orderId = getIntent().getLongExtra("orderId", 0);
+//            roomId = getIntent().getLongExtra("id", 0);
+//            Log.e("room1",roomId+"");
+//            Log.e("orderId1",orderId+"");
+//
+//            if (isEdit) {
+//                editRoomDetails();
+//                getEditOrderDetails();
+//                binding.addToCart.setVisibility(View.GONE);
+//                binding.editCart.setVisibility(View.VISIBLE);
+//            } else {
+//                binding.addToCart.setVisibility(View.VISIBLE);
+//                binding.editCart.setVisibility(View.GONE);
+//
+//            } getRoomDetails(roomId);
+//
+//        }
     }
+
 
     private void addToCartButton(){
         binding.addToCart.setOnClickListener(new View.OnClickListener() {
@@ -600,7 +916,9 @@ public class BookingInfo extends AppCompatActivity {
             }
         });
 
+
     }
+
 
     private void cart(){
         binding.cart.setOnClickListener(new View.OnClickListener() {
@@ -613,4 +931,33 @@ public class BookingInfo extends AppCompatActivity {
         });
 
     }
+
+
+    private void editButton(){
+
+        binding.editCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editRoomDetails();
+           //     Toast.makeText(BookingInfo.this, "ol", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+    }
+
+
+    private void cartIntent(){
+        binding.cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                CartFragment cartFragment = new CartFragment();
+//                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(cartFragment).commit();
+                startActivity(new Intent(getBaseContext(), BottomNavigationBarActivity.class));
+                EventBus.getDefault().post("cart");
+            }
+        });
+    }
+
 }

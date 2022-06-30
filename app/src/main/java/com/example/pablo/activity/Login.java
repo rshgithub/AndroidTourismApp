@@ -61,18 +61,6 @@ public class Login extends AppCompatActivity {
         FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
         Log.e("FCM_TOKEN",FCM_TOKEN+"");
 
-        NewtonCradleLoading newtonCradleLoading;
-        newtonCradleLoading = (NewtonCradleLoading) findViewById(R.id.newton_cradle_loading);
-
-
-        if (binding.newtonCradleLoading.isStart()) {
-            binding.newtonCradleLoading.start();
-            binding.newtonCradleLoading.setLoadingColor(Color.parseColor("#FF0E4C75"));
-        } else {
-            binding.newtonCradleLoading.start();
-            binding.newtonCradleLoading.setLoadingColor(Color.parseColor("#FF0E4C75"));
-
-        }
 
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +68,8 @@ public class Login extends AppCompatActivity {
 
                 String email_str = binding.email.getText().toString();
                 String password_str = binding.password.getText().toString();
-
+                binding.progress.setVisibility(View.VISIBLE);
+                binding.progress.setIndeterminate(true);
                 if (!email_str.isEmpty() && !password_str.isEmpty()) {
                     //api
                     FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
@@ -91,10 +80,8 @@ public class Login extends AppCompatActivity {
 
                             Log.e("error", String.valueOf(response.code()));
                             if (response.isSuccessful()) {
-                                binding.newtonCradleLoading.stop();
-                                binding.newtonCradleLoading.setLoadingColor(Color.parseColor("#00FFFFFF"));
-                                Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
-
+                              Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+                                binding.progress.setVisibility(View.GONE);
                                 //token
                                 EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
                                 EDIT.putLong(USERKey, response.body().getData().getUser().getId());
@@ -120,9 +107,7 @@ public class Login extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ExampleLogin> call, Throwable t) {
-                            binding.newtonCradleLoading.stop();
-                            binding.newtonCradleLoading.setLoadingColor(Color.parseColor("#00FFFFFF"));
-                            Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                           Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
                             t.printStackTrace();
                             Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();

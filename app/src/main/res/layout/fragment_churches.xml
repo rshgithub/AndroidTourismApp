@@ -39,12 +39,12 @@
             android:id="@+id/textView43"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tabs"
+            android:layout_below="@+id/searchView3"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
-            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/montserrat"
             android:text="@string/discover"
             android:textColor="#0E4C75"
@@ -57,9 +57,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/view12"
-            android:layout_marginStart="@dimen/_3sdp"
-            android:layout_marginLeft="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/imageView13"
             android:layout_toRightOf="@+id/imageView13"
             android:fontFamily="@font/montserrat"
@@ -148,6 +148,7 @@
                 android:orientation="horizontal">
 
                 <include layout="@layout/top_mosque_shimmer"></include>
+
                 <include layout="@layout/top_mosque_shimmer"></include>
 
             </LinearLayout>
@@ -197,6 +198,22 @@
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 
+            <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/card"
+            android:elevation="@dimen/_5sdp"
+            android:hint="@string/search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </RelativeLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

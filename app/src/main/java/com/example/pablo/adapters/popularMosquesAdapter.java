@@ -18,13 +18,14 @@ import com.example.pablo.details_activities.MosqueDetails;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.databinding.PopularMosqueBinding;
 import com.example.pablo.model.mosques.Data;
+import com.example.pablo.model.mosques.MosqueExample;
 
 import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAdapter.ViewHolder> {
-    private List<Data> list  ;
+    private List<MosqueExample> list  ;
     Context context;
     private static MyInterface listener ;
     public final static String MOSQUE_ID = "mosque_id" ;
@@ -47,10 +48,10 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
     public void onBindViewHolder(popularMosquesAdapter.ViewHolder holder, int position) {
 
         if (holder!=null){
-        holder.binding.mosqueName.setText(list.get(position).getName());
-        holder.binding.locationPin.setText(list.get(position).getAddress());
+        holder.binding.mosqueName.setText(list.get(position).getData().getName());
+        holder.binding.locationPin.setText(list.get(position).getData().getAddress());
 
-            Glide.with(context).load(list.get(position).getMosqueImage())
+            Glide.with(context).load(list.get(position).getData().getMosqueImage())
                     .transition(withCrossFade())
                     .circleCrop()
                     .apply(new RequestOptions().transform(new RoundedCorners(10))
@@ -80,7 +81,7 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, MosqueDetails.class);
-                intent.putExtra(MOSQUE_ID, list.get(position).getId());
+                intent.putExtra(MOSQUE_ID, list.get(position).getData().getId());
                 context.startActivity(intent);
             }
         });
@@ -94,7 +95,7 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
 
 
 
-    public void setdata(List<Data> list) {
+    public void setData(List<MosqueExample> list) {
         this.list = list;
         notifyDataSetChanged();
     }

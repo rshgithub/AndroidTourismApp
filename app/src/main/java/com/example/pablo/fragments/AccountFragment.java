@@ -12,25 +12,23 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.pablo.activity.ActivityNotification;
 import com.example.pablo.FileUtil;
 import com.example.pablo.activity.ActivityAbout;
@@ -41,10 +39,6 @@ import com.example.pablo.databinding.FragmentAccountBinding;
 import com.example.pablo.model.RegisterResponse;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.users.UsersExample;
-import com.github.dhaval2404.imagepicker.ImagePicker;
-import com.google.gson.Gson;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.File;
@@ -57,6 +51,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Login.PREF_NAME;
@@ -69,7 +65,10 @@ public class AccountFragment extends Fragment {
     NewtonCradleLoading newtonCradleLoading;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
-
+    File file;
+    Bitmap bitmap;
+    int SELECT_PHOTO=1;
+    Uri uri;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -102,57 +101,19 @@ public class AccountFragment extends Fragment {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        binding.About.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityAbout.class);
-                startActivity(intent);
-            }
-        });
-
-        binding.Notifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityNotification.class);
-                startActivity(intent);
-            }
-        });
-
-        binding.Support.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityAbout.class);
-                startActivity(intent);
-            }
-        });
-
-        if (!isOnLine()) {
-            if (isConnected) {
-                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
-            } else {
-
-                Intent i = new Intent(getActivity(), NoInternetConnection.class);
-                startActivity(i);
-                getActivity().finish();
-            }
-        }
-
-        service = Service.ApiClient.getRetrofitInstance();
+        getRetrofitInstance();
+        ifIsOnLine();
+        about();
+        logOutButton();
+        permission();
         getAccountData();
-        binding.Out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLogout();
-            }
-        });
-
-
-//-----------------------------start cam--------------------------------------------------
+        swipe();
         changeUserImage();
-//*-----------------------------end cam--------------------------------------------------
-
-
+        notification();
+        support();
+        startShimmer();
         return view;
+
     }
 
 
@@ -168,7 +129,7 @@ public class AccountFragment extends Fragment {
                 Log.e("response code", response.code() + "");
 
                 if (response.isSuccessful()) {
-
+                    stopShimmer();
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
                     Log.e("image",response.body().getData().getUserAvatar());
@@ -232,7 +193,6 @@ public class AccountFragment extends Fragment {
 
     }
 
-    //------------------------*No Internet Connection*----------------------------
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void registerNetworkCallback() {
 
@@ -278,130 +238,57 @@ public class AccountFragment extends Fragment {
         return true;
     }
 
-    File file;
-    Bitmap bitmap;
-
-    // change user image
-
     private void changeUserImage() {
         binding.camera.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                boolean pick = true;
-                if (pick == true) {
-                    if (!checkCameraPermission()) {
-                        requestCameraPermission();
-                    } else
-                        new ImagePicker.Builder(getActivity())
-                                .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
-                                .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                                .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
-                                .start();
 
-                } else {
-                    if (!checkStoragePermission()) {
-                        requestStoragePermission();
-                    } else new ImagePicker.Builder(getActivity())
-                            .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
-                            .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                            .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
-                            .start();
-
-                }
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,SELECT_PHOTO);
             }
         });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        new ImagePicker.Builder(this)
-                .crop(83, 100)                    //Crop image(Optional), Check Customization for more option
-                .compress(1024)            //Final image size will be less than 1 MB(Optional)
-                .maxResultSize(233, 280)    //Final image resolution will be less than 1080 x 1080(Optional)
-                .start();
-
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void requestStoragePermission() {
-        requestPermissions(new String[]{
-                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private void requestCameraPermission() {
-        requestPermissions(new String[]{Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
-    }
-
-    private boolean checkStoragePermission() {
-        boolean res2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
-        return res2;
-    }
-
-    private boolean checkCameraPermission() {
-        boolean res1 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
-                == PackageManager.PERMISSION_GRANTED;
-        boolean res2 = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
-        return res1 && res2;
-    }
-
-    private void uploadImage() {
-
-        binding.camera.setImageBitmap(bitmap);
-        updateUserImage();
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            //Image Uri will not be null for RESULT_OK
             Uri uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 file = FileUtil.from(getActivity(), uri);
-                uploadImage();
+                binding.camera.setImageBitmap(bitmap);
+                updateUserImage();
             } catch (IOException e) {
-                Log.w("TAG", "onActivityResult: CROP_IMAGE_ACTIVITY_REQUEST_CODE => ", e);
+                Log.w("tag", e);
             }
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            Toast.makeText(getActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show();
+        } else if (resultCode == RESULT_CANCELED) {
+            Toast.makeText(getActivity(), "RESULT_CANCELED", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "cancel image"+ resultCode, Toast.LENGTH_SHORT).show();
         }
 
 
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
-            Uri uri = data.getData();
-            //this is written from a fragment.
-            CropImage.activity(uri).setAspectRatio(83, 100)
-                    .setRequestedSize(233, 280)
-                    .setGuidelines(CropImageView.Guidelines.ON).start(getActivity());
-        } else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            if (resultCode == Activity.RESULT_OK) {
-                Uri resultUri = result.getUri();
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
-                    uploadImage();
-                } catch (IOException e) {
-                    Log.w("TAG", "onActivityResult: CROP_IMAGE_ACTIVITY_REQUEST_CODE => ", e);
-                }
-
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Exception error = result.getError();
-                Log.w("TAG", "onActivityResult: ", error);
+        if (requestCode == SELECT_PHOTO&&requestCode==RESULT_OK&&data!=null&&data.getData()!=null){
+            uri = data.getData();
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),uri);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            Glide.with(getActivity()).asBitmap().load(bitmap)
+                    .apply(new RequestOptions().transform(new RoundedCorners(100))
+                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)).circleCrop().into(binding.photo);
+
+           // binding.photo.setImageBitmap(bitmap);
         }
+
     }
 
-    private void updateUserImage() {
+    private void updateUserImage(){
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");
 
@@ -410,26 +297,142 @@ public class AccountFragment extends Fragment {
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-            Call<RegisterResponse> call = service.updateUserImage("application/json", body, token);
+            Call<RegisterResponse> call = service.updateUserAvatar("application/json", body, token);
             call.enqueue(new Callback<RegisterResponse>() {
                 @Override
                 public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                     Log.d("response code", response.code() + "");
                     if (response.isSuccessful()) {
-                        Log.d("success", "success");
-
-                    } else {
+                        Log.d("success", response.message());
                     }
                 }
-
                 @Override
                 public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                    Log.d("onFailure", t.getMessage() + "");
-                    call.cancel();
+                    Log.d("error", t.getMessage() + "");
                 }
             });
-        }else
-            Toast.makeText(getActivity(), "some thing went wrong!", Toast.LENGTH_SHORT).show();
+        }
     }
 
+    private void permission(){
+        ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    }
+
+    private void swipe(){
+        SwipeRefreshLayout swipeRefreshLayout = binding.swipe;
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            new Handler().postDelayed(() -> {
+                swipeRefreshLayout.setRefreshing(false);
+                service = Service.ApiClient.getRetrofitInstance();
+                startShimmer();
+                getAccountData();
+            }, 1000);
+        });
+
+    }
+
+    private void logOutButton(){
+        binding.Out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLogout();
+            }
+        });
+
+        binding.textView5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getLogout();
+            }
+        });
+    }
+
+    private void ifIsOnLine(){
+        if (!isOnLine()) {
+            if (isConnected) {
+                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+            } else {
+
+                Intent i = new Intent(getActivity(), NoInternetConnection.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        }
+    }
+
+    private void about(){
+
+        binding.About.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.textView50.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void notification(){
+
+        binding.Notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityNotification.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.textView46.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityNotification.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void support(){
+
+        binding.Support.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.textView47.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void getRetrofitInstance(){
+        service = Service.ApiClient.getRetrofitInstance();
+
+    }
+
+
+    private void startShimmer() {
+
+        binding.shimmerLayout.startShimmer();
+    }
+
+    private void stopShimmer() {
+        binding.shimmerLayout.stopShimmer();
+        binding.shimmerLayout.setVisibility(View.GONE);
+    }
 }

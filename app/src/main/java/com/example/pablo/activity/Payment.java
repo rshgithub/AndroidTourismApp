@@ -3,12 +3,15 @@ package com.example.pablo.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.pablo.R;
@@ -16,6 +19,9 @@ import com.example.pablo.databinding.ActivityPaymentBinding;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.buy_one_order.BuyOneOrderExample;
 import com.example.pablo.model.buyorder.BuyOrderExample;
+import com.github.ybq.android.spinkit.sprite.CircleSprite;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +39,7 @@ Long price;
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.progress.setVisibility(View.GONE);
         price = getIntent().getLongExtra("price", 0);
         binding.totalPrice.setText(price+"");
 
@@ -85,7 +92,10 @@ Long price;
                         Toast.makeText(Payment.this, "Cvv Name must contain 3 number", Toast.LENGTH_LONG).show();
                     }
 
+
+
                 }else{
+
                     payment();
                 }
             }
@@ -97,6 +107,7 @@ Long price;
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");
 
+
         Long number = Long.valueOf(binding.tvCardNumber.getText().toString());
         Long ExpiryMonth = Long.valueOf(binding.tvExpiryMonth.getText().toString());
         Long ExpiryYear = Long.valueOf(binding.tvExpiryYear.getText().toString());
@@ -106,12 +117,16 @@ Long price;
         Log.e("ll","  ExpiryMonth  "+ExpiryMonth+"  ExpiryYear  "
         +ExpiryYear+"number"+number+"name"+Name+"cvv"+Cvv);
 
+        binding.progress.setVisibility(View.VISIBLE);
+        binding.progress.setIndeterminate(true);
+
         service.Payment(number, Name, ExpiryMonth, ExpiryYear,Cvv, token).enqueue(new Callback<com.example.pablo.model.payment.Payment>() {
             @Override
             public void onResponse(Call<com.example.pablo.model.payment.Payment> call, retrofit2.Response<com.example.pablo.model.payment.Payment> response) {
 
                 Log.e("code",response.code()+"");
                 if (response.isSuccessful()) {
+                    binding.progress.setVisibility(View.GONE);
                     Toast.makeText(Payment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
 

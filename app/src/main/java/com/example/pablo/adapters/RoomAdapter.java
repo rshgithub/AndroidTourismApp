@@ -40,7 +40,7 @@ import java.util.List;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
-    private List<RoomsExample> list  ;
+    private List<Data> list  ;
     Context context;
     private RoomsInterface listener ;
 
@@ -61,13 +61,13 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(RoomAdapter.ViewHolder holder, int position) {
 
-        holder.binding.room.setText(list.get(position).getData().getName()+"");
-        holder.binding.roomNum.setText(list.get(position).getData().getCapacity());
-        holder.binding.roomPrice.setText(list.get(position).getData().getPricePerNight()+"");
-        holder.binding.availableRoom.setText(list.get(position).getData().getAvailableRooms()+"");
+        holder.binding.room.setText(list.get(position).getName()+"");
+        holder.binding.roomNum.setText(list.get(position).getCapacity());
+        holder.binding.roomPrice.setText(list.get(position).getPricePerNight()+"");
+        holder.binding.availableRoom.setText(list.get(position).getAvailableRooms()+"");
 
 
-        if (list.get(position).getData().getAvailableRooms()==0){
+        if (list.get(position).getAvailableRooms()==0){
             holder.binding.book.setEnabled(false);
             holder.binding.book.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.disable_button));
         }else{
@@ -76,7 +76,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
 
         }
 
-        List<String> imgeList = list.get(position).getData().getRoomImages();
+        List<String> imgeList = list.get(position).getRoomImages();
         switch (imgeList.size()) {
             case 1:
                 Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
@@ -88,18 +88,19 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
             case 3:
                 Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
                 Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.bed1).into(holder.binding.img2);
-                Glide.with(context).load(list.get(position).getData().getRoomImages().get(2)).placeholder(R.drawable.bed1).into(holder.binding.img3);
+                Glide.with(context).load(list.get(position).getRoomImages().get(2)).placeholder(R.drawable.bed1).into(holder.binding.img3);
 
         }
 
 
-        listener.onItemRoomClick(list.get(position).getData().getAvailableRooms());
+        listener.onItemRoomClick(list.get(position).getAvailableRooms());
 
         holder.binding.book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                listener.onItemClick(list.get(position).getData().getId());
+                listener.onItemClick(list.get(position).getId());
+
 
             }
         });
@@ -113,7 +114,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
     }
 
 
-    public void setData(List<RoomsExample> list) {
+    public void setData(List<Data> list) {
         this.list = list;
         notifyDataSetChanged();
     }
