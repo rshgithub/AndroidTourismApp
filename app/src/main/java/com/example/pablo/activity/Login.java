@@ -55,72 +55,26 @@ public class Login extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.progress.setVisibility(View.GONE);
         SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         EDIT = SP.edit();
 
         FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
         Log.e("FCM_TOKEN",FCM_TOKEN+"");
 
+        if (getIntent() != null) {
+            String email = getIntent().getStringExtra("email");
+           String password = getIntent().getStringExtra("password");
+           binding.email.setText(email);
+           binding.password.setText(password);
+        }
 
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String email_str = binding.email.getText().toString();
-                String password_str = binding.password.getText().toString();
                 binding.progress.setVisibility(View.VISIBLE);
                 binding.progress.setIndeterminate(true);
-                if (!email_str.isEmpty() && !password_str.isEmpty()) {
-                    //api
-                    FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
-                    LoginRequest user = new LoginRequest(email_str, password_str,FCM_TOKEN);
-                    Service.ApiClient.getRetrofitInstance().login(user).enqueue(new Callback<ExampleLogin>() {
-                        @Override
-                        public void onResponse(Call<ExampleLogin> call, retrofit2.Response<ExampleLogin> response) {
-
-                            Log.e("error", String.valueOf(response.code()));
-                            if (response.isSuccessful()) {
-                              Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
-                                binding.progress.setVisibility(View.GONE);
-                                //token
-                                EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
-                                EDIT.putLong(USERKey, response.body().getData().getUser().getId());
-                                EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
-                                EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
-                                EDIT.apply();
-
-                                Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
-                                startActivity(intent);
-                                Toast.makeText(getBaseContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                                Log.e("Success", new Gson().toJson(response.body()));
-                                finish();
-                            } else {
-
-                                String errorMessage = parseError(response);
-                                Log.e("errorMessage", errorMessage + "");
-                                Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ExampleLogin> call, Throwable t) {
-                           Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
-
-                            t.printStackTrace();
-                            Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                            call.cancel();
-                        }
-                    });
-
-                } else {
-                    YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.email));
-                    YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.password));
-                    Toast.makeText(getBaseContext(), "Please check your Email Field and Password Field", Toast.LENGTH_SHORT).show();
-                }
-
+                login();
 
             }
         });
@@ -132,6 +86,64 @@ public class Login extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    private void login(){
+        String email_str = binding.email.getText().toString();
+        String password_str = binding.password.getText().toString();
+
+        if (!email_str.isEmpty() && !password_str.isEmpty()) {
+            //api
+            FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
+            LoginRequest user = new LoginRequest(email_str, password_str,FCM_TOKEN);
+            Service.ApiClient.getRetrofitInstance().login(user).enqueue(new Callback<ExampleLogin>() {
+                @Override
+                public void onResponse(Call<ExampleLogin> call, retrofit2.Response<ExampleLogin> response) {
+
+                    Log.e("error", String.valueOf(response.code()));
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+                        binding.progress.setVisibility(View.GONE);
+                        //token
+                        EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
+                        EDIT.putLong(USERKey, response.body().getData().getUser().getId());
+                        EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
+                        EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
+                        EDIT.apply();
+
+                        Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(getBaseContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("Success", new Gson().toJson(response.body()));
+                        finish();
+                    } else {
+                        binding.progress.setVisibility(View.GONE);
+                        String errorMessage = parseError(response);
+                        Log.e("errorMessage", errorMessage + "");
+                        Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+
+                    }
+
+
+                }
+
+                @Override
+                public void onFailure(Call<ExampleLogin> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                    binding.progress.setVisibility(View.GONE);
+                    t.printStackTrace();
+                    Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    call.cancel();
+                }
+            });
+
+        } else {
+            binding.progress.setVisibility(View.GONE);
+
+            YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.email));
+            YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.password));
+            Toast.makeText(getBaseContext(), "Please check your Email Field and Password Field", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static String parseError(Response<?> response) {
@@ -148,5 +160,7 @@ public class Login extends AppCompatActivity {
         }
         return errorMsg;
     }
+
+
 
 }

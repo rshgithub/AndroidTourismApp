@@ -49,7 +49,7 @@ public class Signup extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
+        binding.progress.setVisibility(View.GONE);
         if (!isOnLine()){
             Dialog dialog = new Dialog(getBaseContext(), R.style.NoInternet);
             dialog.setContentView(R.layout.no_internet);
@@ -116,12 +116,14 @@ public class Signup extends AppCompatActivity {
                                 EDIT.putString(AddressKey, response.body().getData().getUser().getAddress());
 
                                 Intent intent = new Intent(getBaseContext(), Login.class);
+                                intent.putExtra("email",binding.email.getText().toString());
+                                intent.putExtra("password",binding.password.getText().toString());
                                 startActivity(intent);
                                 Toast.makeText(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
                                 Log.e("Success", new Gson().toJson(response.body()));
                                 finish();
                             }else {
-
+                                binding.progress.setVisibility(View.GONE);
                                 String errorMessage = parseError(response);
                                 Log.e("errorMessage", errorMessage + "");
                                 Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
@@ -137,7 +139,7 @@ public class Signup extends AppCompatActivity {
                             t.printStackTrace();
                             Toast.makeText(getBaseContext(), t.getMessage() , Toast.LENGTH_SHORT).show();
                             call.cancel();
-
+                            binding.progress.setVisibility(View.GONE);
                         }
                     });
 
