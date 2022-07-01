@@ -17,7 +17,6 @@ public class OrderDetailsExample implements Serializable
     @SerializedName("hotel_order_items")
     @Expose
     private List<HotelOrderItem> hotelOrderItems = null;
-    private final static long serialVersionUID = -252835484541446402L;
 
     public String getMessage() {
         return message;

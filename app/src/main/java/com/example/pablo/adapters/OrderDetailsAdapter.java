@@ -6,10 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityHotelOrdersDetailsBinding;
 import com.example.pablo.databinding.HotelOrderBinding;
 import com.example.pablo.databinding.OrderDetailsBinding;
@@ -51,40 +53,23 @@ public class OrderDetailsAdapter  extends RecyclerView.Adapter<OrderDetailsAdapt
         holder.binding.roomServing.setText(list.get(position).getSavingsPerRoom()+"");
         holder.binding.roomName.setText(list.get(position).getRoomName()+"");
 
-            String[] letters = {"0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"};
-            String color = "#";
-            for (int i = 0; i < 6; i++ ) {
-                color += letters[(int) Math.round(Math.random() * 15)];
-            }
-            System.out.println(color);
-            holder.binding.imageView2.setBackgroundColor(Color.parseColor(color));
+
+//        if (list.get(position).getStatus().equals("rejected")){
+//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
+//        }else if (list.get(position).getStatus().equals("accepted")){
+//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
+//        }else if (list.get(position).getStatus().equals("payed")){
+//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
+//        }else if (list.get(position).getStatus().equals("carted")){
+//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
+//        }
+
+
 
 
     }
 
-//    // simple methods for register cell state changes
-//    public void registerToggle(int position) {
-//        if (unfoldedIndexes.contains(position))
-//            registerFold(position);
-//        else
-//            registerUnfold(position);
-//    }
-//
-//    public void registerFold(int position) {
-//        unfoldedIndexes.remove(position);
-//    }
-//
-//    public void registerUnfold(int position) {
-//        unfoldedIndexes.add(position);
-//    }
-//
-//    public View.OnClickListener getDefaultRequestBtnClickListener() {
-//        return defaultRequestBtnClickListener;
-//    }
-//
-//    public void setDefaultRequestBtnClickListener(View.OnClickListener defaultRequestBtnClickListener) {
-//        this.defaultRequestBtnClickListener = defaultRequestBtnClickListener;
-//    }
+
 
 
     @Override

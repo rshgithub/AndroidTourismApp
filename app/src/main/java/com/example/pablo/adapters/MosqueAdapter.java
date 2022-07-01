@@ -17,7 +17,7 @@ import com.example.pablo.R;
 import com.example.pablo.details_activities.MosqueDetails;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.databinding.MosquesItemBinding;
-import com.example.pablo.model.mosques.Data;
+import com.example.pablo.model.mosques.Datum;
 import com.example.pablo.model.mosques.MosqueExample;
 
 
@@ -26,7 +26,7 @@ import java.util.List;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder> {
-    private List<MosqueExample> list  ;
+    private List<Datum> list  ;
     Context context;
     private static MyInterface listener ;
     public final static String MOSQUE_ID = "mosque_id" ;
@@ -36,7 +36,7 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
         this.context= context;
         this.listener=listener;
     }
-    public void setData(List<MosqueExample> list) {
+    public void setData(List<Datum> list) {
         this.list = list;
         notifyDataSetChanged();
     }
@@ -51,11 +51,11 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
     @Override
     public void onBindViewHolder(MosqueAdapter.ViewHolder holder, int position) {
 
-        holder.binding.name.setText(list.get(position).getData().getName());
-        holder.binding.address.setText(list.get(position).getData().getAddress());
-        holder.binding.availableTime.setText(list.get(position).getData().getAvailableTime()+"");
+        holder.binding.name.setText(list.get(position).getName());
+        holder.binding.address.setText(list.get(position).getAddress());
+        holder.binding.availableTime.setText(list.get(position).getAvailableTime()+"");
 
-        Glide.with(context).load(list.get(position).getData().getMosqueImage())
+        Glide.with(context).load(list.get(position).getMosqueImage())
                 .transition(withCrossFade())
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(10))
@@ -84,7 +84,7 @@ public class MosqueAdapter extends RecyclerView.Adapter<MosqueAdapter.ViewHolder
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, MosqueDetails.class);
-                intent.putExtra(MOSQUE_ID, list.get(position).getData().getId());
+                intent.putExtra(MOSQUE_ID, list.get(position).getId());
                 context.startActivity(intent);
             }
         });

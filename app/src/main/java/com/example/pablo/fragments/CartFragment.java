@@ -93,7 +93,7 @@ public class CartFragment extends Fragment {
         noInternetDialog.setCancelable(true);
 
 
-        if (!isOnLine()){
+        if (!isOnLine()) {
             Dialog dialog = new Dialog(getActivity(), R.style.NoInternet);
             dialog.setContentView(R.layout.no_internet);
             dialog.show();
@@ -103,7 +103,7 @@ public class CartFragment extends Fragment {
             retry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if(isOnLine()){
+                    if (isOnLine()) {
                         getRoomsCart();
                         dialog.dismiss();
                     }
@@ -121,9 +121,7 @@ public class CartFragment extends Fragment {
         getRetrofitInstance();
         getRoomsCart();
         swipeToEditAndDelete();
-
-
-
+  //     noData();
 
         return view;
     }
@@ -157,7 +155,7 @@ public class CartFragment extends Fragment {
             public void onFailure(Call<CartExample> call, Throwable t) {
                 Log.e("error", t.getMessage());
 
-                Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
 
             }
@@ -172,7 +170,7 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
 
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                     Log.e("code", response.code() + "");
                     Log.e("code", response.body().getId() + "");
@@ -189,7 +187,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<Datum> call, Throwable t) {
 
-                Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
                 t.printStackTrace();
                 Log.e("code", t.getMessage() + "");
@@ -207,7 +205,7 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
 
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                     adapter.notifyDataSetChanged();
                     Toast.makeText(getActivity(), "clear all successfully", Toast.LENGTH_SHORT).show();
@@ -225,7 +223,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<Datum> call, Throwable t) {
 
-                Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
                 t.printStackTrace();
                 Log.e("code", t.getMessage() + "");
@@ -234,31 +232,60 @@ public class CartFragment extends Fragment {
 
     }
 
-    public boolean isOnLine(){
+    public boolean isOnLine() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if(networkInfo==null || !networkInfo.isAvailable() || !networkInfo.isConnected()){
+        if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
             return false;
         }
         return true;
     }
 
-    private void deleteAll(){
+    private void deleteAll() {
         binding.deleteAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-                clear(token);
-                if (list != null)
-                    list.clear();
-                adapter.notifyDataSetChanged();
+
+
+                Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
+                dialog.setContentView(R.layout.layout_custom_dialog);
+
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                Button btnClose = dialog.findViewById(R.id.cancel);
+                Button btnClear = dialog.findViewById(R.id.clear);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnClear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                        clear(token);
+                        if (list != null)
+                            list.clear();
+                        adapter.notifyDataSetChanged();
+                        binding.totalPrice.setText("0$");
+                        binding.count.setText("0");
+                        dialog.dismiss();
+                        noData();
+                    }
+                });
+
+                dialog.show();
+
             }
         });
     }
 
 
-    private void adapter(){
+    private void adapter() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         binding.recyclerView2.setLayoutManager(layoutManager);
@@ -270,9 +297,15 @@ public class CartFragment extends Fragment {
                 binding.pay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(getActivity(), Payment.class);
-                        intent.putExtra("price",price);
+                        if (list.size()==0){
+                            Toast.makeText(getActivity(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Intent intent = new Intent(getActivity(), Payment.class);
+                        intent.putExtra("price", price);
                         startActivity(intent);
+                    }
+
+
                     }
                 });
                 binding.totalPrice.setText(price + "$");
@@ -292,12 +325,12 @@ public class CartFragment extends Fragment {
 
     }
 
-    private void getRetrofitInstance(){
+    private void getRetrofitInstance() {
         service = Service.ApiClient.getRetrofitInstance();
 
     }
 
-    private void swipeToEditAndDelete(){
+    private void swipeToEditAndDelete() {
         // Create and add a callback
         ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
             @Override
@@ -309,23 +342,48 @@ public class CartFragment extends Fragment {
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
                 final int position = viewHolder.getAdapterPosition();
-                switch (direction){
+                switch (direction) {
                     case ItemTouchHelper.LEFT:
-                        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-                        delete(list.get(position).getId(), token);
-                        adapter.notifyDataSetChanged();
-                        list.remove(position);
-                        adapter.notifyItemRemoved(position);
+
+                        Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
+                        dialog.setContentView(R.layout.layout_custom_dialog2);
+
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                        Button btnClose = dialog.findViewById(R.id.cancel);
+                        Button btnClear = dialog.findViewById(R.id.clear);
+
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                                getRoomsCart();
+                            }
+                        });
+
+                        btnClear.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                                delete(list.get(position).getId(), token);
+                                adapter.notifyDataSetChanged();
+                                dialog.dismiss();
+                                list.remove(position);
+                                adapter.notifyItemRemoved(position);
+                             //   noData();
+                            }
+                        });
+                        dialog.show();
                         break;
 
                     case ItemTouchHelper.RIGHT:
                         Log.e("orderId", list.get(position).getOrderId() + "");
-                        Log.e("roomId", list.get(position).getRoom_id() + "");
+                        Log.e("roomId", list.get(position).getRoomId() + "");
 
                         Intent intent = new Intent(getActivity(), BookingInfo.class);
-                        intent.putExtra("id", list.get(position).getRoom_id());
-                        intent.putExtra("orderId", list.get(position).getOrderId());
+                        intent.putExtra("id", list.get(position).getRoomId());
+                        intent.putExtra("orderId", list.get(position).getId());
                         intent.putExtra("isEdit", true);
                         adapter.notifyDataSetChanged();
                         startActivity(intent);
@@ -334,7 +392,7 @@ public class CartFragment extends Fragment {
             }
 
             @Override
-            public void onChildDraw (Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive){
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
                         .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(), R.color.red))
                         .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
@@ -354,20 +412,20 @@ public class CartFragment extends Fragment {
 
     }
 
-    private void startShimmer(){
+    private void startShimmer() {
         binding.shimmerLayout.startShimmer();
 
     }
 
-    private void stopShimmer(){
+    private void stopShimmer() {
         binding.shimmerLayout.stopShimmer();
         binding.shimmerLayout.setVisibility(View.GONE);
     }
 
-    private void swipeRefresh(){
+    private void swipeRefresh() {
         SwipeRefreshLayout swipeRefreshLayout = binding.scroll;
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            new Handler().postDelayed(()->{
+            new Handler().postDelayed(() -> {
                 swipeRefreshLayout.setRefreshing(false);
                 startShimmer();
                 list = new ArrayList<>();
@@ -376,24 +434,27 @@ public class CartFragment extends Fragment {
                 getRetrofitInstance();
                 getRoomsCart();
                 swipeToEditAndDelete();
-            },1000);
+            }, 1000);
         });
     }
 
-    private void noData(){
-        if(list.size()==0)
-        {
+    private void noData() {
+        if (list.isEmpty()) {
             binding.empty.setVisibility(View.VISIBLE);
             binding.empty.setText("No Reserved Rooms Yet");
             binding.imageView26.setVisibility(View.VISIBLE);
             binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
             binding.recyclerView2.setVisibility(View.GONE);
+            binding.count.setText("0");
+            binding.totalPrice.setText("0$");
 
-        }else{
+        } else {
             binding.empty.setVisibility(View.GONE);
             binding.imageView26.setVisibility(View.GONE);
             binding.recyclerView2.setVisibility(View.VISIBLE);
         }
     }
+
+
 
 }

@@ -63,7 +63,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         list =new ArrayList<>();
         recyclerView = v.findViewById(R.id.recyclerview);
         cart = v.findViewById(R.id.cart);
-        rooms_count = v.findViewById(R.id.rooms_count);
+//        rooms_count = v.findViewById(R.id.rooms_count);
 
         checkInternetConnection();
 

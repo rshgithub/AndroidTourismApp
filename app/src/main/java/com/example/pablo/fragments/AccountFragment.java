@@ -259,7 +259,7 @@ public class AccountFragment extends Fragment {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 file = FileUtil.from(getActivity(), uri);
-                binding.camera.setImageBitmap(bitmap);
+                binding.photo.setImageBitmap(bitmap);
                 updateUserImage();
             } catch (IOException e) {
                 Log.w("tag", e);
@@ -434,5 +434,6 @@ public class AccountFragment extends Fragment {
     private void stopShimmer() {
         binding.shimmerLayout.stopShimmer();
         binding.shimmerLayout.setVisibility(View.GONE);
+        binding.container.setVisibility(View.VISIBLE);
     }
 }

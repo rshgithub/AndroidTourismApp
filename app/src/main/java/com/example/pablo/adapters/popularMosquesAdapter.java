@@ -17,15 +17,15 @@ import com.example.pablo.R;
 import com.example.pablo.details_activities.MosqueDetails;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.databinding.PopularMosqueBinding;
-import com.example.pablo.model.mosques.Data;
 import com.example.pablo.model.mosques.MosqueExample;
+import com.example.pablo.model.mosques.TopMosque;
 
 import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAdapter.ViewHolder> {
-    private List<MosqueExample> list  ;
+    private List<TopMosque> list  ;
     Context context;
     private static MyInterface listener ;
     public final static String MOSQUE_ID = "mosque_id" ;
@@ -48,10 +48,10 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
     public void onBindViewHolder(popularMosquesAdapter.ViewHolder holder, int position) {
 
         if (holder!=null){
-        holder.binding.mosqueName.setText(list.get(position).getData().getName());
-        holder.binding.locationPin.setText(list.get(position).getData().getAddress());
+        holder.binding.mosqueName.setText(list.get(position).getName());
+        holder.binding.locationPin.setText(list.get(position).getAddress());
 
-            Glide.with(context).load(list.get(position).getData().getMosqueImage())
+            Glide.with(context).load(list.get(position).getMosqueImage())
                     .transition(withCrossFade())
                     .circleCrop()
                     .apply(new RequestOptions().transform(new RoundedCorners(10))
@@ -81,7 +81,7 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, MosqueDetails.class);
-                intent.putExtra(MOSQUE_ID, list.get(position).getData().getId());
+                intent.putExtra(MOSQUE_ID, list.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -95,7 +95,7 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
 
 
 
-    public void setData(List<MosqueExample> list) {
+    public void setData(List<TopMosque> list) {
         this.list = list;
         notifyDataSetChanged();
     }

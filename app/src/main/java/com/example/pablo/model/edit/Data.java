@@ -13,13 +13,25 @@ public class Data implements Serializable
     private Integer id;
     @SerializedName("user_id")
     @Expose
-    private Integer userId;
+    private Object userId;
     @SerializedName("order_id")
     @Expose
     private Integer orderId;
+    @SerializedName("room_id")
+    @Expose
+    private Integer roomId;
     @SerializedName("room_name")
     @Expose
     private String roomName;
+    @SerializedName("available_rooms")
+    @Expose
+    private Integer availableRooms;
+    @SerializedName("hotel_name")
+    @Expose
+    private String hotelName;
+    @SerializedName("room_image")
+    @Expose
+    private List<String> roomImage = null;
     @SerializedName("check_in")
     @Expose
     private String checkIn;
@@ -44,13 +56,12 @@ public class Data implements Serializable
     @SerializedName("order_total_price")
     @Expose
     private Integer orderTotalPrice;
-    @SerializedName("time_count")
+    @SerializedName("created_from")
     @Expose
-    private String timeCount;
+    private String createdFrom;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-    private final static long serialVersionUID = 6593304715990283261L;
 
     public Integer getId() {
         return id;
@@ -60,11 +71,11 @@ public class Data implements Serializable
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Object getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Object userId) {
         this.userId = userId;
     }
 
@@ -76,12 +87,44 @@ public class Data implements Serializable
         this.orderId = orderId;
     }
 
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
+    }
+
     public String getRoomName() {
         return roomName;
     }
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public Integer getAvailableRooms() {
+        return availableRooms;
+    }
+
+    public void setAvailableRooms(Integer availableRooms) {
+        this.availableRooms = availableRooms;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public List<String> getRoomImage() {
+        return roomImage;
+    }
+
+    public void setRoomImage(List<String> roomImage) {
+        this.roomImage = roomImage;
     }
 
     public String getCheckIn() {
@@ -148,12 +191,12 @@ public class Data implements Serializable
         this.orderTotalPrice = orderTotalPrice;
     }
 
-    public String getTimeCount() {
-        return timeCount;
+    public String getCreatedFrom() {
+        return createdFrom;
     }
 
-    public void setTimeCount(String timeCount) {
-        this.timeCount = timeCount;
+    public void setCreatedFrom(String createdFrom) {
+        this.createdFrom = createdFrom;
     }
 
     public String getCreatedAt() {

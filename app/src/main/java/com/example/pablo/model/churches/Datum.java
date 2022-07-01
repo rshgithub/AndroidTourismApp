@@ -1,12 +1,10 @@
+package com.example.pablo.model.churches;
 
-package com.example.pablo.model.mosquedetails;
-
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data implements Serializable
-{
+public class Datum {
+
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -37,9 +35,9 @@ public class Data implements Serializable
     @SerializedName("map")
     @Expose
     private String map;
-    @SerializedName("mosque_image")
+    @SerializedName("church_image")
     @Expose
-    private String mosqueImage;
+    private String churchImage;
 
     public Integer getId() {
         return id;
@@ -121,12 +119,12 @@ public class Data implements Serializable
         this.map = map;
     }
 
-    public String getMosqueImage() {
-        return mosqueImage;
+    public String getChurchImage() {
+        return churchImage;
     }
 
-    public void setMosqueImage(String mosqueImage) {
-        this.mosqueImage = mosqueImage;
+    public void setChurchImage(String churchImage) {
+        this.churchImage = churchImage;
     }
 
 }

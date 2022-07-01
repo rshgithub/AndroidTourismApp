@@ -1,14 +1,12 @@
-
-package com.example.pablo.model.mosques;
-
-import java.io.Serializable;
-import java.util.List;
+package com.example.pablo.model.churches;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MosqueExample implements Serializable
-{
+import java.util.List;
+
+public class AllChurches {
+
     @SerializedName("message")
     @Expose
     private String message;
@@ -32,4 +30,6 @@ public class MosqueExample implements Serializable
         this.data = data;
     }
 
+
 }
+

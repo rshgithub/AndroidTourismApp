@@ -17,7 +17,7 @@ public class Datum implements Serializable
     @SerializedName("status")
     @Expose
     private String status;
-    @SerializedName("time_count")
+    @SerializedName("created_from")
     @Expose
     private String timeCount;
     @SerializedName("hotel_name")

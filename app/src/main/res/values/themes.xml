@@ -78,4 +78,9 @@
     <style name="NoInternet" >
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+    <style name="DialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:windowMinWidthMinor">85%</item>
+    </style>
 </resources>

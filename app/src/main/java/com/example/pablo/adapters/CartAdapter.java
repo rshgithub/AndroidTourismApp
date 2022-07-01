@@ -11,6 +11,10 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.pablo.R;
 import com.example.pablo.activity.BookingInfo;
 import com.example.pablo.activity.Login;
@@ -22,6 +26,8 @@ import com.example.pablo.model.cart.CartExample;
 import com.example.pablo.model.cart.HotelOrderItem;
 
 import java.util.List;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     private List<HotelOrderItem> list;
@@ -47,8 +53,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.binding.roomTotalPrice.setText(list.get(position).getOrderTotalPrice() + "");
+        holder.binding.roomName.setText(list.get(position).getRoomName() + "");
         holder.binding.hotelRoomName.setText(list.get(position).getRoomCount() + " Room Count");
         holder.binding.dateTime.setText(list.get(position).getCheckIn() + " - " + list.get(position).getCheckOut());
+        Glide.with(context).load(list.get(position).getRoomImage().get(0) )
+                .transition(withCrossFade())
+                .circleCrop()
+                .apply(new RequestOptions().transform(new RoundedCorners(10))
+                        .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .error(R.drawable.mosqes).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(holder.binding.imageView6);
 
 
         Long count = list.get(position).getOrderTotalPrice();

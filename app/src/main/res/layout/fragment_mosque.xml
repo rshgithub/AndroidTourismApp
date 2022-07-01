@@ -10,12 +10,16 @@
         android:layout_width="match_parent"
         android:id="@+id/scroll"
         android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F6F9FA"
         >
+
 
         <View
             android:id="@+id/view12"
@@ -108,7 +112,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_220sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layoutAnimation="@anim/item_layout_animation"
 
             android:layout_below="@+id/imageView13"
@@ -126,7 +130,7 @@
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_220sdp"
+            android:layout_height="@dimen/_180sdp"
             android:layout_below="@+id/imageView13"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -199,7 +203,7 @@
         <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView3"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -212,7 +216,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
     </RelativeLayout>
+        </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

@@ -1,12 +1,10 @@
+package com.example.pablo.model.mosques;
 
-package com.example.pablo.model.mosquedetails;
-
-import java.io.Serializable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Data implements Serializable
-{
+public class Datum {
+
     @SerializedName("id")
     @Expose
     private Integer id;

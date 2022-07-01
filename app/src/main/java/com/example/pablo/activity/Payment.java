@@ -66,8 +66,8 @@ Long price;
             @Override
             public void onClick(View view) {
 
-                if(binding.tvCardName == null || binding.tvExpiryMonth == null
-                        || binding.tvCardNumber == null || binding.tvCvv == null){
+                if(binding.tvCardName.getText().toString().isEmpty() || binding.tvExpiryMonth.getText().toString().isEmpty()
+                        || binding.tvCardNumber.getText().toString().isEmpty()|| binding.tvCvv.getText().toString().isEmpty()){
 
                     String number = binding.tvCardNumber.getText().toString();
                     String Date = binding.tvExpiryMonth.getText().toString();

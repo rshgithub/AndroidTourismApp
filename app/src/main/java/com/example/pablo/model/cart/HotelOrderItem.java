@@ -2,56 +2,67 @@
 package com.example.pablo.model.cart;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class HotelOrderItem implements Serializable
 {
-
     @SerializedName("id")
     @Expose
     private Long id;
     @SerializedName("user_id")
     @Expose
-    private Long userId;
+    private Integer userId;
     @SerializedName("order_id")
     @Expose
-    private Long orderId;
+    private Integer orderId;
     @SerializedName("room_id")
     @Expose
-    private Long room_id;
+    private Integer roomId;
     @SerializedName("room_name")
     @Expose
     private String roomName;
+    @SerializedName("available_rooms")
+    @Expose
+    private Integer availableRooms;
+    @SerializedName("hotel_name")
+    @Expose
+    private String hotelName;
+    @SerializedName("room_image")
+    @Expose
+    private List<String> roomImage = null;
     @SerializedName("check_in")
     @Expose
     private String checkIn;
     @SerializedName("check_out")
     @Expose
     private String checkOut;
-    @SerializedName("time_count")
-    @Expose
-    private String timeCount;
     @SerializedName("room_count")
     @Expose
-    private Long roomCount;
+    private Integer roomCount;
     @SerializedName("total_nights")
     @Expose
-    private Long totalNights;
+    private Integer totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Long roomPricePerNight;
+    private Integer roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
-    private Long roomHasOffer;
+    private Integer roomHasOffer;
     @SerializedName("savings_per_room")
     @Expose
-    private Long savingsPerRoom;
+    private Integer savingsPerRoom;
     @SerializedName("order_total_price")
     @Expose
     private Long orderTotalPrice;
-    private final static long serialVersionUID = 3147614202124648815L;
+    @SerializedName("created_from")
+    @Expose
+    private String createdFrom;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
 
     public Long getId() {
         return id;
@@ -61,20 +72,28 @@ public class HotelOrderItem implements Serializable
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public Long getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
+    }
+
+    public Integer getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
 
     public String getRoomName() {
@@ -83,6 +102,30 @@ public class HotelOrderItem implements Serializable
 
     public void setRoomName(String roomName) {
         this.roomName = roomName;
+    }
+
+    public Integer getAvailableRooms() {
+        return availableRooms;
+    }
+
+    public void setAvailableRooms(Integer availableRooms) {
+        this.availableRooms = availableRooms;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public List<String> getRoomImage() {
+        return roomImage;
+    }
+
+    public void setRoomImage(List<String> roomImage) {
+        this.roomImage = roomImage;
     }
 
     public String getCheckIn() {
@@ -101,51 +144,43 @@ public class HotelOrderItem implements Serializable
         this.checkOut = checkOut;
     }
 
-    public String getTimeCount() {
-        return timeCount;
-    }
-
-    public void setTimeCount(String timeCount) {
-        this.timeCount = timeCount;
-    }
-
-    public Long getRoomCount() {
+    public Integer getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(Long roomCount) {
+    public void setRoomCount(Integer roomCount) {
         this.roomCount = roomCount;
     }
 
-    public Long getTotalNights() {
+    public Integer getTotalNights() {
         return totalNights;
     }
 
-    public void setTotalNights(Long totalNights) {
+    public void setTotalNights(Integer totalNights) {
         this.totalNights = totalNights;
     }
 
-    public Long getRoomPricePerNight() {
+    public Integer getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Long roomPricePerNight) {
+    public void setRoomPricePerNight(Integer roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 
-    public Long getRoomHasOffer() {
+    public Integer getRoomHasOffer() {
         return roomHasOffer;
     }
 
-    public void setRoomHasOffer(Long roomHasOffer) {
+    public void setRoomHasOffer(Integer roomHasOffer) {
         this.roomHasOffer = roomHasOffer;
     }
 
-    public Long getSavingsPerRoom() {
+    public Integer getSavingsPerRoom() {
         return savingsPerRoom;
     }
 
-    public void setSavingsPerRoom(Long savingsPerRoom) {
+    public void setSavingsPerRoom(Integer savingsPerRoom) {
         this.savingsPerRoom = savingsPerRoom;
     }
 
@@ -157,11 +192,20 @@ public class HotelOrderItem implements Serializable
         this.orderTotalPrice = orderTotalPrice;
     }
 
-    public Long getRoom_id() {
-        return room_id;
+    public String getCreatedFrom() {
+        return createdFrom;
     }
 
-    public void setRoom_id(Long room_id) {
-        this.room_id = room_id;
+    public void setCreatedFrom(String createdFrom) {
+        this.createdFrom = createdFrom;
     }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
 }

@@ -17,15 +17,14 @@ import com.example.pablo.R;
 import com.example.pablo.details_activities.ChurchesDetails;
 import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.databinding.MosquesItemBinding;
-import com.example.pablo.model.churches.ChurchesExample;
-import com.example.pablo.model.churches.Data;
+import com.example.pablo.model.churches.Datum;
 
 import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class ChurchesAdapter  extends RecyclerView.Adapter<ChurchesAdapter.ViewHolder> {
-    private List<ChurchesExample> list  ;
+    private List<Datum> list  ;
     Context context;
     private static MyInterface listener ;
     public final static String CHURCHES_ID = "Churches_id" ;
@@ -46,11 +45,11 @@ public class ChurchesAdapter  extends RecyclerView.Adapter<ChurchesAdapter.ViewH
     @Override
     public void onBindViewHolder(ChurchesAdapter.ViewHolder holder, int position) {
 
-        holder.binding.name.setText(list.get(position).getData().getName());
-        holder.binding.address.setText(list.get(position).getData().getAddress());
-        holder.binding.availableTime.setText(list.get(position).getData().getAvailableTime());
+        holder.binding.name.setText(list.get(position).getName());
+        holder.binding.address.setText(list.get(position).getAddress());
+        holder.binding.availableTime.setText(list.get(position).getAvailableTime());
 
-        Glide.with(context).load(list.get(position).getData().getChurchImage())
+        Glide.with(context).load(list.get(position).getChurchImage())
                 .transition(withCrossFade())
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(20))
@@ -77,7 +76,7 @@ public class ChurchesAdapter  extends RecyclerView.Adapter<ChurchesAdapter.ViewH
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, ChurchesDetails.class);
-                intent.putExtra(CHURCHES_ID, list.get(position).getData().getId());
+                intent.putExtra(CHURCHES_ID, list.get(position).getId());
                 context.startActivity(intent);
             }
         });
@@ -88,7 +87,7 @@ public class ChurchesAdapter  extends RecyclerView.Adapter<ChurchesAdapter.ViewH
     }
 
 
-    public void setData(List<ChurchesExample> list) {
+    public void setData(List<Datum> list) {
         this.list = list;
         notifyDataSetChanged();
     }

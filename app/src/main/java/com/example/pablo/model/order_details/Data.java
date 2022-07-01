@@ -9,40 +9,45 @@ public class Data implements Serializable{
 
     @SerializedName("id")
     @Expose
-    private Long id;
+    private Integer id;
     @SerializedName("user_id")
     @Expose
-    private Long userId;
+    private Integer userId;
     @SerializedName("status")
     @Expose
     private String status;
-    @SerializedName("time_count")
-    @Expose
-    private String timeCount;
     @SerializedName("hotel_name")
     @Expose
     private String hotelName;
     @SerializedName("total_price")
     @Expose
-    private Long totalPrice;
+    private Integer totalPrice;
     @SerializedName("order_items_count")
     @Expose
-    private Long orderItemsCount;
-    private final static long serialVersionUID = -1398470121324438103L;
+    private Integer orderItemsCount;
+    @SerializedName("created_from")
+    @Expose
+    private String createdFrom;
+    @SerializedName("created_at")
+    @Expose
+    private String createdAt;
+    @SerializedName("updated_at")
+    @Expose
+    private String updatedAt;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -54,14 +59,6 @@ public class Data implements Serializable{
         this.status = status;
     }
 
-    public String getTimeCount() {
-        return timeCount;
-    }
-
-    public void setTimeCount(String timeCount) {
-        this.timeCount = timeCount;
-    }
-
     public String getHotelName() {
         return hotelName;
     }
@@ -70,20 +67,44 @@ public class Data implements Serializable{
         this.hotelName = hotelName;
     }
 
-    public Long getTotalPrice() {
+    public Integer getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(Integer totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public Long getOrderItemsCount() {
+    public Integer getOrderItemsCount() {
         return orderItemsCount;
     }
 
-    public void setOrderItemsCount(Long orderItemsCount) {
+    public void setOrderItemsCount(Integer orderItemsCount) {
         this.orderItemsCount = orderItemsCount;
+    }
+
+    public String getCreatedFrom() {
+        return createdFrom;
+    }
+
+    public void setCreatedFrom(String createdFrom) {
+        this.createdFrom = createdFrom;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }

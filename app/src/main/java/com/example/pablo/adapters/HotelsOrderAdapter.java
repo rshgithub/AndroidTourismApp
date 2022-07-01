@@ -42,8 +42,8 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
     @Override
     public void onBindViewHolder(HotelsOrderAdapter.ViewHolder holder, int position) {
 
-        holder.binding.date.setText(list.get(position).getTimeCount()+"");
-        holder.binding.price.setText(list.get(position).getTotalPrice()+"");
+        holder.binding.date.setText(list.get(position).getTimeCount()+"room count");
+        holder.binding.price.setText(list.get(position).getTotalPrice()+"$");
         holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
         holder.binding.hotelName.setText(list.get(position).getHotelName());
 

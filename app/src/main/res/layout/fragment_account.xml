@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F8F8"
+    android:id="@+id/container"
     tools:context=".fragments.AccountFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -29,26 +30,23 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/photo"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="12dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_person_24"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                 app:strokeColor="@color/purple_500"
                 tools:ignore="MissingConstraints" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/chape"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="12dp"
                 android:background="@drawable/image"
                 android:scaleType="fitXY"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,11 +177,11 @@
                 android:id="@+id/imageView22"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="31dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="36dp"
                 android:src="@drawable/ic_baseline_call_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView18"
+                app:layout_constraintTop_toBottomOf="@+id/textView46"
                 app:tint="#0E4C75"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -191,7 +189,7 @@
                 android:id="@+id/Notifications"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_30sdp"
                 android:layout_marginEnd="@dimen/_40sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
@@ -239,7 +237,7 @@
                 android:id="@+id/Out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_31sdp"
                 android:layout_marginEnd="@dimen/_40sdp"
                 android:layout_marginRight="@dimen/_40sdp"
                 android:scaleType="fitXY"
@@ -251,23 +249,21 @@
                 android:id="@+id/imageView23"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_27sdp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="37dp"
                 android:src="@drawable/ic_baseline_privacy_tip_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView22" />
+                app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
             <ImageView
                 android:id="@+id/imageView25"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_27sdp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="38dp"
                 android:src="@drawable/ic_baseline_info_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+                app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -275,11 +271,10 @@
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="@dimen/_28sdp"
+                android:layout_marginTop="41dp"
                 android:src="@drawable/ic_baseline_login_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView25" />
+                app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textView5"

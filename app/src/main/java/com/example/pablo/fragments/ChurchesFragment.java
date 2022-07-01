@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +30,10 @@ import com.example.pablo.interfaces.MyInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.adapters.PopularChurchesAdapter;
 import com.example.pablo.adapters.ChurchesAdapter;
-import com.example.pablo.model.churches.ChurchesExample;
-import com.example.pablo.model.churches.Data;
+import com.example.pablo.model.churches.AllChurches;
+import com.example.pablo.model.churches.Datum;
+import com.example.pablo.model.churches.TopChurches;
 import com.example.pablo.databinding.FragmentChurchesBinding;
-import com.example.pablo.model.hotel.SearchHotel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +50,8 @@ public class ChurchesFragment extends Fragment {
 
     ChurchesAdapter churchesAdapter;
     FragmentChurchesBinding binding;
-    List<ChurchesExample> list;
+    List<Datum> list;
+    List<TopChurches> list1;
     Service service;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
@@ -136,22 +136,22 @@ public class ChurchesFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getChurches(token).enqueue(new Callback<List<ChurchesExample>>() {
+        service.getChurches(token).enqueue(new Callback<AllChurches>() {
             @Override
-            public void onResponse(Call<List<ChurchesExample>> call, Response<List<ChurchesExample>> response) {
+            public void onResponse(Call<AllChurches> call, Response<AllChurches> response) {
 
                 if (response.isSuccessful()) {
 //                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     binding.recyclerview.startLayoutAnimation();
 
                     stopShimmer();
-                    list = response.body();
-                    popularChurchesAdapter.setData(list);
+                    list = response.body().getData();
+                    churchesAdapter.setData(list);
 
                 }
             }
             @Override
-            public void onFailure(Call<List<ChurchesExample>> call, Throwable t) {
+            public void onFailure(Call<AllChurches> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
@@ -163,22 +163,22 @@ public class ChurchesFragment extends Fragment {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getTopChurches(token).enqueue(new Callback<List<ChurchesExample>>() {
+        service.getTopChurches(token).enqueue(new Callback<List<TopChurches>>() {
             @Override
-            public void onResponse(Call<List<ChurchesExample>> call, Response<List<ChurchesExample>> response) {
+            public void onResponse(Call<List<TopChurches>> call, Response<List<TopChurches>> response) {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     stopShimmer();
                     binding.recyclerview2.startLayoutAnimation();
 
-                    list = response.body();
-                    churchesAdapter.setData(list);
+                    list1 = response.body();
+                    popularChurchesAdapter.setData(list1);
 
                 }
             }
             @Override
-            public void onFailure(Call<List<ChurchesExample>> call, Throwable t) {
+            public void onFailure(Call<List<TopChurches>> call, Throwable t) {
                 Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -309,28 +309,23 @@ public class ChurchesFragment extends Fragment {
         });
     }
 
-    private void search(String c) {
+    private void search(String name) {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
         String search = binding.searchView3.getQuery().toString();
 
-        service.ChurchesSearch(token,search).enqueue(new Callback<ChurchesExample>() {
+        service.ChurchesSearch(token,search).enqueue(new Callback<AllChurches>() {
             @Override
-            public void onResponse(Call<ChurchesExample> call, Response<ChurchesExample> response) {
+            public void onResponse(Call<AllChurches> call, Response<AllChurches> response) {
                 if (response.isSuccessful()){
-
-                 //   Log.e("search",response.body().getData().size()+"");
-                   // churchesAdapter.setData(response.body().getData());
-                    //  Log.e("search",response.body().+"");
+                    churchesAdapter.setData(response.body().getData());
                 }
-
-
             }
 
             @SuppressLint("CheckResult")
             @Override
-            public void onFailure(Call<ChurchesExample> call, Throwable t) {
+            public void onFailure(Call<AllChurches> call, Throwable t) {
             }
         });
 

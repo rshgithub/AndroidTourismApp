@@ -98,13 +98,15 @@ public class HotelOrdersDetails extends AppCompatActivity {
             public void onResponse(Call<OrderDetailsExample> call, Response<OrderDetailsExample> response) {
 
                 if (response.isSuccessful()) {
-                 Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
+              //   Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
 
 
                     binding.totalPrice.setText(response.body().getData().getTotalPrice()+"$");
-                    binding.date.setText(response.body().getData().getTimeCount()+"");
+                    binding.date.setText(response.body().getData().getCreatedFrom()+"");
                     binding.count.setText(response.body().getData().getOrderItemsCount()+"");
                     binding.hotelName.setText(response.body().getData().getHotelName()+"");
+
+
 
                     list = response.body().getHotelOrderItems();
                     adapter.setData(list);
