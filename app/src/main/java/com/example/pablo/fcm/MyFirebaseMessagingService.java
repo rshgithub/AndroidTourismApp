@@ -16,14 +16,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.pablo.R;
-import com.example.pablo.activity.Login;
-import com.example.pablo.activity.MainActivity;
 import com.example.pablo.details_activities.HotelOrdersDetails;
-import com.example.pablo.details_activities.HotelsDetails;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
