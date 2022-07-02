@@ -14,8 +14,8 @@ import com.example.pablo.details_activities.HotelOrdersDetails;
 import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.onbording_1.IntroActivity;
 
-import static com.example.pablo.activity.Login.PREF_NAME;
 import static com.example.pablo.activity.Login.SP;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 
 public class Splash extends AppCompatActivity {
 
@@ -32,7 +32,9 @@ public class Splash extends AppCompatActivity {
 
         Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");
+        String FCM_TOKEN = Login.SP.getString(Login.FCM_TOKEN, "");
         Log.e("tokenn", token);
+        Log.e("FCM_TOKEN_splash", FCM_TOKEN);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +42,17 @@ public class Splash extends AppCompatActivity {
                 onboarding = getSharedPreferences("onboarding", MODE_PRIVATE);
 
                 boolean isFirsttime = onboarding.getBoolean("firsttime", true);
-                if (!isFirsttime && token != null && SP.getString("email","")==null&& SP.getString("password","")==null) {
+
+                if (getIntent().getExtras() != null && getIntent().getStringExtra("order_id") != null) {
+
+                    if (getIntent().getStringExtra("order_id") != null) {
+//                        Toast.makeText(MainActivity.this, getIntent().getStringExtra("order_id") + "", Toast.LENGTH_SHORT).show();
+//                        Intent notificationIntent = new Intent(MainActivity.this, HotelOrdersDetails.class);
+//                        notificationIntent.putExtra("order_id", getIntent().getStringExtra("order_id"));
+//                        startActivity(notificationIntent);
+//                        finish();
+                    }
+                } else if (!isFirsttime && token != null) {
                     Intent i = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                     startActivity(i);
                     finish();

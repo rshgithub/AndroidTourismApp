@@ -47,7 +47,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
 public class ActivityNotification extends AppCompatActivity {

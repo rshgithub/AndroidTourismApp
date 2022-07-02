@@ -16,7 +16,7 @@ public class NotificationData implements Serializable
     private Long hotelOrderId;
     @SerializedName("status")
     @Expose
-    private Long status;
+    private String status;
     @SerializedName("hotel_name")
     @Expose
     private String hotelName;
@@ -26,7 +26,7 @@ public class NotificationData implements Serializable
     @SerializedName("body")
     @Expose
     private String body;
-    @SerializedName("time_count")
+    @SerializedName("created_from")
     @Expose
     private String time_count;
     @SerializedName("created_at")
@@ -67,11 +67,11 @@ public class NotificationData implements Serializable
         this.hotelOrderId = hotelOrderId;
     }
 
-    public Long getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Long status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

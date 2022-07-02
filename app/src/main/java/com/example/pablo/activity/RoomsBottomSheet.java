@@ -43,7 +43,7 @@ import retrofit2.Response;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
 public class RoomsBottomSheet extends BottomSheetDialogFragment {

@@ -1,13 +1,19 @@
 package com.example.pablo.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.pablo.R;
 import com.example.pablo.details_activities.HotelOrdersDetails;
 import com.example.pablo.databinding.HotelOrderBinding;
@@ -18,6 +24,7 @@ import com.example.pablo.model.orders.OrdersExample;
 import java.util.HashSet;
 import java.util.List;
 
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 
 public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> {
@@ -39,6 +46,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
         return new HotelsOrderAdapter.ViewHolder(binding);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(HotelsOrderAdapter.ViewHolder holder, int position) {
 
@@ -46,9 +54,21 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
         holder.binding.price.setText(list.get(position).getTotalPrice()+"$");
         holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
         holder.binding.hotelName.setText(list.get(position).getHotelName());
+        Glide.with(context).load(list.get(position).getHotel_image())
+                 .error(R.drawable.mosqes).skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(holder.binding.image);
 
 
-
+        if(list.get(position).getStatus().equals("rejected")){
+            holder.binding.status.setTextColor(context.getResources().getColor(R.color.red));
+        }else if (list.get(position).getStatus().equals("pending")){//Checkout !!
+            holder.binding.status.setTextColor(context.getResources().getColor(R.color.yellow));
+        }else if (list.get(position).getStatus().equals("approved")){
+            holder.binding.status.setTextColor(context.getResources().getColor(R.color.green));
+        }else{
+            holder.binding.status.setTextColor(context.getResources().getColor(R.color.red));
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -23,6 +23,12 @@ public class Datum implements Serializable
     @SerializedName("hotel_name")
     @Expose
     private String hotelName;
+    @SerializedName("hotel_image")
+    @Expose
+    private String hotel_image;
+    @SerializedName("created_at")
+    @Expose
+    private String created_at;
     @SerializedName("total_price")
     @Expose
     private Long totalPrice;
@@ -30,6 +36,22 @@ public class Datum implements Serializable
     @Expose
     private Long orderItemsCount;
     private final static long serialVersionUID = -7116576093380600927L;
+
+    public String getHotel_image() {
+        return hotel_image;
+    }
+
+    public void setHotel_image(String hotel_image) {
+        this.hotel_image = hotel_image;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
 
     public Long getId() {
         return id;

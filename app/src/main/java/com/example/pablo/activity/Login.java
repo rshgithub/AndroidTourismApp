@@ -36,18 +36,19 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.pablo.activity.Signup.PREF_NAME;
+
 
 public class Login extends AppCompatActivity {
 
     ActivityLoginBinding binding;
     public static SharedPreferences SP;    // to read from SharedPreferences
     public static SharedPreferences.Editor EDIT; // to write in / edit SharedPreferences
-    public static final String PREF_NAME = "token";
     public static final String TokenKey = "Token_K";
     public static final String USERKey = "USER_K";
     public static final String UserNameKey = "UserName_K";
     public static final String AddressKey = "AddressKey_K";
-    public String FCM_TOKEN ;
+    public static String FCM_TOKEN ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,7 @@ public class Login extends AppCompatActivity {
         EDIT = SP.edit();
 
         FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
-        Log.e("FCM_TOKEN",FCM_TOKEN+"");
+        Log.e("FCM_TOKEN_LOGIN",FCM_TOKEN+"");
 
         if (getIntent() != null) {
             String email = getIntent().getStringExtra("email");

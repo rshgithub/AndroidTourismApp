@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,11 +52,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.binding.tvNotificationDate.setText(list.get(position).getCreated_at());
 
 
-            if(list.get(position).getStatus()==1){
+            if(list.get(position).getStatus().equals("rejected")){
+                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
+            }else if (list.get(position).getStatus().equals("pending")){//Checkout !!
+                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color_pinding);
+            }else if (list.get(position).getStatus().equals("approved")){
                 holder.binding.imageView22.setBackgroundResource(R.drawable.side_color);
             }else{
-                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
+                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color_pinding);
             }
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(context, list.get(position).getStatus(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

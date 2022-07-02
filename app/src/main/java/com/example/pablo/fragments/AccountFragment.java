@@ -29,9 +29,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.pablo.R;
 import com.example.pablo.activity.ActivityNotification;
 import com.example.pablo.FileUtil;
 import com.example.pablo.activity.ActivityAbout;
+import com.example.pablo.activity.ActivitySupport;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.Login;
 import com.example.pablo.interfaces.Service;
@@ -55,7 +57,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
-import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
 public class AccountFragment extends Fragment {
@@ -101,17 +103,18 @@ public class AccountFragment extends Fragment {
         binding = FragmentAccountBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+        startShimmer();
         getRetrofitInstance();
         ifIsOnLine();
         about();
         logOutButton();
         permission();
-        getAccountData();
         swipe();
+        getAccountData();
         changeUserImage();
         notification();
         support();
-        startShimmer();
+
         return view;
 
     }
@@ -133,7 +136,7 @@ public class AccountFragment extends Fragment {
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
                     Log.e("image",response.body().getData().getUserAvatar());
-                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).circleCrop().into(binding.photo);
+                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).error(R.drawable.ic_baseline_person_24).circleCrop().into(binding.photo);
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
@@ -279,11 +282,11 @@ public class AccountFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Glide.with(getActivity()).asBitmap().load(bitmap)
-                    .apply(new RequestOptions().transform(new RoundedCorners(100))
-                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)).circleCrop().into(binding.photo);
+            Glide.with(getActivity()).asBitmap().load(bitmap).into(binding.photo);
+//                    .apply(new RequestOptions().transform(new RoundedCorners(100))
+//                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
 
-           // binding.photo.setImageBitmap(bitmap);
+            binding.photo.setImageBitmap(bitmap);
         }
 
     }
@@ -303,7 +306,11 @@ public class AccountFragment extends Fragment {
                 public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                     Log.d("response code", response.code() + "");
                     if (response.isSuccessful()) {
+                        Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
                         Log.d("success", response.message());
+                    }else {
+                        Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
+
                     }
                 }
                 @Override
@@ -315,7 +322,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void permission(){
-        ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
 
     }
 
@@ -405,7 +412,7 @@ public class AccountFragment extends Fragment {
         binding.Support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                Intent intent = new Intent(getActivity(), ActivitySupport.class);
                 startActivity(intent);
             }
         });
@@ -413,7 +420,7 @@ public class AccountFragment extends Fragment {
         binding.textView47.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ActivityAbout.class);
+                Intent intent = new Intent(getActivity(), ActivitySupport.class);
                 startActivity(intent);
             }
         });
@@ -429,6 +436,7 @@ public class AccountFragment extends Fragment {
     private void startShimmer() {
 
         binding.shimmerLayout.startShimmer();
+    //    binding.shimmerLayout.setVisibility(View.GONE);
     }
 
     private void stopShimmer() {

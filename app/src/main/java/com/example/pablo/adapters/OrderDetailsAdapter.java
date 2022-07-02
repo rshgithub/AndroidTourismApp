@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityHotelOrdersDetailsBinding;
 import com.example.pablo.databinding.HotelOrderBinding;
@@ -45,24 +47,56 @@ public class OrderDetailsAdapter  extends RecyclerView.Adapter<OrderDetailsAdapt
     @Override
     public void onBindViewHolder(OrderDetailsAdapter.ViewHolder holder, int position) {
 
-        holder.binding.checkin.setText(list.get(position).getCheckIn()+"  -  "+list.get(position).getCheckOut()+"");
+        holder.binding.reservationDate.setText(list.get(position).getCheckIn()+"  -  "+list.get(position).getCheckOut()+"");
         holder.binding.roomCount.setText(list.get(position).getRoomCount()+"");
         holder.binding.roomOffer.setText(list.get(position).getRoomHasOffer()+"");
+        holder.binding.orderTotalPrice.setText(list.get(position).getOrderTotalPrice()+"");
         holder.binding.totalNights.setText(list.get(position).getTotalNights()+"");
         holder.binding.pricePerNights.setText(list.get(position).getRoomPricePerNight()+"");
         holder.binding.roomServing.setText(list.get(position).getSavingsPerRoom()+"");
         holder.binding.roomName.setText(list.get(position).getRoomName()+"");
+        holder.binding.hotelName.setText(list.get(position).getHotelName()+"");
+        holder.binding.createdFrom.setText(list.get(position).getCreatedFrom()+"");
+        holder.binding.day.setText(list.get(position).getCreatedAt()+"");
+        Glide.with(context).load(list.get(position).getRoomImage())
+                .error(R.drawable.mosqes).skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(holder.binding.roomImage);
+
+        holder.binding.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.textView40.setVisibility(View.VISIBLE);
+                holder.binding.textView33.setVisibility(View.VISIBLE);
+                holder.binding.checkin.setVisibility(View.VISIBLE);
+                holder.binding.roomOffer.setVisibility(View.VISIBLE);
+                holder.binding.reservationDate.setVisibility(View.VISIBLE);
+                holder.binding.reservationDate.setVisibility(View.VISIBLE);
+                holder.binding.roomServing.setVisibility(View.VISIBLE);
+                holder.binding.less.setVisibility(View.VISIBLE);
+                holder.binding.details.setVisibility(View.GONE);
+
+            }
+        });
+
+        holder.binding.less.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.binding.textView40.setVisibility(View.GONE);
+                holder.binding.textView33.setVisibility(View.GONE);
+                holder.binding.checkin.setVisibility(View.GONE);
+                holder.binding.roomOffer.setVisibility(View.GONE);
+                holder.binding.reservationDate.setVisibility(View.GONE);
+                holder.binding.reservationDate.setVisibility(View.GONE);
+                holder.binding.roomServing.setVisibility(View.GONE);
+                holder.binding.details.setVisibility(View.VISIBLE);
+                holder.binding.less.setVisibility(View.GONE);
+
+            }
+        });
 
 
-//        if (list.get(position).getStatus().equals("rejected")){
-//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
-//        }else if (list.get(position).getStatus().equals("accepted")){
-//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
-//        }else if (list.get(position).getStatus().equals("payed")){
-//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
-//        }else if (list.get(position).getStatus().equals("carted")){
-//            holder.binding.imageView2.setBackgroundColor(R.drawable.cancel);
-//        }
+
 
 
 

@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.pablo.R;
 import com.example.pablo.activity.Login;
 import com.example.pablo.adapters.OrderDetailsAdapter;
@@ -35,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.pablo.activity.Login.PREF_NAME;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 import static com.example.pablo.adapters.HotelsOrderAdapter.ORDERDETAILS;
 import static com.example.pablo.fcm.MyFirebaseMessagingService.ORDER_ID;
@@ -98,14 +100,25 @@ public class HotelOrdersDetails extends AppCompatActivity {
             public void onResponse(Call<OrderDetailsExample> call, Response<OrderDetailsExample> response) {
 
                 if (response.isSuccessful()) {
-              //   Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
-
 
                     binding.totalPrice.setText(response.body().getData().getTotalPrice()+"$");
                     binding.date.setText(response.body().getData().getCreatedFrom()+"");
                     binding.count.setText(response.body().getData().getOrderItemsCount()+"");
                     binding.hotelName.setText(response.body().getData().getHotelName()+"");
-
+                    binding.status.setText(response.body().getData().getStatus()+"");
+                    if(response.body().getData().getStatus().equals("rejected")){
+                        binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.red));
+                    }else if (response.body().getData().getStatus().equals("pending")){//Checkout !!
+                        binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.yellow));
+                    }else if (response.body().getData().getStatus().equals("approved")){
+                        binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.green));
+                    }else{
+                        binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.red));
+                    }
+                    Glide.with(getBaseContext()).load(response.body().getData().getHotel_image())
+                            .error(R.drawable.mosqes).skipMemoryCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(binding.imageView19);
 
 
                     list = response.body().getHotelOrderItems();

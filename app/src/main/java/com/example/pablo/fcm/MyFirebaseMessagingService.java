@@ -28,11 +28,13 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import static com.example.pablo.activity.Signup.PREF_NAME;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static SharedPreferences SP;    // to read from SharedPreferences
     public static SharedPreferences.Editor EDIT;
-    public static final String PREF_NAME = "token";
-    public static final String fcmToken = "Token_K";
+//    public static final String PREF_NAME = "token";
+    public static final String fcmToken = "fcmToken_K";
     public static final String ORDER_ID = "order_id";
     String TAG = "MyFirebaseMessagingService";
 

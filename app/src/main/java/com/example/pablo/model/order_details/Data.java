@@ -19,6 +19,9 @@ public class Data implements Serializable{
     @SerializedName("hotel_name")
     @Expose
     private String hotelName;
+    @SerializedName("hotel_image")
+    @Expose
+    private String hotel_image;
     @SerializedName("total_price")
     @Expose
     private Integer totalPrice;
@@ -34,6 +37,14 @@ public class Data implements Serializable{
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+
+    public String getHotel_image() {
+        return hotel_image;
+    }
+
+    public void setHotel_image(String hotel_image) {
+        this.hotel_image = hotel_image;
+    }
 
     public Integer getId() {
         return id;
