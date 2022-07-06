@@ -7,7 +7,7 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/Favorites"
+        android:id="@+id/Cart"
         android:icon="@drawable/ic_baseline_shopping_cart_24"
         android:iconTint="#0E4C75"
         android:title="Cart" />

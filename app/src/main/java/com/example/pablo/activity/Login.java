@@ -119,11 +119,13 @@ public class Login extends AppCompatActivity {
                         finish();
                     } else {
                         binding.progress.setVisibility(View.GONE);
+
                         String errorMessage = parseError(response);
                         Log.e("errorMessage", errorMessage + "");
                         Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
 
-                    }
+                }
+
 
 
                 }
@@ -152,8 +154,9 @@ public class Login extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(response.errorBody().string());
             JSONObject jsonObject2 = jsonObject.getJSONObject("errors");
-            JSONArray jsonArray = jsonObject2.getJSONArray("password");
+            JSONArray jsonArray = jsonObject2.getJSONArray("email");
             String s = jsonArray.getString(0);
+
 
 
             return s;

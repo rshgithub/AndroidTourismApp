@@ -33,6 +33,7 @@ import com.example.pablo.R;
 import com.example.pablo.activity.ActivityNotification;
 import com.example.pablo.FileUtil;
 import com.example.pablo.activity.ActivityAbout;
+import com.example.pablo.activity.ActivityPrivacy;
 import com.example.pablo.activity.ActivitySupport;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.Login;
@@ -114,7 +115,7 @@ public class AccountFragment extends Fragment {
         changeUserImage();
         notification();
         support();
-
+        privacy();
         return view;
 
     }
@@ -136,7 +137,7 @@ public class AccountFragment extends Fragment {
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
                     Log.e("image",response.body().getData().getUserAvatar());
-                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).error(R.drawable.ic_baseline_person_24).circleCrop().into(binding.photo);
+                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).error(R.drawable.ic_baseline_person_24).into(binding.photo);
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
@@ -421,6 +422,27 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ActivitySupport.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+
+    private void privacy(){
+
+        binding.privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityPrivacy.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.Privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ActivityPrivacy.class);
                 startActivity(intent);
             }
         });

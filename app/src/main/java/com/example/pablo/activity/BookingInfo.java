@@ -19,8 +19,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityBookingInfoBinding;
 import com.example.pablo.fragments.BottomNavigationBarActivity;
@@ -29,7 +27,6 @@ import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.edit_order.EditOrderDetails;
-import com.example.pablo.model.hotel.HotelRoom;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.google.gson.Gson;
 
@@ -48,13 +45,13 @@ import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
 
 public class BookingInfo extends AppCompatActivity {
-    int sum = 1;
+    Long sum = Long.valueOf(1);
     SimpleDateFormat sdf;
     ActivityBookingInfoBinding binding;
     Service service;
     Long roomId,orderId;
     Long tot;
-    Long totals;
+    Double total;
     Date date2;
     Date date3;
     String checkInDate, checkOutDate;
@@ -208,8 +205,9 @@ public class BookingInfo extends AppCompatActivity {
                         Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
                     }
 
-                   Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages()).circleCrop().into(binding.imageView6);
+    Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).circleCrop().into(binding.imageView6);
 
+                    Log.e("room_image",response.body().getData().getRoomImages()+"");
 
 //-----------------------------room count---------------------------------------
 
@@ -218,17 +216,31 @@ public class BookingInfo extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             sum--;
-                            if (sum < 1) {
-                                binding.min.setEnabled(false);
-
-                               // sum = 1;
-                            }else {
+                            if (sum >= 1) {
                                 binding.min.setEnabled(true);
-                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-
-                                Long x =   response.body().getData().getPricePerNight()*sum*Count;
-                                binding.totalMoney.setText(x+"");
+                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
+
+                                if (response.body().getData().getHasOffer() == null){
+                                    Long x =   response.body().getData().getPricePerNight()*sum*dayCount;
+                                    binding.totalMoney.setText(x+"");
+
+                                }else{
+                                    Long hotel_price = (response.body().getData().getPricePerNight());
+                                    tot = dayCount * hotel_price * sum;
+                                    double offer= (double) response.body().getData().getHasOffer()/ 100;
+
+                                    total = tot * offer;
+                                    double x = tot - total;
+                                    binding.totalMoney.setText(x + "");
+
+                                    Log.e("discount",offer+"");
+                                }
+                            }else {
+                                binding.min.setEnabled(false);
+                                binding.add.setEnabled(true);
+                                 sum = Long.valueOf(1);
+
 
                             }
 
@@ -245,17 +257,35 @@ public class BookingInfo extends AppCompatActivity {
                         public void onClick(View v) {
                             sum++;
 
-                            if (sum > response.body().getData().getAvailableRooms()) {
-                                binding.add.setEnabled(false);
-                            }else{
+                            Long available = response.body().getData().getAvailableRooms();
+
+                            if (sum <= response.body().getData().getAvailableRooms()) {
                                 binding.add.setEnabled(true);
-                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-
-                                Long x =   response.body().getData().getPricePerNight()*sum*Count;
-                                binding.totalMoney.setText(x+"");
+                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
-                            }
 
+                                if (response.body().getData().getHasOffer() == null){
+                                    Long x =   response.body().getData().getPricePerNight()*sum*dayCount;
+                                    binding.totalMoney.setText(x+"");
+
+                                }else{
+                                    Long hotel_price = (response.body().getData().getPricePerNight());
+                                    tot = dayCount * hotel_price * sum;
+                                    double offer= (double) response.body().getData().getHasOffer()/ 100;
+
+                                    total = tot * offer;
+                                    double x = tot - total;
+                                    binding.totalMoney.setText(x + "");
+
+                                    Log.e("discount",offer+"");
+                                }
+                            }else {
+                                binding.add.setEnabled(false);
+                                binding.min.setEnabled(true);
+                                sum = available;
+
+
+                            }
 
 
 
@@ -296,13 +326,15 @@ public class BookingInfo extends AppCompatActivity {
                                 binding.totalMoney.setText(x + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
-                                tot = Count * Price* RoomCount;
-                                totals = tot * (offer / 100);
-                                Long x = tot - totals;
-                                Long x1 =   x*sum;
-                                binding.totalMoney.setText(x1 + "");
+                                Long hotel_price = (response.body().getData().getPricePerNight());
+                                tot = Count * hotel_price * sum;
+                                double offer= (double) response.body().getData().getHasOffer()/ 100;
 
+                                total = tot * offer;
+                                double x = tot - total;
+                                binding.totalMoney.setText(x + "");
+
+                                Log.e("discount",offer+"");
                             }
 
                         }
@@ -347,19 +379,22 @@ public class BookingInfo extends AppCompatActivity {
                             Long Count = Long.valueOf((binding.dayCount.getText().toString()));
                             Long RoomCount = Long.valueOf((binding.dayCount.getText().toString()));
 
-                            if (response.body().getData().getHasOffer() == 0) {
+                            if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price* RoomCount;
                                 Long x =   tot*sum;
 
                                 binding.totalMoney.setText(x + "");
 
                             } else {
-                                int offer = Integer.parseInt(response.body().getData().getHasOffer() + "");
-                                tot = Count * Price* RoomCount;
-                                totals = tot * (offer / 100);
-                                Long x = tot - totals;
-                                Long x1 =   x*sum;
-                                binding.totalMoney.setText(x1 + "");
+                                Long hotel_price = (response.body().getData().getPricePerNight());
+                                tot = Count * hotel_price * sum;
+                                double offer= (double) response.body().getData().getHasOffer()/ 100;
+
+                                total = tot * offer;
+                                double x = tot - total;
+                                binding.totalMoney.setText(x + "");
+
+                                Log.e("discount",offer+"");
 
                             }
 
@@ -432,17 +467,31 @@ public class BookingInfo extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             sum--;
-                            if (sum < 1) {
-                                binding.min.setEnabled(false);
-
-                                // sum = 1;
-                            }else {
+                            if (sum >= 1) {
                                 binding.min.setEnabled(true);
-                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-
-                                Long x =   response.body().getData().getRoomPricePerNight()*sum*Count;
-                                binding.totalMoney.setText(x+"");
+                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
+
+                                if (response.body().getData().getRoomHasOffer() == null){
+                                    Long x =   response.body().getData().getRoomPricePerNight()*sum*dayCount;
+                                    binding.totalMoney.setText(x+"");
+
+                                }else{
+                                    Long hotel_price = (response.body().getData().getRoomPricePerNight());
+                                    tot = dayCount * hotel_price * sum;
+                                    double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
+
+                                    total = tot * offer;
+                                    double x = tot - total;
+                                    binding.totalMoney.setText(x + "");
+
+                                    Log.e("discount",offer+"");
+                                }
+                            }else {
+                                binding.min.setEnabled(false);
+                                binding.add.setEnabled(true);
+                                sum = Long.valueOf(1);
+
 
                             }
 
@@ -451,6 +500,7 @@ public class BookingInfo extends AppCompatActivity {
 
                         }
                     });
+
                     //add
                     binding.add.setOnClickListener(new View.OnClickListener() {
 
@@ -459,17 +509,35 @@ public class BookingInfo extends AppCompatActivity {
                         public void onClick(View v) {
                             sum++;
 
-                            if (sum > response.body().getData().getAvailableRooms()) {
-                                binding.add.setEnabled(false);
-                            }else{
+                            Long available = response.body().getData().getAvailableRooms();
+
+                            if (sum <= response.body().getData().getAvailableRooms()) {
                                 binding.add.setEnabled(true);
-                                Long Count = Long.valueOf((binding.dayCount.getText().toString()));
-
-                                Long x =   response.body().getData().getRoomPricePerNight()*sum*Count;
-                                binding.totalMoney.setText(x+"");
+                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
-                            }
 
+                                if (response.body().getData().getRoomHasOffer() == null){
+                                    Long x =   response.body().getData().getRoomPricePerNight()*sum*dayCount;
+                                    binding.totalMoney.setText(x+"");
+
+                                }else{
+                                    Long hotel_price = (response.body().getData().getRoomPricePerNight());
+                                    tot = dayCount * hotel_price * sum;
+                                    double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
+
+                                    total = tot * offer;
+                                    double x = tot - total;
+                                    binding.totalMoney.setText(x + "");
+
+                                    Log.e("discount",offer+"");
+                                }
+                            }else {
+                                binding.add.setEnabled(false);
+                                binding.min.setEnabled(true);
+                                sum = available;
+
+
+                            }
 
 
 
@@ -509,11 +577,15 @@ public class BookingInfo extends AppCompatActivity {
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
-                                tot = Count * Price;
-                                totals = tot * (offer / 100);
-                                Long x = tot - totals;
+                                Long hotel_price = (response.body().getData().getRoomPricePerNight());
+                                tot = Count * hotel_price * sum;
+                                double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
+
+                                total = tot * offer;
+                                double x = tot - total;
                                 binding.totalMoney.setText(x + "");
+
+                                Log.e("discount",offer+"");
 
                             }
 
@@ -563,11 +635,15 @@ public class BookingInfo extends AppCompatActivity {
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                Long offer = Long.valueOf((response.body().getData().getRoomHasOffer() + ""));
-                                tot = Count * Price;
-                                totals = tot * (offer / 100);
-                                Long x = tot - totals;
+                                Long hotel_price = (response.body().getData().getRoomPricePerNight());
+                                tot = Count * hotel_price * sum;
+                                double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
+
+                                total = tot * offer;
+                                double x = tot - total;
                                 binding.totalMoney.setText(x + "");
+
+                                Log.e("discount",offer+"");
 
                             }
 
@@ -743,6 +819,7 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bookNow();
+                finish();
             }
         });
 
@@ -769,6 +846,7 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editRoomDetails();
+                finish();
            //     Toast.makeText(BookingInfo.this, "ol", Toast.LENGTH_SHORT).show();
 
             }
@@ -780,12 +858,8 @@ public class BookingInfo extends AppCompatActivity {
         binding.cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                CartFragment cartFragment = new CartFragment();
-//                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//                fragmentTransaction.replace(cartFragment).commit();
-                startActivity(new Intent(getBaseContext(), BottomNavigationBarActivity.class));
                 EventBus.getDefault().post("cart");
+                startActivity(new Intent(getBaseContext(),BottomNavigationBarActivity.class));
             }
         });
     }

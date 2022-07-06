@@ -3,6 +3,7 @@ package com.example.pablo.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -16,12 +17,15 @@ import android.widget.Toast;
 
 import com.example.pablo.R;
 import com.example.pablo.databinding.ActivityPaymentBinding;
+import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.buy_one_order.BuyOneOrderExample;
 import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.github.ybq.android.spinkit.sprite.CircleSprite;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+
+import org.greenrobot.eventbus.EventBus;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -128,6 +132,10 @@ Long price;
                 if (response.isSuccessful()) {
                     binding.progress.setVisibility(View.GONE);
                     Toast.makeText(Payment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+               //open order fragment
+                    startActivity(new Intent(getBaseContext(), BottomNavigationBarActivity.class));
+                    EventBus.getDefault().post("order");
+
                 } else {
 
                     String errorMessage = parseError(response);

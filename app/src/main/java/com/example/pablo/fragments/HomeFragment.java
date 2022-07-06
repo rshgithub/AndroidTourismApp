@@ -89,7 +89,6 @@ public class HomeFragment extends Fragment {
         recyclerView2 = view.findViewById(R.id.recyclerview1);
 
         list = new ArrayList<>() ;
-//        list1 = new ArrayList<>() ;
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false);
@@ -100,9 +99,6 @@ public class HomeFragment extends Fragment {
         recyclerView2.setAdapter(popularHotelsAdapter);
         serves = Service.ApiClient.getRetrofitInstance();
 
-      //  getFoodImage();
-//        getpopularHotel();
-//       imageSliderRun();
 
         //Fragment
         binding.tabs.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -114,8 +110,7 @@ public class HomeFragment extends Fragment {
 
                 } else if (item.getItemId() == R.id.Mosque) {
                     openFragment(MosqueFragment.newInstance());
-                }else if (item.getItemId() == R.id.Restaurants) {
-                } else {
+                }else {
                     openFragment(ChurchesFragment.newInstance());
 
                 }
@@ -135,53 +130,5 @@ public class HomeFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
-    //section 2 ads food
-//    private void getFoodImage() {
-//        serves.getFoodImage().enqueue(new Callback<List<ImageExam>>() {
-//            @Override
-//            public void onResponse(Call<List<ImageExam>> call, Response<List<ImageExam>> response) {
-//
-////                Toast.makeText(getActivity(), "data", Toast.LENGTH_SHORT).show();
-//                if (response.body() != null) {
-//                    list = response.body();
-//                    foodOfferAdapter.setdata(list);
-//
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<ImageExam>> call, Throwable t) {
-//                Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
-    //3ed section popular hotels
-//    private void getpopularHotel() {
-//        serves.getPopularHotels("Bearer " + "38|ewcq2VaLhvY6xPyNdRW1Tqp56nuvFnXA1PRNpwNf").enqueue(new Callback<List<HotelsExample>>() {
-//            @Override
-//            public void onResponse(Call<List<HotelsExample>> call, Response<List<HotelsExample>> response) {
-//
-////                Toast.makeText(getActivity(), "data", Toast.LENGTH_SHORT).show();
-//                if (response.body() != null) {
-//                    list1 = response.body();
-//                    popularHotelsAdapter.setdata(list1);
-//
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<List<HotelsExample>> call, Throwable t) {
-//                Toast.makeText(getActivity(), "null", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
-
-    //slider
-    private void imageSliderRun() {
-        int[] images = {R.drawable.boutique_franchise_hotels, R.drawable.mosqe, R.drawable.close_woman};
-//        SliderAdapter sliderAdapter = new SliderAdapter(images);
-//        binding.imageSlider.setSliderAdapter(sliderAdapter);
-//        binding.imageSlider.setIndicatorAnimation(IndicatorAnimationType.WORM);
-//        binding.imageSlider.setSliderTransformAnimation(SliderAnimations.FADETRANSFORMATION);
-//        binding.imageSlider.startAutoCycle();
-    }
 }

@@ -25,7 +25,7 @@ public class Data implements Serializable
     private String roomName;
     @SerializedName("available_rooms")
     @Expose
-    private Integer availableRooms;
+    private Long availableRooms;
     @SerializedName("hotel_name")
     @Expose
     private String hotelName;
@@ -46,7 +46,7 @@ public class Data implements Serializable
     private Integer totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Integer roomPricePerNight;
+    private Long roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
     private Integer roomHasOffer;
@@ -103,11 +103,11 @@ public class Data implements Serializable
         this.roomName = roomName;
     }
 
-    public Integer getAvailableRooms() {
+    public Long getAvailableRooms() {
         return availableRooms;
     }
 
-    public void setAvailableRooms(Integer availableRooms) {
+    public void setAvailableRooms(Long availableRooms) {
         this.availableRooms = availableRooms;
     }
 
@@ -159,11 +159,11 @@ public class Data implements Serializable
         this.totalNights = totalNights;
     }
 
-    public Integer getRoomPricePerNight() {
+    public Long getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Integer roomPricePerNight) {
+    public void setRoomPricePerNight(Long roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 

@@ -154,10 +154,10 @@ public class Signup extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(response.errorBody().string());
             JSONObject jsonObject2 = jsonObject.getJSONObject("errors");
-            JSONArray jsonArray = jsonObject2.getJSONArray("password");
+            JSONArray jsonArray = jsonObject2.getJSONArray("email");
             String s = jsonArray.getString(0);
-
             return s;
+
         } catch (Exception e) {
         }
         return errorMsg;

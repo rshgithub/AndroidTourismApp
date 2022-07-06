@@ -54,7 +54,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.View
         if (holder != null) {
             holder.binding.name.setText(list.get(position).getName());
 
-//          holder.binding.color.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
+          holder.binding.color.setBackgroundColor(Color.parseColor(list.get(position).getColor()));
 
             Glide.with(context).load(list.get(position).getIcon())
                     .transition(withCrossFade())

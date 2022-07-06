@@ -68,10 +68,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView25"
-            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+            app:layout_constraintTop_toBottomOf="@+id/privacy" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView49"
+            android:id="@+id/privacy"
             android:layout_width="@dimen/_250sdp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
@@ -120,7 +120,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:src="@drawable/ic_baseline_brightness_1_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView49" />
+            app:layout_constraintTop_toBottomOf="@+id/privacy" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
