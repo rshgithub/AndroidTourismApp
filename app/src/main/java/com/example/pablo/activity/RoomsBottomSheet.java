@@ -180,8 +180,9 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(),BottomNavigationBarActivity.class));
-                EventBus.getDefault().post("cart");
+                Intent intent=new Intent(getActivity(),BottomNavigationBarActivity.class);
+                intent.putExtra("cart","cart");
+                startActivity(intent);
             }
         });
     }

@@ -1,12 +1,17 @@
 package com.example.pablo.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +20,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.pablo.R;
+import com.example.pablo.activity.Login;
 import com.example.pablo.details_activities.HotelOrdersDetails;
 import com.example.pablo.databinding.HotelOrderBinding;
+import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.order_details.HotelOrderItem;
 import com.example.pablo.model.orders.Datum;
 import com.example.pablo.model.orders.OrdersExample;
@@ -24,12 +31,20 @@ import com.example.pablo.model.orders.OrdersExample;
 import java.util.HashSet;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.PREF_NAME;
 
 
 public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> {
     public List<Datum> list  ;
     Context context;
+    Service service;
     public static String ORDERDETAILS = "order_id";
 ;
 
@@ -54,6 +69,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
         holder.binding.price.setText(list.get(position).getTotalPrice()+"$");
         holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
         holder.binding.hotelName.setText(list.get(position).getHotelName());
+        holder.binding.status.setText(list.get(position).getStatus());
         Glide.with(context).load(list.get(position).getHotel_image())
                  .error(R.drawable.mosqes).skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -82,7 +98,111 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
             }
         });
 
+        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("code", list.get(position).getId() + "");
 
+                if(list.get(position).getStatus().equals("rejected")||list.get(position).getStatus().equals("approved")){
+
+                Dialog dialog = new Dialog(context, R.style.DialogStyle);
+                dialog.setContentView(R.layout.layout_custom_dialog2);
+
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                Button btnClose = dialog.findViewById(R.id.cancel);
+                Button btnClear = dialog.findViewById(R.id.clear);
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnClear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.e("code", list.get(position).getId() + "");
+
+                        Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                        String token = Login.SP.getString(Login.TokenKey, "");
+                        delete(list.get(position).getId(),token,dialog,position);
+
+                    }
+                });
+                dialog.show();
+                }
+                else {
+
+                    Dialog dialog = new Dialog(context, R.style.DialogStyle);
+                    dialog.setContentView(R.layout.layout_custom_dialog2);
+
+                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                    Button btnClose = dialog.findViewById(R.id.cancel);
+                    Button btnClear = dialog.findViewById(R.id.clear);
+                    TextView text = dialog.findViewById(R.id.textView17);
+                    text.setText("Are you sure you want to delete this order ? , its still pending if you want to delete it , will refund your money");
+
+                    btnClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnClear.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                            String token = Login.SP.getString(Login.TokenKey, "");
+                            Log.e("code", list.get(position).getId() + "");
+                            Log.e("token", token + "");
+                            delete(list.get(position).getId(),token,dialog,position);
+//                            notifyDataSetChanged();
+//                            dialog.dismiss();
+//                            list.remove(position);
+//                            notifyItemRemoved(position);
+                        }
+                    });
+                    dialog.show();
+                }
+            }
+        });
+
+
+
+    }
+
+    public void delete(Long id, String token, Dialog dialog, int position) {
+        Service.ApiClient.getRetrofitInstance().deleteHotelOrders(id, token).enqueue(new Callback<Datum>() {
+            @Override
+            public void onResponse(Call<Datum> call, Response<Datum> response) {
+                if (response.isSuccessful()) {
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                    list.remove(position);
+                    notifyItemRemoved(position);
+                    Toast.makeText(context, response.message() + "", Toast.LENGTH_LONG).show();
+                    Log.e("code", response.code() + "");
+                    Log.e("code", response.body().getId() + "");
+                } else {
+                    dialog.dismiss();
+                    Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show();
+                    String errorMessage = parseError(response);
+                    Log.e("errorMessage", errorMessage + "");
+                    Toast.makeText(context, response.message() + "", Toast.LENGTH_LONG).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Datum> call, Throwable t) {
+                Toast.makeText(context, t.getMessage() + "", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+                Log.e("code", t.getMessage() + "");
+            }
+        });
 
     }
 

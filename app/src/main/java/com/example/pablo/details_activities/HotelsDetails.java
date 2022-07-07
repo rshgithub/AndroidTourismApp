@@ -104,8 +104,8 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                     binding.rate.setText( response.body().getData().getStar()+"");
                     binding.location.setText(response.body().getData().getAddress());
                     binding.details.setText( response.body().getData().getDetails());
-                    Glide.with(HotelsDetails.this).load(response.body().getData().getHotelImage())
-                            .into(binding.hotelImg);
+//                    Glide.with(HotelsDetails.this).load(response.body().getData().getHotelImage())
+//                            .into(binding.hotelImg);
                     Toast.makeText(HotelsDetails.this, response.body().getData().getName()+"", Toast.LENGTH_SHORT).show();
                     //rooms
                     binding.button.setOnClickListener(new View.OnClickListener() {

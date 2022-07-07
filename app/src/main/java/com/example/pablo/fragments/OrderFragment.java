@@ -136,6 +136,7 @@ public class OrderFragment extends Fragment {
         });
     }
 
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void registerNetworkCallback() {
 

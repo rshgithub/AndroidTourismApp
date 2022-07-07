@@ -50,7 +50,7 @@ public class BookingInfo extends AppCompatActivity {
     ActivityBookingInfoBinding binding;
     Service service;
     Long roomId,orderId;
-    Long tot;
+    double tot;
     Double total;
     Date date2;
     Date date3;
@@ -133,7 +133,9 @@ public class BookingInfo extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     stopShimmer();
                     binding.progress.setVisibility(View.GONE);
-
+                    Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
+                    intent.putExtra("cart","cart");
+                    startActivity(intent);
                     Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -183,6 +185,21 @@ public class BookingInfo extends AppCompatActivity {
                     binding.count.setText("1");
 
                     binding.totalMoney.setText(response.body().getData().getPricePerNight() + "");
+                    if (response.body().getData().getHasOffer() == null){
+                        Long x =   response.body().getData().getPricePerNight();
+                        binding.totalMoney.setText(x+"");
+
+                    }else{
+                        Long hotel_price = (response.body().getData().getPricePerNight());
+                        tot = 1 * hotel_price * sum;
+                        double offer= (double) response.body().getData().getHasOffer()/ 100;
+
+                        total = tot * offer;
+                        double x = tot - total;
+                        binding.totalMoney.setText(x + "");
+
+                        Log.e("discount",offer+"");
+                    }
 
                     binding.dayCount.setText("1");
 
@@ -205,7 +222,7 @@ public class BookingInfo extends AppCompatActivity {
                         Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
                     }
 
-    Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).circleCrop().into(binding.imageView6);
+    Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).into(binding.imageView6);
 
                     Log.e("room_image",response.body().getData().getRoomImages()+"");
 
@@ -261,6 +278,8 @@ public class BookingInfo extends AppCompatActivity {
 
                             if (sum <= response.body().getData().getAvailableRooms()) {
                                 binding.add.setEnabled(true);
+                                binding.min.setEnabled(true);
+
                                 Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
 
@@ -322,7 +341,7 @@ public class BookingInfo extends AppCompatActivity {
 
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price * RoomCount;
-                                Long x =   tot*sum;
+                                double x =   tot*sum;
                                 binding.totalMoney.setText(x + "");
 
                             } else {
@@ -381,7 +400,7 @@ public class BookingInfo extends AppCompatActivity {
 
                             if (response.body().getData().getHasOffer() == null) {
                                 tot = Count * Price* RoomCount;
-                                Long x =   tot*sum;
+                                double x =   tot*sum;
 
                                 binding.totalMoney.setText(x + "");
 
@@ -469,16 +488,17 @@ public class BookingInfo extends AppCompatActivity {
                             sum--;
                             if (sum >= 1) {
                                 binding.min.setEnabled(true);
-                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
+//                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
 
+
                                 if (response.body().getData().getRoomHasOffer() == null){
-                                    Long x =   response.body().getData().getRoomPricePerNight()*sum*dayCount;
+                                    double x =   response.body().getData().getRoomPricePerNight()*sum*Double.valueOf((binding.dayCount.getText().toString()));
                                     binding.totalMoney.setText(x+"");
 
                                 }else{
-                                    Long hotel_price = (response.body().getData().getRoomPricePerNight());
-                                    tot = dayCount * hotel_price * sum;
+                                    Double hotel_price = (response.body().getData().getRoomPricePerNight());
+                                    tot = Double.valueOf((binding.dayCount.getText().toString())) * hotel_price * sum;
                                     double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
 
                                     total = tot * offer;
@@ -513,16 +533,18 @@ public class BookingInfo extends AppCompatActivity {
 
                             if (sum <= response.body().getData().getAvailableRooms()) {
                                 binding.add.setEnabled(true);
-                                Long dayCount = Long.valueOf((binding.dayCount.getText().toString()));
+                                binding.min.setEnabled(true);
+
+//                                double dayCount = Double.valueOf((binding.dayCount.getText().toString()));
                                 binding.count.setText(sum + "");
 
                                 if (response.body().getData().getRoomHasOffer() == null){
-                                    Long x =   response.body().getData().getRoomPricePerNight()*sum*dayCount;
+                                    double x =   response.body().getData().getRoomPricePerNight()*sum*Double.valueOf((binding.dayCount.getText().toString()));
                                     binding.totalMoney.setText(x+"");
 
                                 }else{
-                                    Long hotel_price = (response.body().getData().getRoomPricePerNight());
-                                    tot = dayCount * hotel_price * sum;
+                                    Double hotel_price = (response.body().getData().getRoomPricePerNight());
+                                    tot = Double.valueOf((binding.dayCount.getText().toString())) * hotel_price * sum;
                                     double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
 
                                     total = tot * offer;
@@ -569,16 +591,16 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
-                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+                         //   Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
+//                            Long Count = Double.valueOf((binding.dayCount.getText().toString()));
 
                             if (response.body().getData().getRoomHasOffer() == null) {
-                                tot = Count * Price;
+                                tot = Double.valueOf((binding.dayCount.getText().toString())) *  Double.valueOf((binding.priceHotel.getText().toString()));
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                Long hotel_price = (response.body().getData().getRoomPricePerNight());
-                                tot = Count * hotel_price * sum;
+                                Double hotel_price = (response.body().getData().getRoomPricePerNight());
+                                tot = Double.valueOf((binding.dayCount.getText().toString())) * hotel_price * sum;
                                 double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
 
                                 total = tot * offer;
@@ -628,15 +650,15 @@ public class BookingInfo extends AppCompatActivity {
                             }
 
                             //total price
-                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
-                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
+//                            Long Price = Long.valueOf((binding.priceHotel.getText().toString()));
+//                            Long Count = Long.valueOf((binding.dayCount.getText().toString()));
                             if (response.body().getData().getRoomHasOffer() == null) {
-                                tot = Count * Price;
+                                tot = Double.valueOf((binding.dayCount.getText().toString())) *  Double.valueOf((binding.priceHotel.getText().toString()));
                                 binding.totalMoney.setText(tot + "");
 
                             } else {
-                                Long hotel_price = (response.body().getData().getRoomPricePerNight());
-                                tot = Count * hotel_price * sum;
+                                Double hotel_price = (response.body().getData().getRoomPricePerNight());
+                                tot = Double.valueOf((binding.dayCount.getText().toString())) * hotel_price * sum;
                                 double offer= (double) response.body().getData().getRoomHasOffer()/ 100;
 
                                 total = tot * offer;
@@ -819,7 +841,7 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 bookNow();
-                finish();
+//                finish();
             }
         });
 
@@ -833,7 +855,7 @@ public class BookingInfo extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getBaseContext(), Cart.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
 
@@ -858,8 +880,10 @@ public class BookingInfo extends AppCompatActivity {
         binding.cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post("cart");
-                startActivity(new Intent(getBaseContext(),BottomNavigationBarActivity.class));
+                Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
+                intent.putExtra("cart","cart");
+                startActivity(intent);
+//                finish();
             }
         });
     }

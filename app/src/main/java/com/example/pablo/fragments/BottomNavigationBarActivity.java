@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import com.example.pablo.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,17 +22,28 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottom_navigation_bar);
-
-        EventBus.getDefault().register(this);
-
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+
+        if (getIntent().getStringExtra("cart")!=null){
+            Toast.makeText(getBaseContext(), "cart", Toast.LENGTH_SHORT).show();
+            openFragment(CartFragment.newInstance());
+            bottomNavigationView.setSelectedItemId(R.id.Cart);
+        }
+        else if(getIntent().getStringExtra("order")!=null) {
+            openFragment(OrderFragment.newInstance());
+            bottomNavigationView.setSelectedItemId(R.id.order);
+
+        }
+        else
+            openFragment(HomeFragment.newInstance());
+
+
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.Home) {
                     openFragment(HotelsFragment.newInstance());
-                      finish();
+                    finish();
                 } else if (item.getItemId() == R.id.Cart) {
                     openFragment(CartFragment.newInstance());
                 } else if (item.getItemId() == R.id.Order) {
@@ -42,7 +54,6 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
                 return true;
             }
         });
-        openFragment(HomeFragment.newInstance());
     }
 
     void openFragment(Fragment fragment) {
@@ -52,20 +63,5 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    @Subscribe
-    public void onEvent(String event) {
-        if (event.equals("cart")) {
-            openFragment(CartFragment.newInstance());
-        }else if(event.equals("order")){
-            openFragment(OrderFragment.newInstance());
-        }
-    }
 
-
-    @Override
-    public void onPause() {
-        EventBus.getDefault().unregister(this);
-
-        super.onPause();
-    }
 }

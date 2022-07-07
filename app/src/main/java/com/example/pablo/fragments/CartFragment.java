@@ -154,6 +154,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<CartExample> call, Throwable t) {
                 Log.e("error", t.getMessage());
+                stopShimmer();
 
                 Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
@@ -293,7 +294,7 @@ public class CartFragment extends Fragment {
         adapter = new CartAdapter(getActivity(), new BookingInterface() {
 
             @Override
-            public void totalPriceOnItemClick(Long price) {
+            public void totalPriceOnItemClick(Double price) {
                 binding.pay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

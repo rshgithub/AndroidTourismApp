@@ -65,8 +65,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .into(holder.binding.imageView6);
 
 
-        Long count = list.get(position).getOrderTotalPrice();
-        Long c = Long.valueOf(0);
+        Double count = list.get(position).getOrderTotalPrice();
+        Double c = Double.valueOf(0);
         for (int i = 0; i < list.size(); i++) {
             c += count;
         }

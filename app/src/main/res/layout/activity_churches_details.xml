@@ -59,19 +59,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Churches_name"
-            android:layout_width="wrap_content"
+            android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_19sdp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/churches_name"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_20sdp" />
+            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/location_pin"
@@ -82,11 +81,10 @@
             android:layout_marginLeft="@dimen/_1sdp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_toEndOf="@+id/imageView5"
-            android:text="@string/location"
+            android:layout_toRightOf="@+id/imageView5"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9sdp"
-            android:textStyle="bold"
-            android:layout_toRightOf="@+id/imageView5" />
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imageView5"
@@ -109,23 +107,21 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/details"
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="@dimen/_20sdp" />
+            android:textColor="#FFFFFF" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/visitors_count"
-            android:layout_width="wrap_content"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/location_pin"
-            android:layout_marginStart="181dp"
-            android:layout_marginLeft="181dp"
-            android:layout_marginTop="12dp"
-            android:layout_toEndOf="@+id/textView19"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:layout_toRightOf="@+id/textView19"
-            android:text="@string/_5000_visited"
+            android:textAlignment="viewEnd"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9ssp"
             android:textStyle="normal|bold" />
@@ -133,24 +129,23 @@
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView19"
+            android:layout_below="@+id/visitors_count"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp">
 
             <kr.co.prnd.readmore.ReadMoreTextView
                 android:id="@+id/details"
                 android:layout_width="@dimen/_240sdp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:fontFamily="@font/montserrat"
                 android:minLines="2"
                 android:padding="@dimen/_2sdp"
                 android:screenReaderFocusable="true"
-                android:text="@string/text"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/_9ssp"
                 app:readMoreColor="#C3D61B"
@@ -171,7 +166,6 @@
             android:background="@drawable/km"
             android:gravity="center"
             android:padding="@dimen/_3sdp"
-            android:text="@string/_3_7_km"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_10ssp" />
 
@@ -220,7 +214,6 @@
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_toEndOf="@+id/textView22"
             android:layout_toRightOf="@+id/textView22"
-            android:text="@string/saturday_thursday"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9ssp" />
 
@@ -238,7 +231,6 @@
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toEndOf="@+id/textView22"
             android:layout_toRightOf="@+id/textView22"
-            android:text="@string/_08_00_am_3_00_pm"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_8ssp" />
 

@@ -43,7 +43,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="@dimen/_276sdp"
-        android:layout_height="@dimen/_150sdp"
+        android:layout_height="@dimen/_160sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:layout_marginLeft="@dimen/_150sdp"
         android:layout_marginTop="@dimen/_300sdp"
@@ -57,18 +57,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/Churches_name"
-            android:layout_width="wrap_content"
+            android:layout_width="225dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_19sdp"
             android:fontFamily="@font/montserrat"
             android:textColor="#FFFFFF"
             android:textSize="@dimen/_15ssp"
-            android:textStyle="bold"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/_20sdp" />
+            android:textStyle="bold" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/location_pin"
@@ -112,14 +112,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/visitors_count"
-            android:layout_width="wrap_content"
+            android:layout_width="122dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/location_pin"
-            android:layout_marginStart="181dp"
-            android:layout_marginLeft="181dp"
-            android:layout_marginTop="12dp"
-            android:layout_toEndOf="@+id/textView19"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="@dimen/_20sdp"
             android:layout_toRightOf="@+id/textView19"
+            android:textAlignment="viewEnd"
             android:textColor="#C3D61B"
             android:textSize="@dimen/_9ssp"
             android:textStyle="normal|bold" />
@@ -127,19 +127,19 @@
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView19"
+            android:layout_below="@+id/visitors_count"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="27dp"
             android:layout_marginLeft="27dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp">
 
             <kr.co.prnd.readmore.ReadMoreTextView
                 android:id="@+id/details"
                 android:layout_width="@dimen/_240sdp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_height="@dimen/_65sdp"
                 android:fontFamily="@font/montserrat"
                 android:minLines="2"
                 android:padding="@dimen/_2sdp"
@@ -260,6 +260,8 @@
         android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"

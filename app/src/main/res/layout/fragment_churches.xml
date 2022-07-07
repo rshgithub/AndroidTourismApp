@@ -76,7 +76,7 @@
             android:layout_below="@+id/recyclerview"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginLeft="@dimen/_8sdp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageView13"
             android:layout_toRightOf="@+id/imageView13"
             android:fontFamily="@font/montserrat"
@@ -105,7 +105,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/earth" />
 

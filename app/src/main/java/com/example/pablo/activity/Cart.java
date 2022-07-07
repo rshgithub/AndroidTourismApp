@@ -1,7 +1,5 @@
 package com.example.pablo.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -9,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -26,12 +23,9 @@ import com.example.pablo.adapters.CartAdapter;
 import com.example.pablo.databinding.ActivityCartBinding;
 import com.example.pablo.interfaces.BookingInterface;
 import com.example.pablo.interfaces.Service;
-import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.example.pablo.model.cart.CartExample;
 import com.example.pablo.model.cart.HotelOrderItem;
 import com.example.pablo.model.reservations.Datum;
-import com.google.android.material.snackbar.Snackbar;
-import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -232,7 +226,7 @@ public class Cart extends AppCompatActivity {
         adapter = new CartAdapter(this, new BookingInterface() {
 
             @Override
-            public void totalPriceOnItemClick(Long price) {
+            public void totalPriceOnItemClick(Double price) {
                 binding.pay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

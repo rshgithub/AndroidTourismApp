@@ -35,10 +35,13 @@
 
     <TextView
         android:id="@+id/textView17"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:text="Are you sure you want to delete this item ?"
+        android:textAlignment="center"
         android:textColor="#323232"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,10 +65,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/cancel"
-            android:text="Clear"
-            android:textColor="#FFFFFF"
             android:layout_weight="1"
+            android:background="@drawable/cancel"
+            android:text="Delete"
+            android:textColor="#FFFFFF"
 
             app:layout_constraintVertical_bias="0.0" />
 

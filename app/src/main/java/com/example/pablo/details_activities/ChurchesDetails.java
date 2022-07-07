@@ -23,6 +23,7 @@ import com.example.pablo.interfaces.Service;
 import com.example.pablo.adapters.PopularChurchesAdapter;
 import com.example.pablo.adapters.ChurchesAdapter;
 import com.example.pablo.databinding.ActivityChurchesDetailsBinding;
+import com.example.pablo.model.churchesdetails.ChurchesDetailsExample;
 import com.example.pablo.model.mosquedetails.MosqueDetailsExample;
 
 import retrofit2.Call;
@@ -81,9 +82,9 @@ public class ChurchesDetails extends AppCompatActivity {
         Login.SP = this.getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
 
-        service.getChurchesDetails(ChurchesId,token).enqueue(new Callback<MosqueDetailsExample>() {
+        service.getChurchesDetails(ChurchesId,token).enqueue(new Callback<ChurchesDetailsExample>() {
             @Override
-            public void onResponse(Call<MosqueDetailsExample> call, Response<MosqueDetailsExample> response) {
+            public void onResponse(Call<ChurchesDetailsExample> call, Response<ChurchesDetailsExample> response) {
                 if (response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     stopShimmer();
@@ -94,11 +95,12 @@ public class ChurchesDetails extends AppCompatActivity {
                     binding.details.setText( response.body().getData().getDetails());
                     binding.availableDay.setText( response.body().getData().getAvailableDay()+"");
                     binding.km.setText( response.body().getData().getAreaSpace()+"");
-                    binding.visitorsCount.setText( response.body().getData().getVisitorsCount());
-                    Glide.with(ChurchesDetails.this).load(response.body().getData().getMosqueImage())
+                    binding.visitorsCount.setText( response.body().getData().getVisitorsCount() + " k visited");
+                    Glide.with(ChurchesDetails.this).load(response.body().getData().getChurchImage())
                             .transition(withCrossFade())
                             .error(R.drawable.mosqe).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                             .into(binding.churchesImage);
+
                     binding.call.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -117,7 +119,7 @@ public class ChurchesDetails extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<MosqueDetailsExample> call, Throwable t) {
+            public void onFailure(Call<ChurchesDetailsExample> call, Throwable t) {
                 t.printStackTrace();
                Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 

@@ -76,7 +76,7 @@
             android:layout_below="@+id/recyclerview"
             android:layout_marginStart="@dimen/_8sdp"
             android:layout_marginLeft="@dimen/_8sdp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:layout_toEndOf="@+id/imageView13"
             android:layout_toRightOf="@+id/imageView13"
             android:fontFamily="@font/montserrat"
@@ -105,14 +105,14 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="18dp"
             android:layout_marginLeft="18dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:scaleType="fitXY"
             android:src="@drawable/earth" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
+            android:layout_height="@dimen/_170sdp"
             android:layoutAnimation="@anim/item_layout_animation"
 
             android:layout_below="@+id/imageView13"
@@ -130,7 +130,7 @@
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_180sdp"
+            android:layout_height="@dimen/_170sdp"
             android:layout_below="@+id/imageView13"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"

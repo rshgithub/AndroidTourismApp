@@ -64,7 +64,7 @@ public class popularMosquesAdapter extends RecyclerView.Adapter<popularMosquesAd
             @Override
             public void onClick(View view) {
 
-                String uri = "http://maps.google.com/maps?saddr=" + "31.503355632448965 ,  34.46231765317062" + "&daddr=" + 31.503355632448965 + "," + 34.46231765317062;
+                String uri = "http://maps.google.com/maps?saddr=" + list.get(position).getMap() + "&daddr=" + list.get(position).getMap();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 context.startActivity(intent);
             }

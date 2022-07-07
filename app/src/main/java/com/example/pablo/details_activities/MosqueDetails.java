@@ -99,7 +99,7 @@ public class MosqueDetails extends AppCompatActivity {
                     binding.details.setText( response.body().getData().getDetails());
                     binding.availableDay.setText( response.body().getData().getAvailableDay()+"");
                     binding.km.setText( response.body().getData().getAreaSpace()+"");
-                    binding.visitorsCount.setText( response.body().getData().getVisitorsCount());
+                    binding.visitorsCount.setText( response.body().getData().getVisitorsCount()+" k visited");
                     Glide.with(MosqueDetails.this).load(response.body().getData().getMosqueImage())
                             .transition(withCrossFade())
                             .error(R.drawable.mosqe).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)

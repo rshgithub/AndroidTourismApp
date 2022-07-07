@@ -4,6 +4,7 @@ import com.example.pablo.model.amenities.Amenities;
 import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.model.churches.AllChurches;
 import com.example.pablo.model.churches.TopChurches;
+import com.example.pablo.model.churchesdetails.ChurchesDetailsExample;
 import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.edit_order.EditOrderDetails;
 import com.example.pablo.model.hotel.Hotels;
@@ -163,13 +164,10 @@ public interface Service {
     @GET("searchHotelByNameDesc")
     Call<SearchHotel> search(@Header("Authorization") String token, @Query("data") String name);
 
+    //delete item from order
+    @DELETE("hotelOrders/{id}")
+    Call<com.example.pablo.model.orders.Datum> deleteHotelOrders(@Path("id") Long itemId, @Header("Authorization") String token);
 
-    @GET("searchChurchByNameDesc")
-    Call<AllChurches> ChurchesSearch(@Header("Authorization") String token, @Query("data") String name);
-
-
-    @GET("searchMosqueByNameDesc")
-    Call<MosqueExample> mosqueSearch(@Header("Authorization") String token, @Query("data") String name);
 
     @Multipart
     @POST("updateAuthAvatar")
@@ -201,7 +199,15 @@ public interface Service {
 
     //churches details
     @GET("churches/{id}")
-    Call<MosqueDetailsExample> getChurchesDetails(@Path("id") int id, @Header("Authorization") String token);
+    Call<ChurchesDetailsExample> getChurchesDetails(@Path("id") int id, @Header("Authorization") String token);
+
+
+    @GET("searchChurchByNameDesc")
+    Call<AllChurches> ChurchesSearch(@Header("Authorization") String token, @Query("data") String name);
+
+
+    @GET("searchMosqueByNameDesc")
+    Call<MosqueExample> mosqueSearch(@Header("Authorization") String token, @Query("data") String name);
 
     //******************************************************************************
     //get user details from

@@ -23,8 +23,8 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/Mosque_imageView"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_180sdp"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_170sdp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/_200sdp"
-        android:layout_height="@dimen/_180sdp"
+        android:layout_width="@dimen/_190sdp"
+        android:layout_height="@dimen/_170sdp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -46,25 +46,25 @@
         app:layout_constraintVertical_bias="0.498"
         />
 
+
     <ImageView
         android:id="@+id/imageView15"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="116dp"
+        android:layout_marginEnd="12dp"
         android:padding="@dimen/_7sdp"
         app:layout_constraintEnd_toEndOf="@+id/Mosque_imageView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/map_marker_free_icon_font"
         tools:ignore="VectorDrawableCompat" />
 
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/mosque_name"
-        android:layout_width="wrap_content"
+        android:layout_width="178dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="116dp"
         android:fontFamily="@font/montserrat"
         android:text="@string/mosque_name"
         android:textColor="#FFFFFF"

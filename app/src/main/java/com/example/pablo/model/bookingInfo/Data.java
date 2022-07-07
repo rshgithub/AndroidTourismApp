@@ -28,22 +28,22 @@ public class Data implements Serializable
     private String checkOut;
     @SerializedName("room_count")
     @Expose
-    private Integer roomCount;
+    private int roomCount;
     @SerializedName("total_nights")
     @Expose
-    private Integer totalNights;
+    private Double totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Integer roomPricePerNight;
+    private Double roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
-    private Integer roomHasOffer;
+    private Double roomHasOffer;
     @SerializedName("savings_per_room")
     @Expose
-    private Integer savingsPerRoom;
+    private Double savingsPerRoom;
     @SerializedName("order_total_price")
     @Expose
-    private Integer orderTotalPrice;
+    private Double orderTotalPrice;
     @SerializedName("time_count")
     @Expose
     private String timeCount;
@@ -100,51 +100,51 @@ public class Data implements Serializable
         this.checkOut = checkOut;
     }
 
-    public Integer getRoomCount() {
+    public int getRoomCount() {
         return roomCount;
     }
 
-    public void setRoomCount(Integer roomCount) {
+    public void setRoomCount(int roomCount) {
         this.roomCount = roomCount;
     }
 
-    public Integer getTotalNights() {
+    public Double getTotalNights() {
         return totalNights;
     }
 
-    public void setTotalNights(Integer totalNights) {
+    public void setTotalNights(Double totalNights) {
         this.totalNights = totalNights;
     }
 
-    public Integer getRoomPricePerNight() {
+    public Double getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Integer roomPricePerNight) {
+    public void setRoomPricePerNight(Double roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 
-    public Integer getRoomHasOffer() {
+    public Double getRoomHasOffer() {
         return roomHasOffer;
     }
 
-    public void setRoomHasOffer(Integer roomHasOffer) {
+    public void setRoomHasOffer(Double roomHasOffer) {
         this.roomHasOffer = roomHasOffer;
     }
 
-    public Integer getSavingsPerRoom() {
+    public Double getSavingsPerRoom() {
         return savingsPerRoom;
     }
 
-    public void setSavingsPerRoom(Integer savingsPerRoom) {
+    public void setSavingsPerRoom(Double savingsPerRoom) {
         this.savingsPerRoom = savingsPerRoom;
     }
 
-    public Integer getOrderTotalPrice() {
+    public Double getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(Integer orderTotalPrice) {
+    public void setOrderTotalPrice(Double orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 

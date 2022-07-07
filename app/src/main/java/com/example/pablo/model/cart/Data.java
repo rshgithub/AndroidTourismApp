@@ -25,10 +25,10 @@ public class Data extends CartExample implements Serializable{
         private String hotelName;
         @SerializedName("total_price")
         @Expose
-        private int totalPrice;
+        private Double totalPrice;
         @SerializedName("order_items_count")
         @Expose
-        private Long orderItemsCount;
+        private Double orderItemsCount;
         @SerializedName("created_at")
         @Expose
         private String createdAt;
@@ -74,19 +74,19 @@ public class Data extends CartExample implements Serializable{
         this.hotelName = hotelName;
     }
 
-        public int getTotalPrice() {
+        public Double getTotalPrice() {
         return totalPrice;
     }
 
-        public void setTotalPrice(int totalPrice) {
+        public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-        public Long getOrderItemsCount() {
+        public Double getOrderItemsCount() {
         return orderItemsCount;
     }
 
-        public void setOrderItemsCount(Long orderItemsCount) {
+        public void setOrderItemsCount(Double orderItemsCount) {
         this.orderItemsCount = orderItemsCount;
     }
 

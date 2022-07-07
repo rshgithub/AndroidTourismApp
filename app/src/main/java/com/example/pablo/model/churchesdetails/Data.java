@@ -38,7 +38,9 @@ public class Data implements Serializable
     @SerializedName("map")
     @Expose
     private String map;
-    private final static long serialVersionUID = 1722014682371123782L;
+    @SerializedName("church_image")
+    @Expose
+    private String churchImage;
 
     public Integer getId() {
         return id;
@@ -118,6 +120,14 @@ public class Data implements Serializable
 
     public void setMap(String map) {
         this.map = map;
+    }
+
+    public String getChurchImage() {
+        return churchImage;
+    }
+
+    public void setChurchImage(String churchImage) {
+        this.churchImage = churchImage;
     }
 
 }

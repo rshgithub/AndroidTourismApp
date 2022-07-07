@@ -31,19 +31,19 @@ public class Data implements Serializable
     private String roomCount;
     @SerializedName("total_nights")
     @Expose
-    private Long totalNights;
+    private Double totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Long roomPricePerNight;
+    private Double roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
-    private Long roomHasOffer;
+    private Double roomHasOffer;
     @SerializedName("savings_per_room")
     @Expose
-    private Long savingsPerRoom;
+    private Double savingsPerRoom;
     @SerializedName("order_total_price")
     @Expose
-    private Long orderTotalPrice;
+    private Double orderTotalPrice;
     private final static long serialVersionUID = 3787303147222906261L;
 
     public Long getId() {
@@ -102,43 +102,43 @@ public class Data implements Serializable
         this.roomCount = roomCount;
     }
 
-    public Long getTotalNights() {
+    public Double getTotalNights() {
         return totalNights;
     }
 
-    public void setTotalNights(Long totalNights) {
+    public void setTotalNights(Double totalNights) {
         this.totalNights = totalNights;
     }
 
-    public Long getRoomPricePerNight() {
+    public Double getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Long roomPricePerNight) {
+    public void setRoomPricePerNight(Double roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 
-    public Long getRoomHasOffer() {
+    public Double getRoomHasOffer() {
         return roomHasOffer;
     }
 
-    public void setRoomHasOffer(Long roomHasOffer) {
+    public void setRoomHasOffer(Double roomHasOffer) {
         this.roomHasOffer = roomHasOffer;
     }
 
-    public Long getSavingsPerRoom() {
+    public Double getSavingsPerRoom() {
         return savingsPerRoom;
     }
 
-    public void setSavingsPerRoom(Long savingsPerRoom) {
+    public void setSavingsPerRoom(Double savingsPerRoom) {
         this.savingsPerRoom = savingsPerRoom;
     }
 
-    public Long getOrderTotalPrice() {
+    public Double getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(Long orderTotalPrice) {
+    public void setOrderTotalPrice(Double orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 
