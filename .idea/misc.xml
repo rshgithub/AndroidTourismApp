@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/backgroundshape.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/btn_shadow.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/skip.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/splash_btn.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable-v24/text_shadow.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ac.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/amenities.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/amenitiespark.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/amenitieswifi.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/bnv_selector2.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/booknow.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/buttombar.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/buy_field.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/cancel.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/card.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/cardads.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/cart.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/clear.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/close.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/comment.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/count.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/count_num.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/dialog.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/disable_button.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/fresh.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/galary.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/hotel_detail.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/hotel_details.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/hotel_shape.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/hotels_background.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/hotels_images.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ic_baseline_access_time_24.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ic_baseline_share_location_24.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/indicator_selected.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/indicator_selector.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/order.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/order_details.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/parking.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/payment.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/pobuler_hotel.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/posts.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/retry.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/reviews.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/room_count.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/rounded.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/search.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/side_color.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/side_color_pinding.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/side_error_color.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/slider.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/tab2.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/drawable/top_card.xml" value="0.2265" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_cart.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_churches_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_hotel_orders_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_hotels_details.xml" value="0.2" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_mosque_details.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_privacy.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/activity_room.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/fragment_cart.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/hotel_details_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/mosque_details_shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/onboarding_1.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/shimmer.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/ucas/Desktop/tourismApp/app/src/main/res/layout/top_mosque_shimmer.xml" value="0.25416666666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

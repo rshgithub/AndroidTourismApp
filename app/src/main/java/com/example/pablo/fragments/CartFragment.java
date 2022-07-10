@@ -121,7 +121,6 @@ public class CartFragment extends Fragment {
         getRetrofitInstance();
         getRoomsCart();
         swipeToEditAndDelete();
-  //     noData();
 
         return view;
     }
@@ -137,9 +136,7 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     stopShimmer();
-///                    Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     list = response.body().getHotelOrderItems();
-//                    noData();
                     adapter.setData(list);
 
                 } else {
@@ -372,7 +369,6 @@ public class CartFragment extends Fragment {
                                 dialog.dismiss();
                                 list.remove(position);
                                 adapter.notifyItemRemoved(position);
-                             //   noData();
                             }
                         });
                         dialog.show();
