@@ -381,9 +381,6 @@ public class AccountFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
 
-                        load_dialog = ProgressDialog.show(getActivity(), "log out",
-                                "Loading. Please wait...", true);
-                        dialog.show();
                         getLogout();
                     }
                 });
@@ -407,8 +404,9 @@ public class AccountFragment extends Fragment {
                 TextView body = dialog.findViewById(R.id.textView17);
                 ImageView image = dialog.findViewById(R.id.imageView4);
 
-                title.setText("Log Out!");
-                body.setText("Are You Sure You Want to Log Out ?");
+                dialog.
+//                title.setText("Log Out!");
+//                body.setText("Are You Sure You Want to Log Out ?");
                 btnClear.setText("Log Out");
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
@@ -421,9 +419,7 @@ public class AccountFragment extends Fragment {
                 btnClear.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        load_dialog = ProgressDialog.show(getActivity(), "log out",
-                                "Loading. Please wait...", true);
-                        dialog.show();
+
                         getLogout();
                     }
                 });

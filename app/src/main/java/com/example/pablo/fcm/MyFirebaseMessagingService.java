@@ -33,6 +33,7 @@ import static com.example.pablo.activity.Signup.PREF_NAME;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public static SharedPreferences SP;    // to read from SharedPreferences
     public static SharedPreferences.Editor EDIT;
+//    public static final String PREF_NAME = "token";
     public static final String fcmToken = "fcmToken_K";
     public static final String ORDER_ID = "order_id";
     String TAG = "MyFirebaseMessagingService";
@@ -81,6 +82,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         EDIT.apply();
 
 
+
+        // If you want to send messages to this application instance or
+        // manage this apps subscriptions on the server side, send the
+        // Instance ID token to your app server.
+//        sendRegistrationToServer(token);
     }
 
     //This method is only generating push notification
@@ -98,6 +104,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.putExtra(ORDER_ID,type);
         contentIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         CharSequence tickerText = messageBody;
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "M_CH_ID");
@@ -131,6 +138,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         notificationManager.notify(0, notificationBuilder.build());
+//        count++;
     }
 
 

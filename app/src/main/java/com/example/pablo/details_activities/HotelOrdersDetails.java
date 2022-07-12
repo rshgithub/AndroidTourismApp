@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -61,7 +60,28 @@ public class HotelOrdersDetails extends AppCompatActivity {
             orderId = getIntent().getLongExtra(ORDER_ID,0);
         }
 
-        noInternetDialog();
+        Log.e("order",orderId+"");
+
+        if (!isOnLine()){
+            Dialog dialog = new Dialog(getBaseContext(), R.style.NoInternet);
+            dialog.setContentView(R.layout.no_internet);
+            dialog.show();
+
+            Button retry;
+            retry = dialog.findViewById(R.id.retry);
+            retry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(isOnLine()){
+                        getOrderDetails();
+                        dialog.dismiss();
+                    }
+
+                }
+            });
+
+        }
+        getData();
         adapter();
         swipeRefresh();
         getRetrofitInstance();
@@ -125,7 +145,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
 
     public boolean isOnLine(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if(networkInfo==null || !networkInfo.isAvailable() || !networkInfo.isConnected()){
             return false;
         }
@@ -147,28 +167,9 @@ public class HotelOrdersDetails extends AppCompatActivity {
 
     }
 
-    private void noInternetDialog(){
-        if (!isOnLine()){
-            Dialog dialog = new Dialog(getBaseContext(), R.style.NoInternet);
-            dialog.setContentView(R.layout.no_internet);
-            dialog.show();
+    private void getData(){
 
-            Button retry;
-            retry = dialog.findViewById(R.id.retry);
-            retry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(isOnLine()){
-                        getOrderDetails();
-                        dialog.dismiss();
-                    }
-
-                }
-            });
-
-        }
     }
-
 
     private void getRetrofitInstance(){
         service= Service.ApiClient.getRetrofitInstance();
