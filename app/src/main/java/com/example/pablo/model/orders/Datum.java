@@ -31,7 +31,7 @@ public class Datum implements Serializable
     private String created_at;
     @SerializedName("total_price")
     @Expose
-    private Long totalPrice;
+    private Double totalPrice;
     @SerializedName("order_items_count")
     @Expose
     private Long orderItemsCount;
@@ -93,11 +93,11 @@ public class Datum implements Serializable
         this.hotelName = hotelName;
     }
 
-    public Long getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

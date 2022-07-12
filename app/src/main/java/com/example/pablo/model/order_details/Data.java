@@ -24,7 +24,7 @@ public class Data implements Serializable{
     private String hotel_image;
     @SerializedName("total_price")
     @Expose
-    private Integer totalPrice;
+    private Double totalPrice;
     @SerializedName("order_items_count")
     @Expose
     private Integer orderItemsCount;
@@ -78,11 +78,11 @@ public class Data implements Serializable{
         this.hotelName = hotelName;
     }
 
-    public Integer getTotalPrice() {
+    public Double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

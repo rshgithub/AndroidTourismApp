@@ -48,6 +48,7 @@ public class Login extends AppCompatActivity {
     public static final String USERKey = "USER_K";
     public static final String UserNameKey = "UserName_K";
     public static final String AddressKey = "AddressKey_K";
+    public static final String EmailKey = "EmailKey_K";
     public static String FCM_TOKEN ;
 
     @Override
@@ -110,13 +111,15 @@ public class Login extends AppCompatActivity {
                         EDIT.putLong(USERKey, response.body().getData().getUser().getId());
                         EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
                         EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
+                        EDIT.putString(EmailKey, String.valueOf(response.body().getData().getUser().getEmail()));
                         EDIT.apply();
 
                         Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                         startActivity(intent);
+                        finish();
                         Toast.makeText(getBaseContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("Success", new Gson().toJson(response.body()));
-                        finish();
+
                     } else {
                         binding.progress.setVisibility(View.GONE);
 

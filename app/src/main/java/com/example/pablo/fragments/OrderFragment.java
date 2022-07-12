@@ -118,7 +118,7 @@ public class OrderFragment extends Fragment {
                     stopShimmer();
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
 
                 }
 

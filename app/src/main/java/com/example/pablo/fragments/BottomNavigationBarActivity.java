@@ -25,25 +25,22 @@ public class BottomNavigationBarActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
 
         if (getIntent().getStringExtra("cart")!=null){
-            Toast.makeText(getBaseContext(), "cart", Toast.LENGTH_SHORT).show();
             openFragment(CartFragment.newInstance());
             bottomNavigationView.setSelectedItemId(R.id.Cart);
         }
         else if(getIntent().getStringExtra("order")!=null) {
             openFragment(OrderFragment.newInstance());
             bottomNavigationView.setSelectedItemId(R.id.order);
-
         }
-        else
+        else{
             openFragment(HomeFragment.newInstance());
-
+        bottomNavigationView.setSelectedItemId(R.id.Home);}
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.Home) {
-                    openFragment(HotelsFragment.newInstance());
-                    finish();
+                    openFragment(HomeFragment.newInstance());
                 } else if (item.getItemId() == R.id.Cart) {
                     openFragment(CartFragment.newInstance());
                 } else if (item.getItemId() == R.id.Order) {

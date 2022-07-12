@@ -61,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(10))
                         .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                .error(R.drawable.mosqes).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.binding.imageView6);
 
 

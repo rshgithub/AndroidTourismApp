@@ -52,15 +52,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.binding.tvNotificationDate.setText(list.get(position).getCreated_at());
 
 
-            if(list.get(position).getStatus().equals("rejected")){
-                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
-            }else if (list.get(position).getStatus().equals("pending")){//Checkout !!
+//            if(list.get(position).getStatus().equals("rejected")){
+//                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
+//            } else if(list.get(position).getStatus().equals("reservation")){
+//                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
+//            }else if (list.get(position).getStatus().equals("pending")){//Checkout !!
+//                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color_pinding);
+//            }else if (list.get(position).getStatus().equals("approved")){
+//                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color);
+//            }else if (list.get(position).getStatus()== null){
+//                holder.binding.imageView22.setBackgroundResource(R.drawable.side_error_color);
+//            }
+         ///  else{
                 holder.binding.imageView22.setBackgroundResource(R.drawable.side_color_pinding);
-            }else if (list.get(position).getStatus().equals("approved")){
-                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color);
-            }else{
-                holder.binding.imageView22.setBackgroundResource(R.drawable.side_color_pinding);
-            }
+          //  }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

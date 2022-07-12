@@ -36,7 +36,7 @@ import static com.example.pablo.activity.Login.parseError;
 public class Payment extends AppCompatActivity {
     static Service service;
     ActivityPaymentBinding binding;
-Long price;
+double price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ Long price;
         setContentView(binding.getRoot());
 
         binding.progress.setVisibility(View.GONE);
-        price = getIntent().getLongExtra("price", 0);
+        price = getIntent().getDoubleExtra("price", 0);
         binding.totalPrice.setText(price+"");
 
         if (!isOnLine()){

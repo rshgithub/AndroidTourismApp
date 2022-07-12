@@ -1,7 +1,10 @@
 package com.example.pablo.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +27,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -72,6 +78,7 @@ public class AccountFragment extends Fragment {
     Bitmap bitmap;
     int SELECT_PHOTO=1;
     Uri uri;
+    ProgressDialog load_dialog;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -137,7 +144,7 @@ public class AccountFragment extends Fragment {
                     binding.name.setText(response.body().getData().getName());
                     binding.address.setText(response.body().getData().getAddress());
                     Log.e("image",response.body().getData().getUserAvatar());
-                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).error(R.drawable.ic_baseline_person_24).into(binding.photo);
+                    Glide.with(getActivity()).load(response.body().getData().getUserAvatar()).centerCrop().error(R.drawable.ic_baseline_person_24).into(binding.photo);
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
@@ -169,7 +176,7 @@ public class AccountFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
-
+                    load_dialog.dismiss();
                     Intent intent = new Intent(getActivity(), Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -177,6 +184,7 @@ public class AccountFragment extends Fragment {
 
 
                 } else {
+                    load_dialog.dismiss();
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
                     Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
@@ -187,6 +195,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call<LogOutExample> call, Throwable t) {
                 t.printStackTrace();
+                load_dialog.dismiss();
                 Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
 
@@ -197,6 +206,7 @@ public class AccountFragment extends Fragment {
 
     }
 
+    @SuppressLint("MissingPermission")
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void registerNetworkCallback() {
 
@@ -235,7 +245,7 @@ public class AccountFragment extends Fragment {
 
     public boolean isOnLine() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        @SuppressLint("MissingPermission") NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo == null || !networkInfo.isAvailable() || !networkInfo.isConnected()) {
             return false;
         }
@@ -283,7 +293,7 @@ public class AccountFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Glide.with(getActivity()).asBitmap().load(bitmap).into(binding.photo);
+            Glide.with(getActivity()).asBitmap().centerCrop().load(bitmap).into(binding.photo);
 //                    .apply(new RequestOptions().transform(new RoundedCorners(100))
 //                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
 
@@ -344,14 +354,81 @@ public class AccountFragment extends Fragment {
         binding.Out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLogout();
+
+                Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
+                dialog.setContentView(R.layout.layout_custom_dialog);
+
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                Button btnClose = dialog.findViewById(R.id.cancel);
+                Button btnClear = dialog.findViewById(R.id.clear);
+                TextView title = dialog.findViewById(R.id.text_view15);
+                TextView body = dialog.findViewById(R.id.textView17);
+                ImageView image = dialog.findViewById(R.id.imageView4);
+
+//                title.setText("Log Out!");
+//                body.setText("Are You Sure You Want to Log Out ?");
+                btnClear.setText("Log Out");
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnClear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        load_dialog = ProgressDialog.show(getActivity(), "log out",
+                                "Loading. Please wait...", true);
+                        dialog.show();
+                        getLogout();
+                    }
+                });
+
+                dialog.show();
             }
         });
 
         binding.textView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getLogout();
+
+                Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
+                dialog.setContentView(R.layout.layout_custom_dialog);
+
+                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+
+                Button btnClose = dialog.findViewById(R.id.cancel);
+                Button btnClear = dialog.findViewById(R.id.clear);
+                TextView title = dialog.findViewById(R.id.text_view15);
+                TextView body = dialog.findViewById(R.id.textView17);
+                ImageView image = dialog.findViewById(R.id.imageView4);
+
+                title.setText("Log Out!");
+                body.setText("Are You Sure You Want to Log Out ?");
+                btnClear.setText("Log Out");
+
+                btnClose.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                btnClear.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        load_dialog = ProgressDialog.show(getActivity(), "log out",
+                                "Loading. Please wait...", true);
+                        dialog.show();
+                        getLogout();
+                    }
+                });
+
+                dialog.show();
             }
         });
     }
@@ -458,12 +535,48 @@ public class AccountFragment extends Fragment {
     private void startShimmer() {
 
         binding.shimmerLayout.startShimmer();
-    //    binding.shimmerLayout.setVisibility(View.GONE);
+        binding.About.setVisibility(View.GONE);
+        binding.address.setVisibility(View.GONE);
+        binding.camera.setVisibility(View.GONE);
+        binding.imageView9.setVisibility(View.GONE);
+        binding.imageView18.setVisibility(View.GONE);
+        binding.imageView22.setVisibility(View.GONE);
+        binding.imageView23.setVisibility(View.GONE);
+        binding.imageView25.setVisibility(View.GONE);
+        binding.name.setVisibility(View.GONE);
+        binding.Notifications.setVisibility(View.GONE);
+        binding.Out.setVisibility(View.GONE);
+        binding.photo.setVisibility(View.GONE);
+        binding.Privacy.setVisibility(View.GONE);
+        binding.privacy.setVisibility(View.GONE);
+        binding.Support.setVisibility(View.GONE);
+        binding.textView5.setVisibility(View.GONE);
+        binding.textView46.setVisibility(View.GONE);
+        binding.textView47.setVisibility(View.GONE);
+        binding.textView50.setVisibility(View.GONE);
     }
 
     private void stopShimmer() {
         binding.shimmerLayout.stopShimmer();
         binding.shimmerLayout.setVisibility(View.GONE);
-        binding.container.setVisibility(View.VISIBLE);
+        binding.About.setVisibility(View.VISIBLE);
+        binding.address.setVisibility(View.VISIBLE);
+        binding.camera.setVisibility(View.VISIBLE);
+        binding.imageView9.setVisibility(View.VISIBLE);
+        binding.imageView18.setVisibility(View.VISIBLE);
+        binding.imageView22.setVisibility(View.VISIBLE);
+        binding.imageView23.setVisibility(View.VISIBLE);
+        binding.imageView25.setVisibility(View.VISIBLE);
+        binding.name.setVisibility(View.VISIBLE);
+        binding.Notifications.setVisibility(View.VISIBLE);
+        binding.Out.setVisibility(View.VISIBLE);
+        binding.photo.setVisibility(View.VISIBLE);
+        binding.Privacy.setVisibility(View.VISIBLE);
+        binding.privacy.setVisibility(View.VISIBLE);
+        binding.Support.setVisibility(View.VISIBLE);
+        binding.textView5.setVisibility(View.VISIBLE);
+        binding.textView46.setVisibility(View.VISIBLE);
+        binding.textView47.setVisibility(View.VISIBLE);
+        binding.textView50.setVisibility(View.VISIBLE);
     }
 }

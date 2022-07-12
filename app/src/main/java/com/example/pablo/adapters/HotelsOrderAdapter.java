@@ -65,13 +65,13 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
     @Override
     public void onBindViewHolder(HotelsOrderAdapter.ViewHolder holder, int position) {
 
-        holder.binding.date.setText(list.get(position).getTimeCount()+"room count");
+        holder.binding.date.setText(list.get(position).getTimeCount()+"");
         holder.binding.price.setText(list.get(position).getTotalPrice()+"$");
         holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
         holder.binding.hotelName.setText(list.get(position).getHotelName());
         holder.binding.status.setText(list.get(position).getStatus());
         Glide.with(context).load(list.get(position).getHotel_image())
-                 .error(R.drawable.mosqes).skipMemoryCache(true)
+                 .error(R.drawable.bed1).skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.binding.image);
 

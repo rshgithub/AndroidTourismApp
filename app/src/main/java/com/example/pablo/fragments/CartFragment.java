@@ -1,5 +1,6 @@
 package com.example.pablo.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -116,12 +117,13 @@ public class CartFragment extends Fragment {
         swipeRefresh();
         startShimmer();
         list = new ArrayList<>();
+
         deleteAll();
         adapter();
         getRetrofitInstance();
         getRoomsCart();
         swipeToEditAndDelete();
-  //     noData();
+
 
         return view;
     }
@@ -137,9 +139,8 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
                     stopShimmer();
-///                    Toast.makeText(getActivity(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     list = response.body().getHotelOrderItems();
-//                    noData();
+                    noData();
                     adapter.setData(list);
 
                 } else {
@@ -300,11 +301,11 @@ public class CartFragment extends Fragment {
                     public void onClick(View view) {
                         if (list.size()==0){
                             Toast.makeText(getActivity(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Intent intent = new Intent(getActivity(), Payment.class);
-                        intent.putExtra("price", price);
-                        startActivity(intent);
-                    }
+                        }else{
+                            Intent intent = new Intent(getActivity(), Payment.class);
+                            intent.putExtra("price", price);
+                            startActivity(intent);
+                        }
 
 
                     }
@@ -372,7 +373,6 @@ public class CartFragment extends Fragment {
                                 dialog.dismiss();
                                 list.remove(position);
                                 adapter.notifyItemRemoved(position);
-                             //   noData();
                             }
                         });
                         dialog.show();
@@ -447,10 +447,15 @@ public class CartFragment extends Fragment {
             binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
             binding.recyclerView2.setVisibility(View.GONE);
             binding.count.setText("0");
+            binding.deleteAll.setEnabled(false);
+            binding.pay.setEnabled(false);
             binding.totalPrice.setText("0$");
 
         } else {
             binding.empty.setVisibility(View.GONE);
+            binding.deleteAll.setEnabled(true);
+            binding.pay.setEnabled(true);
+
             binding.imageView26.setVisibility(View.GONE);
             binding.recyclerView2.setVisibility(View.VISIBLE);
         }

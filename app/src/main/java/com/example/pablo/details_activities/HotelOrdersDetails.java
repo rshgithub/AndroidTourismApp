@@ -116,7 +116,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
                         binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.red));
                     }
                     Glide.with(getBaseContext()).load(response.body().getData().getHotel_image())
-                            .error(R.drawable.mosqes).skipMemoryCache(true)
+                            .error(R.drawable.bed1).skipMemoryCache(true)
                             .diskCacheStrategy(DiskCacheStrategy.NONE)
                             .into(binding.imageView19);
 

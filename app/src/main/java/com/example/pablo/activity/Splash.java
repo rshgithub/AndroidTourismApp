@@ -2,6 +2,7 @@ package com.example.pablo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import static com.example.pablo.activity.Signup.PREF_NAME;
 
 public class Splash extends AppCompatActivity {
 
-    public static SharedPreferences onboarding;
+    public static SharedPreferences SP;    // to read from SharedPreferences
+    public static SharedPreferences.Editor EDIT;
+
     ActivityMainBinding binding;
 
     @Override
@@ -28,36 +31,26 @@ public class Splash extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        EDIT = SP.edit();
+
+
         final Handler handler = new Handler();
 
-        Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");
-        String FCM_TOKEN = Login.SP.getString(Login.FCM_TOKEN, "");
-        Log.e("tokenn", token);
-        Log.e("FCM_TOKEN_splash", FCM_TOKEN);
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                String token = SP.getString(Login.TokenKey, "");
+
                 //check if first time
-                onboarding = getSharedPreferences("onboarding", MODE_PRIVATE);
+                boolean isFirsttime = SP.getBoolean("firsttime", true);
 
-                boolean isFirsttime = onboarding.getBoolean("firsttime", true);
-
-                if (getIntent().getExtras() != null && getIntent().getStringExtra("order_id") != null) {
-
-                    if (getIntent().getStringExtra("order_id") != null) {
-//                        Toast.makeText(MainActivity.this, getIntent().getStringExtra("order_id") + "", Toast.LENGTH_SHORT).show();
-//                        Intent notificationIntent = new Intent(MainActivity.this, HotelOrdersDetails.class);
-//                        notificationIntent.putExtra("order_id", getIntent().getStringExtra("order_id"));
-//                        startActivity(notificationIntent);
-//                        finish();
-                    }
-                } else if (!isFirsttime && token != null) {
+                if (!isFirsttime && Login.TokenKey != null &&  EDIT != null) {
                     Intent i = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                     startActivity(i);
                     finish();
                 } else if (isFirsttime) {
-                    SharedPreferences.Editor EDIT = onboarding.edit();
+                    SharedPreferences.Editor EDIT = SP.edit();
                     EDIT.putBoolean("firsttime", false);
                     EDIT.commit();
                     Intent i = new Intent(getBaseContext(), IntroActivity.class);

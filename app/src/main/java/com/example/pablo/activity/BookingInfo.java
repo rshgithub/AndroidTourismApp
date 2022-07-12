@@ -136,6 +136,7 @@ public class BookingInfo extends AppCompatActivity {
                     Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
                     intent.putExtra("cart","cart");
                     startActivity(intent);
+                    finish();
                     Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -222,7 +223,7 @@ public class BookingInfo extends AppCompatActivity {
                         Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
                     }
 
-    Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).into(binding.imageView6);
+    Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).placeholder(R.drawable.bed1).into(binding.imageView6);
 
                     Log.e("room_image",response.body().getData().getRoomImages()+"");
 
