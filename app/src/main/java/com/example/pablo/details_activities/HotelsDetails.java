@@ -33,6 +33,7 @@ import com.example.pablo.model.hotels.HotelsExample;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -106,7 +107,6 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                     binding.details.setText( response.body().getData().getDetails());
                     Glide.with(HotelsDetails.this).load(response.body().getData().getHotelImage())
                             .into(binding.hotelImg);
-                    Toast.makeText(HotelsDetails.this, response.body().getData().getName()+"", Toast.LENGTH_SHORT).show();
                     //rooms
                     binding.button.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -123,14 +123,14 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
             @Override
             public void onFailure(Call<HotelsExample> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
             }
 
@@ -156,13 +156,13 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
                     Log.e("code", response.code() + "");
-                    Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<List<Amenities>> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
             }
 
@@ -190,6 +190,9 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.amenities.setVisibility(View.GONE);
         binding.map.setVisibility(View.GONE);
         binding.imgv.setVisibility(View.GONE);
+        binding.det.setVisibility(View.GONE);
+        binding.imageView8.setVisibility(View.GONE);
+        binding.location.setVisibility(View.GONE);
         binding.shimmerLayout.setVisibility(View.VISIBLE);
     }
 
@@ -200,13 +203,16 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.amenities.setVisibility(View.VISIBLE);
         binding.map.setVisibility(View.VISIBLE);
         binding.imgv.setVisibility(View.VISIBLE);
+        binding.det.setVisibility(View.VISIBLE);
+        binding.imageView8.setVisibility(View.VISIBLE);
+        binding.location.setVisibility(View.VISIBLE);
         binding.shimmerLayout.setVisibility(View.GONE);
     }
 
     private void checkInternetConnection(){
         if (!isOnLine()){
             if (isConnected){
-                Toast.makeText(getBaseContext(),"Connected",Toast.LENGTH_SHORT).show();
+                Toasty.success(getBaseContext(),"Connected",Toast.LENGTH_SHORT).show();
             }else{
 
                 Intent i = new Intent(getBaseContext(), NoInternetConnection.class);

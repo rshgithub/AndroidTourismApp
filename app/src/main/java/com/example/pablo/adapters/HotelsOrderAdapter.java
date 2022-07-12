@@ -31,6 +31,7 @@ import com.example.pablo.model.orders.OrdersExample;
 import java.util.HashSet;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -161,10 +162,6 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
                             Log.e("code", list.get(position).getId() + "");
                             Log.e("token", token + "");
                             delete(list.get(position).getId(),token,dialog,position);
-//                            notifyDataSetChanged();
-//                            dialog.dismiss();
-//                            list.remove(position);
-//                            notifyItemRemoved(position);
                         }
                     });
                     dialog.show();
@@ -185,20 +182,20 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
                     dialog.dismiss();
                     list.remove(position);
                     notifyItemRemoved(position);
-                    Toast.makeText(context, response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.success(context, response.message() + "", Toast.LENGTH_LONG).show();
                     Log.e("code", response.code() + "");
                     Log.e("code", response.body().getId() + "");
                 } else {
                     dialog.dismiss();
-                    Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show();
+                    Toasty.error(context, "something went wrong", Toast.LENGTH_SHORT).show();
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(context, response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(context, response.message() + "", Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(Call<Datum> call, Throwable t) {
-                Toast.makeText(context, t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(context, t.getMessage() + "", Toast.LENGTH_LONG).show();
                 t.printStackTrace();
                 Log.e("code", t.getMessage() + "");
             }

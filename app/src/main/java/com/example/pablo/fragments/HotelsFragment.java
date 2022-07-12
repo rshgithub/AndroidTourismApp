@@ -26,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 
@@ -48,6 +49,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -108,19 +110,6 @@ public class HotelsFragment extends Fragment {
         binding = FragmentHotelsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-//        SwipeRefreshLayout swipeRefreshLayout = binding.scroll;
-//        swipeRefreshLayout.setOnRefreshListener(() -> {
-//            new Handler().postDelayed(() -> {
-//                swipeRefreshLayout.setRefreshing(false);
-//                checkInternetConnection();
-//                startShimmer();
-//                adapter();
-//                getRetrofitInstance();
-//                page = 1;
-//                getHotel();
-//                getPopularHotel();
-//            }, 1000);
-//        });
 
         checkInternetConnection();
         startShimmer();
@@ -128,6 +117,8 @@ public class HotelsFragment extends Fragment {
         getRetrofitInstance();
         getHotel();
         getPopularHotel();
+
+        binding.searchView3.setQueryHint("Search");
 
         binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
                 public boolean onClose( ) {
@@ -144,6 +135,8 @@ public class HotelsFragment extends Fragment {
         binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 search(query);
                 return true;
             }
@@ -169,8 +162,6 @@ public class HotelsFragment extends Fragment {
             @Override
             public void onResponse(Call<Hotels> call, Response<Hotels> response) {
 
-                binding.progress.setVisibility(View.VISIBLE);
-                binding.progress.setIndeterminate(true);
                 if (response.isSuccessful()) {
 
 
@@ -181,15 +172,12 @@ public class HotelsFragment extends Fragment {
                     isLoading = false;
                     if (page == 1) {
                         allHotelsAdapter.setData(response.body().getData());
-                        binding.progress.setVisibility(View.GONE);
                     } else
                         allHotelsAdapter.addToList(response.body().getData());
                     if (response.body().getLastPage() == page) {
-                        binding.progress.setVisibility(View.GONE);
                         isLastPage = true;
                         Log.e("lastPage", isLastPage + "");
                     } else {
-                        binding.progress.setVisibility(View.GONE);
                         isLastPage = false;
                     }
 
@@ -316,7 +304,7 @@ public class HotelsFragment extends Fragment {
     private void checkInternetConnection() {
         if (!isOnLine()) {
             if (isConnected) {
-                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
             } else {
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);
@@ -381,14 +369,9 @@ public class HotelsFragment extends Fragment {
             @Override
             public void onResponse(Call<SearchHotel> call, Response<SearchHotel> response) {
                 if (response.isSuccessful()) {
-//                    Toast.makeText(getActivity(), " "+ search, Toast.LENGTH_SHORT).show();
-//                    list.clear();
                     Log.e("search", response.body().getData().size() + "");
                     allHotelsAdapter.setData(response.body().getData());
-                    //  Log.e("search",response.body().+"");
                 }
-
-
             }
 
             @SuppressLint("CheckResult")

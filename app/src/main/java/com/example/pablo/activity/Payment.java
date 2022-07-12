@@ -24,9 +24,11 @@ import com.example.pablo.model.buyorder.BuyOrderExample;
 import com.github.ybq.android.spinkit.sprite.CircleSprite;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.greenrobot.eventbus.EventBus;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -36,14 +38,15 @@ import static com.example.pablo.activity.Login.parseError;
 public class Payment extends AppCompatActivity {
     static Service service;
     ActivityPaymentBinding binding;
-double price;
+    KProgressHUD hud;
+
+    double price;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityPaymentBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.progress.setVisibility(View.GONE);
         price = getIntent().getDoubleExtra("price", 0);
         binding.totalPrice.setText(price+"");
 
@@ -84,16 +87,16 @@ double price;
                     int tvCvv = Cvv.length();
 
                     if (CardNumber != 16){
-                        Toast.makeText(Payment.this, "The card number must contain 16 number", Toast.LENGTH_LONG).show();
+                        Toasty.error(Payment.this, "The card number must contain 16 number", Toast.LENGTH_LONG).show();
                     }
                      if (ExpiryDate != 5){
-                        Toast.makeText(Payment.this, "The expiration date should be written as 3/13", Toast.LENGTH_LONG).show();
+                         Toasty.error(Payment.this, "The expiration date should be written as 3/13", Toast.LENGTH_LONG).show();
                     }
                      if (CardName > 30){
-                        Toast.makeText(Payment.this, "Card Name must be less than 30 char", Toast.LENGTH_LONG).show();
+                         Toasty.error(Payment.this, "Card Name must be less than 30 char", Toast.LENGTH_LONG).show();
                     }
                      if (tvCvv != 3){
-                        Toast.makeText(Payment.this, "Cvv Name must contain 3 number", Toast.LENGTH_LONG).show();
+                         Toasty.error(Payment.this, "Cvv Name must contain 3 number", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -121,8 +124,15 @@ double price;
         Log.e("ll","  ExpiryMonth  "+ExpiryMonth+"  ExpiryYear  "
         +ExpiryYear+"number"+number+"name"+Name+"cvv"+Cvv);
 
-        binding.progress.setVisibility(View.VISIBLE);
-        binding.progress.setIndeterminate(true);
+        hud = KProgressHUD.create(Payment.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        hud.setProgress(90);
+
 
         service.Payment(number, Name, ExpiryMonth, ExpiryYear,Cvv, token).enqueue(new Callback<com.example.pablo.model.payment.Payment>() {
             @Override
@@ -130,8 +140,8 @@ double price;
 
                 Log.e("code",response.code()+"");
                 if (response.isSuccessful()) {
-                    binding.progress.setVisibility(View.GONE);
-                    Toast.makeText(Payment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    hud.dismiss();
+                    Toasty.success(Payment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                     //open order fragment
                     Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
                     intent.putExtra("order","order");
@@ -139,19 +149,19 @@ double price;
                     finish();
 
                 } else {
+                    hud.dismiss();
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-             //       Toast.makeText(getBaseContext(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
-
                 }
             }
 
             @Override
             public void onFailure(Call<com.example.pablo.model.payment.Payment> call, Throwable t) {
                 t.printStackTrace();
+                hud.dismiss();
 
-                Toast.makeText(Payment.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Toasty.error(Payment.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

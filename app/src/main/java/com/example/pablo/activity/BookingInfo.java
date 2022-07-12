@@ -29,6 +29,7 @@ import com.example.pablo.model.edit.EditExample;
 import com.example.pablo.model.edit_order.EditOrderDetails;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,6 +37,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +58,8 @@ public class BookingInfo extends AppCompatActivity {
     Date date3;
     String checkInDate, checkOutDate;
     boolean isConnected = false;
-    
+    KProgressHUD hud;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +117,14 @@ public class BookingInfo extends AppCompatActivity {
 
 
     private void bookNow() {
-        binding.progress.setVisibility(View.VISIBLE);
-        binding.progress.setIndeterminate(true);
+        hud = KProgressHUD.create(BookingInfo.this)
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setCancellable(true)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f)
+                .show();
+        hud.setProgress(90);
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
@@ -132,17 +141,17 @@ public class BookingInfo extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     stopShimmer();
-                    binding.progress.setVisibility(View.GONE);
+                    hud.dismiss();
                     Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
                     intent.putExtra("cart","cart");
                     startActivity(intent);
                     finish();
-                    Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 } else {
+                    hud.dismiss();
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.warning(BookingInfo.this, errorMessage, Toast.LENGTH_SHORT, true).show();
 
                 }
             }
@@ -150,8 +159,10 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onFailure(Call<CartExample> call, Throwable t) {
                 t.printStackTrace();
+                hud.dismiss();
 
-                Toast.makeText(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(BookingInfo.this,  t.getMessage(), Toast.LENGTH_SHORT, true).show();
+
             }
         });
     }
@@ -220,7 +231,7 @@ public class BookingInfo extends AppCompatActivity {
                     if(binding.count.getText().toString().equals(0)){
                          binding.chikinDate.setText(00+"");
                          binding.chikoutDate.setEnabled(false);
-                        Toast.makeText(BookingInfo.this, "add day count", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(BookingInfo.this,"please add day count", Toast.LENGTH_SHORT, true).show();
                     }
 
     Glide.with(BookingInfo.this).load(response.body().getData().getRoomImages().get(0)).placeholder(R.drawable.bed1).into(binding.imageView6);
@@ -438,7 +449,7 @@ public class BookingInfo extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(BookingInfo.this,errorMessage, Toast.LENGTH_SHORT, true).show();
 
                 }
             }
@@ -447,8 +458,7 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onFailure(Call<RoomsExample> call, Throwable t) {
                 t.printStackTrace();
-
-                Toast.makeText(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT, true).show();
 
             }
 
@@ -475,8 +485,6 @@ public class BookingInfo extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     stopShimmer();
                     binding.progress.setVisibility(View.GONE);
-
-                    Toast.makeText(BookingInfo.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
 
 
 //-----------------------------room count---------------------------------------
@@ -688,7 +696,8 @@ public class BookingInfo extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(BookingInfo.this, response.message(), Toast.LENGTH_SHORT, true).show();
+
 
                 }
             }
@@ -697,8 +706,7 @@ public class BookingInfo extends AppCompatActivity {
             @Override
             public void onFailure(Call<EditExample> call, Throwable t) {
                 t.printStackTrace();
-
-                Toast.makeText(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT, true).show();
 
             }
 
@@ -746,7 +754,7 @@ public class BookingInfo extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(BookingInfo.this,response.message(), Toast.LENGTH_SHORT, true).show();
 
                 }
             }
@@ -757,7 +765,7 @@ public class BookingInfo extends AppCompatActivity {
             public void onFailure(Call<EditOrderDetails> call, Throwable t) {
                 t.printStackTrace();
 
-                Toast.makeText(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(BookingInfo.this, t.getMessage(), Toast.LENGTH_SHORT, true).show();
 
             }
 
@@ -784,7 +792,7 @@ public class BookingInfo extends AppCompatActivity {
     private void checkInternetConnection(){
         if (!isOnLine()){
             if (isConnected){
-                Toast.makeText(getBaseContext(),"Connected",Toast.LENGTH_SHORT).show();
+                Toasty.success(BookingInfo.this, "connected", Toast.LENGTH_SHORT, true).show();
             }else{
 
                 Intent i = new Intent(getBaseContext(), NoInternetConnection.class);
@@ -870,7 +878,6 @@ public class BookingInfo extends AppCompatActivity {
             public void onClick(View view) {
                 editRoomDetails();
                 finish();
-           //     Toast.makeText(BookingInfo.this, "ol", Toast.LENGTH_SHORT).show();
 
             }
         });

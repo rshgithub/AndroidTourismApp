@@ -10,7 +10,7 @@
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/raimond_klavins_qdroli4aifm_unsplash"
+        android:background="@drawable/mosque1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,46 +25,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view"
+    <ImageView
+        android:id="@+id/view_1"
         android:layout_width="303dp"
-        android:layout_height="118dp"
-        android:foregroundGravity="center"
+        android:layout_height="@dimen/_100sdp"
         android:background="@drawable/rectangle_138"
+        android:foregroundGravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+    </ImageView>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Fast Delivery "
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/view_1" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Fast Delivery "
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="243dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="27dp"
+            android:gravity="center_horizontal"
+            android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:typeface="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView2" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="243dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="27dp"
-        android:text="It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:textAlignment="center"
-        android:typeface="normal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2"
-        android:gravity="center_horizontal" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/skip"

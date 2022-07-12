@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import am.appwise.components.ni.NoInternetDialog;
+import es.dmoral.toasty.Toasty;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -140,14 +141,31 @@ public class CartFragment extends Fragment {
                 if (response.isSuccessful()) {
                     stopShimmer();
                     list = response.body().getHotelOrderItems();
-                    noData();
+                    if (response.body().getHotelOrderItems()==null) {
+                        binding.empty.setVisibility(View.VISIBLE);
+                        binding.empty.setText("No Reserved Rooms Yet");
+                        binding.imageView26.setVisibility(View.VISIBLE);
+                        binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
+                        binding.recyclerView2.setVisibility(View.GONE);
+                        binding.count.setText("0");
+                        binding.deleteAll.setEnabled(false);
+                        binding.pay.setEnabled(false);
+                        binding.totalPrice.setText("0$");
+
+                    } else {
+                        binding.empty.setVisibility(View.GONE);
+                        binding.deleteAll.setEnabled(true);
+                        binding.pay.setEnabled(true);
+                        binding.imageView26.setVisibility(View.GONE);
+                        binding.recyclerView2.setVisibility(View.VISIBLE);
+                    }
                     adapter.setData(list);
 
                 } else {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -157,7 +175,7 @@ public class CartFragment extends Fragment {
                 Log.e("error", t.getMessage());
                 stopShimmer();
 
-                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
 
             }
@@ -172,7 +190,7 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
 
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.success(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                     Log.e("code", response.code() + "");
                     Log.e("code", response.body().getId() + "");
@@ -181,7 +199,7 @@ public class CartFragment extends Fragment {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -189,7 +207,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<Datum> call, Throwable t) {
 
-                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
                 t.printStackTrace();
                 Log.e("code", t.getMessage() + "");
@@ -207,17 +225,17 @@ public class CartFragment extends Fragment {
 
                 if (response.isSuccessful()) {
 
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.success(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                     adapter.notifyDataSetChanged();
-                    Toast.makeText(getActivity(), "clear all successfully", Toast.LENGTH_SHORT).show();
+                    Toasty.success(getActivity(), "clear all successfully", Toast.LENGTH_SHORT).show();
                     Log.e("code", response.code() + "");
 
                 } else {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -225,7 +243,7 @@ public class CartFragment extends Fragment {
             @Override
             public void onFailure(Call<Datum> call, Throwable t) {
 
-                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
                 t.printStackTrace();
                 Log.e("code", t.getMessage() + "");
@@ -300,7 +318,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         if (list.size()==0){
-                            Toast.makeText(getActivity(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
+                            Toasty.info(getActivity(), "Cart Is Empty", Toast.LENGTH_SHORT).show();
                         }else{
                             Intent intent = new Intent(getActivity(), Payment.class);
                             intent.putExtra("price", price);

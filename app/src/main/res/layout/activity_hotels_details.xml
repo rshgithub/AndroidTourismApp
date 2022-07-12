@@ -27,6 +27,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_380sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
@@ -235,6 +246,7 @@
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
     </RelativeLayout>
 
+            </ScrollView>
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmerLayout"
@@ -256,6 +268,7 @@
 
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -1,5 +1,7 @@
 package com.example.pablo.onbording_1;
 
+import android.widget.LinearLayout;
+
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pablo.R;

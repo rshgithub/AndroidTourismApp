@@ -32,6 +32,7 @@ import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -91,7 +92,6 @@ public class MosqueDetails extends AppCompatActivity {
                 Log.e("response code", response.code() + "");
 
                 if (response.isSuccessful()){
-                 // Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     stopShimmer();
                     binding.ChurchesName.setText( response.body().getData().getName());
                     binding.locationPin.setText( response.body().getData().getAddress());
@@ -120,14 +120,14 @@ public class MosqueDetails extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
             @Override
             public void onFailure(Call<MosqueDetailsExample> call, Throwable t) {
                 t.printStackTrace();
-              Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
             }
 

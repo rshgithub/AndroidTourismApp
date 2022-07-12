@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pablo.R;
 import com.example.pablo.fcm.MyFirebaseMessagingService;
+import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.model.LoginRequest;
 import com.example.pablo.model.RegisterRequest;
 import com.example.pablo.interfaces.Service;
@@ -26,11 +27,15 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.pablo.activity.Login.TokenKey;
+import static com.example.pablo.activity.Login.USERKey;
 
 
 public class Signup extends AppCompatActivity {
@@ -114,19 +119,20 @@ public class Signup extends AppCompatActivity {
                                 EDIT.putString(FullNameKey, response.body().getData().getUser().getName());
                                 EDIT.putString(EmailKey, response.body().getData().getUser().getEmail());
                                 EDIT.putString(AddressKey, response.body().getData().getUser().getAddress());
+                                EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
+                                EDIT.apply();
 
-                                Intent intent = new Intent(getBaseContext(), Login.class);
-                                intent.putExtra("email",binding.email.getText().toString());
-                                intent.putExtra("password",binding.password.getText().toString());
+                                Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                                 startActivity(intent);
-                                Toast.makeText(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
+
+                                Toasty.success(getBaseContext(), response.body().getMessage() , Toast.LENGTH_LONG).show();
                                 Log.e("Success", new Gson().toJson(response.body()));
                                 finish();
                             }else {
                                 binding.progress.setVisibility(View.GONE);
                                 String errorMessage = parseError(response);
                                 Log.e("errorMessage", errorMessage + "");
-                                Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                                Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
 
                             }
                             EDIT.apply();
@@ -137,7 +143,7 @@ public class Signup extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<Example> call, Throwable t) {
                             t.printStackTrace();
-                            Toast.makeText(getBaseContext(), t.getMessage() , Toast.LENGTH_SHORT).show();
+                            Toasty.error(getBaseContext(), t.getMessage() , Toast.LENGTH_SHORT).show();
                             call.cancel();
                             binding.progress.setVisibility(View.GONE);
                         }
@@ -171,9 +177,9 @@ public class Signup extends AppCompatActivity {
 
 
         if (Full == null && address == null && Email == null && Pass == null) {
-            Toast.makeText(getApplicationContext(), " you Didn't sign up yet ", Toast.LENGTH_SHORT).show();
+            Toasty.info(getApplicationContext(), " you Didn't sign up yet ", Toast.LENGTH_SHORT).show();
         } else if (Full != null && Email != null && Pass != null && address != null) {
-            Toast.makeText(getApplicationContext(), "you already signed up ", Toast.LENGTH_SHORT).show();
+            Toasty.info(getApplicationContext(), "you already signed up ", Toast.LENGTH_SHORT).show();
         }
     }
 

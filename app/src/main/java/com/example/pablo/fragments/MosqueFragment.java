@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.pablo.activity.NoInternetConnection;
@@ -44,6 +45,7 @@ import com.example.pablo.model.mosques.TopMosque;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,7 +113,9 @@ public class MosqueFragment extends Fragment {
         getMosque();
         getPopularMosque();
         startShimmer();
-//
+
+        binding.searchView3.setQueryHint("Search");
+
         binding.searchView3.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
@@ -128,6 +132,8 @@ public class MosqueFragment extends Fragment {
         binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 search(query);
                 return true;
             }
@@ -154,20 +160,19 @@ public class MosqueFragment extends Fragment {
                 if (response.isSuccessful()) {
                     binding.recyclerview2.startLayoutAnimation();
                     stopShimmer();
-//                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     list1 = response.body().getData();
                     mosqueAdapter.setData(list1);
 
                 }else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
             @Override
             public void onFailure(Call<MosqueExample> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -192,7 +197,7 @@ public class MosqueFragment extends Fragment {
                     }else {
                         String errorMessage = parseError(response);
                         Log.e("errorMessage", errorMessage + "");
-                        Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                        Toasty.error(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -200,7 +205,7 @@ public class MosqueFragment extends Fragment {
                 public void onFailure(Call<List<TopMosque>>call, Throwable t) {
 
                     Log.e( "getMessage",t.getMessage());
-                    Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toasty.error(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -289,7 +294,7 @@ public class MosqueFragment extends Fragment {
     private void checkInternetConnection(){
         if (!isOnLine()){
             if (isConnected){
-                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
             }else{
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);

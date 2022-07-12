@@ -38,6 +38,7 @@ import com.example.pablo.model.orders.OrdersExample;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -118,7 +119,6 @@ public class OrderFragment extends Fragment {
                     stopShimmer();
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-//                    Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -130,7 +130,7 @@ public class OrderFragment extends Fragment {
                 stopShimmer();
 
                 t.printStackTrace();
-                Toast.makeText(getActivity(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), "" + t.getMessage(), Toast.LENGTH_LONG).show();
 
             }
         });
@@ -185,7 +185,7 @@ public class OrderFragment extends Fragment {
     private void checkInternetConnection() {
         if (!isOnLine()) {
             if (isConnected) {
-                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
             } else {
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);
@@ -220,9 +220,9 @@ public class OrderFragment extends Fragment {
     private void noData() {
         if (list.size() == 0) {
             binding.empty.setVisibility(View.VISIBLE);
-            binding.empty.setText("No Reserved Rooms Yet");
+            binding.empty.setText("There is no orders yet");
             binding.imageView26.setVisibility(View.VISIBLE);
-            binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
+            binding.imageView26.setImageResource(R.drawable.undraw_order_delivered_re_v4ab);
             binding.recyclerview.setVisibility(View.GONE);
 
         } else {

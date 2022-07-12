@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.example.pablo.R;
 import com.example.pablo.fragments.BottomNavigationBarActivity;
 
+import es.dmoral.toasty.Toasty;
+
 public class NoInternetConnection extends AppCompatActivity {
 
     boolean isConnected;
@@ -40,8 +42,7 @@ public class NoInternetConnection extends AppCompatActivity {
 
 
                 }else   {
-
-                    Toast.makeText(NoInternetConnection.this,"Not Connected",Toast.LENGTH_SHORT).show();
+                    Toasty.error(getBaseContext(),"Not Connected", Toast.LENGTH_SHORT, true).show();
 
                 }
 

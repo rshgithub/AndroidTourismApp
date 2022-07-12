@@ -8,18 +8,6 @@
     android:background="#F8F8FA"
     tools:context=".activity.Login">
 
-    <!--    <Button-->
-<!--        android:id="@+id/button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/rotateloading"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:text="start"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-
     <View
         android:id="@+id/view3"
         android:layout_width="@dimen/_105sdp"
@@ -232,19 +220,6 @@
         app:layout_constraintGuide_begin="33dp" />
 
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_weight="2"
-        android:indeterminate="true"
-        android:indeterminateTint="@color/green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup" />
 
 
 

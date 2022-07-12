@@ -26,6 +26,7 @@ import com.example.pablo.databinding.ActivityChurchesDetailsBinding;
 import com.example.pablo.model.churchesdetails.ChurchesDetailsExample;
 import com.example.pablo.model.mosquedetails.MosqueDetailsExample;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +87,6 @@ public class ChurchesDetails extends AppCompatActivity {
             @Override
             public void onResponse(Call<ChurchesDetailsExample> call, Response<ChurchesDetailsExample> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
                     stopShimmer();
 
                     binding.ChurchesName.setText( response.body().getData().getName());
@@ -114,14 +114,14 @@ public class ChurchesDetails extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
             @Override
             public void onFailure(Call<ChurchesDetailsExample> call, Throwable t) {
                 t.printStackTrace();
-               Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
 
             }

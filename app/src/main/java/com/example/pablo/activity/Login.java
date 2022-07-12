@@ -26,12 +26,14 @@ import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.model.LoginRequest;
 import com.example.pablo.model.login.ExampleLogin;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.victor.loading.newton.NewtonCradleLoading;
 import com.victor.loading.rotate.RotateLoading;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,32 +52,33 @@ public class Login extends AppCompatActivity {
     public static final String AddressKey = "AddressKey_K";
     public static final String EmailKey = "EmailKey_K";
     public static String FCM_TOKEN ;
-
+    KProgressHUD hud;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.progress.setVisibility(View.GONE);
         SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         EDIT = SP.edit();
 
         FCM_TOKEN = SP.getString(MyFirebaseMessagingService.fcmToken,null);
         Log.e("FCM_TOKEN_LOGIN",FCM_TOKEN+"");
 
-        if (getIntent() != null) {
-            String email = getIntent().getStringExtra("email");
-           String password = getIntent().getStringExtra("password");
-           binding.email.setText(email);
-           binding.password.setText(password);
-        }
+
 
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.progress.setVisibility(View.VISIBLE);
-                binding.progress.setIndeterminate(true);
+                 hud = KProgressHUD.create(Login.this)
+                         .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                         .setLabel("Please wait")
+                         .setCancellable(true)
+                        .setAnimationSpeed(2)
+                        .setDimAmount(0.5f)
+                        .show();
+                hud.setProgress(90);
+
                 login();
 
             }
@@ -105,7 +108,7 @@ public class Login extends AppCompatActivity {
                     Log.e("error", String.valueOf(response.code()));
                     if (response.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), response.body().getMessage()+"", Toast.LENGTH_LONG).show();
-                        binding.progress.setVisibility(View.GONE);
+                        hud.dismiss();
                         //token
                         EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
                         EDIT.putLong(USERKey, response.body().getData().getUser().getId());
@@ -117,15 +120,15 @@ public class Login extends AppCompatActivity {
                         Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                         startActivity(intent);
                         finish();
-                        Toast.makeText(getBaseContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                        Toasty.success(getBaseContext(), "Success", Toast.LENGTH_SHORT, true).show();
                         Log.e("Success", new Gson().toJson(response.body()));
 
                     } else {
-                        binding.progress.setVisibility(View.GONE);
-
+//                        binding.progress.setVisibility(View.GONE);
+                        hud.dismiss();
                         String errorMessage = parseError(response);
                         Log.e("errorMessage", errorMessage + "");
-                        Toast.makeText(getBaseContext(), response.message() + "", Toast.LENGTH_LONG).show();
+                        Toasty.error(getBaseContext(), response.message(), Toast.LENGTH_SHORT, true).show();
 
                 }
 
@@ -135,20 +138,18 @@ public class Login extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<ExampleLogin> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
-                    binding.progress.setVisibility(View.GONE);
                     t.printStackTrace();
-                    Toast.makeText(getBaseContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                    hud.dismiss();
+                    Toasty.error(getBaseContext(),t.getMessage()+"", Toast.LENGTH_SHORT, true).show();
                     call.cancel();
                 }
             });
 
         } else {
-            binding.progress.setVisibility(View.GONE);
-
+            hud.dismiss();
             YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.email));
             YoYo.with(Techniques.Tada).duration(500).repeat(1).playOn(findViewById(R.id.password));
-            Toast.makeText(getBaseContext(), "Please check your Email Field and Password Field", Toast.LENGTH_SHORT).show();
+            Toasty.info(getBaseContext(),"Please check your Email Field and Password Field", Toast.LENGTH_SHORT, true).show();
         }
     }
 

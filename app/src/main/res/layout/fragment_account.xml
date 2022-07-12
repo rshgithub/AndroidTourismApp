@@ -54,9 +54,7 @@
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/image"
-                    android:padding="40dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_baseline_camera_alt_24"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,8 +86,8 @@
 
                 <ImageView
                     android:id="@+id/camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/ic_baseline_camera_alt_24"
                     app:layout_constraintBottom_toBottomOf="@+id/photo"
                     app:layout_constraintEnd_toEndOf="@+id/photo"

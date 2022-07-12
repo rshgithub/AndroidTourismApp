@@ -33,6 +33,7 @@ import com.victor.loading.newton.NewtonCradleLoading;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -130,13 +131,13 @@ public class HotelOrdersDetails extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
             @Override
             public void onFailure(Call<OrderDetailsExample> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
 
             }

@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -23,6 +25,7 @@ public class IntroActivity extends AppCompatActivity {
     IntroViewPagerAdapter introViewPagerAdapter;
     TabLayout tabIndicator;
     Button btnNext;
+    ImageView view1,view2,view3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +43,14 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         btnNext = findViewById(R.id.skip);
+
         tabIndicator = findViewById(R.id.tab_indicator);
 
         //Data
         final List<ScreenItem> mList = new ArrayList<>();
-        mList.add(new ScreenItem("Easy to Book", "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", R.drawable.raimond_klavins_qdroli4aifm_unsplash));
-        mList.add(new ScreenItem("Easy to Book", "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", R.drawable.raimond));
-        mList.add(new ScreenItem("Easy to Book", "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.", R.drawable.raimond3));
+        mList.add(new ScreenItem("Easy to Book", "Ease of access to hotels, knowing the services they provide and accessing them via the map, and ease of payment, reservation and cancellation of reservations for rooms available in hotels.", R.drawable.ebv2cjcwoaaywbg));
+        mList.add(new ScreenItem("Mosques", "The application displays information about mosques, especially the old mosques in Gaza City, and facilitates the process of communicating with mosque owners and displaying their location on the map.", R.drawable.mosque1));
+        mList.add(new ScreenItem("Churches", "The application displays information about churches, especially the old churches in Gaza City, and facilitates the process of communicating with church owners and displaying their location on the map.", R.drawable.churches));
 
         //Setup viewPager
         screenPager = findViewById(R.id.screen_viewpager);

@@ -37,6 +37,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -92,17 +93,12 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
                 if (response.isSuccessful()) {
                     list = (List<Data>) response.body();
                     adapter.setData(list);
-//                    if (response.body().getAvailableRooms() == null) {
-//                        rooms_count.setText("0");
-//                    } else {
-//                        rooms_count.setText(response.body().getAvailableRooms()+"");
-//                    }
 
                 }else {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -112,7 +108,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
             @Override
             public void onFailure(Call<List<Data>> call, Throwable t) {
 
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("error", t.getMessage());
 
             }
@@ -195,7 +191,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private void checkInternetConnection(){
         if (!isOnLine()){
             if (isConnected){
-                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
             }else{
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);

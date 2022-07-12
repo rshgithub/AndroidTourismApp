@@ -43,16 +43,19 @@ import com.example.pablo.activity.ActivityPrivacy;
 import com.example.pablo.activity.ActivitySupport;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.Login;
+import com.example.pablo.activity.Payment;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.FragmentAccountBinding;
 import com.example.pablo.model.RegisterResponse;
 import com.example.pablo.model.logout.LogOutExample;
 import com.example.pablo.model.users.UsersExample;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.File;
 import java.io.IOException;
 
+import es.dmoral.toasty.Toasty;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -78,7 +81,7 @@ public class AccountFragment extends Fragment {
     Bitmap bitmap;
     int SELECT_PHOTO=1;
     Uri uri;
-    ProgressDialog load_dialog;
+    KProgressHUD hud;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -148,7 +151,7 @@ public class AccountFragment extends Fragment {
                 } else {
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -156,7 +159,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call<UsersExample> call, Throwable t) {
                 t.printStackTrace();
-                Toast.makeText(getContext(), t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(getContext(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
             }
 
@@ -175,19 +178,16 @@ public class AccountFragment extends Fragment {
                 Log.e("response code", response.code() + "");
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), response.body().getMessage() + "", Toast.LENGTH_LONG).show();
-                    load_dialog.dismiss();
                     Intent intent = new Intent(getActivity(), Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    Toast.makeText(getActivity(), response.message(), Toast.LENGTH_LONG).show();
+                    Toasty.success(getActivity(), response.message(), Toast.LENGTH_LONG).show();
 
 
                 } else {
-                    load_dialog.dismiss();
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
-                    Toast.makeText(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
+                    Toasty.error(getActivity(), response.message() + "", Toast.LENGTH_LONG).show();
 
                 }
             }
@@ -195,8 +195,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onFailure(Call<LogOutExample> call, Throwable t) {
                 t.printStackTrace();
-                load_dialog.dismiss();
-                Toast.makeText(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), t.getMessage() + "", Toast.LENGTH_LONG).show();
 
 
             }
@@ -274,14 +273,26 @@ public class AccountFragment extends Fragment {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
                 file = FileUtil.from(getActivity(), uri);
                 binding.photo.setImageBitmap(bitmap);
+
+                hud = KProgressHUD.create(getActivity())
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Upload Image!").setDetailsLabel("Please wait...")
+                        .setCancellable(true)
+                        .setAnimationSpeed(2)
+                        .setDimAmount(0.5f)
+                        .show();
+                hud.setProgress(90);
+
                 updateUserImage();
             } catch (IOException e) {
                 Log.w("tag", e);
             }
         } else if (resultCode == RESULT_CANCELED) {
-            Toast.makeText(getActivity(), "RESULT_CANCELED", Toast.LENGTH_SHORT).show();
+            hud.dismiss();
+            Toasty.info(getActivity(), "RESULT_CANCELED", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), "cancel image"+ resultCode, Toast.LENGTH_SHORT).show();
+            hud.dismiss();
+            Toasty.error(getActivity(), "cancel image"+ resultCode, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -294,8 +305,6 @@ public class AccountFragment extends Fragment {
                 e.printStackTrace();
             }
             Glide.with(getActivity()).asBitmap().centerCrop().load(bitmap).into(binding.photo);
-//                    .apply(new RequestOptions().transform(new RoundedCorners(100))
-//                    .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
 
             binding.photo.setImageBitmap(bitmap);
         }
@@ -317,16 +326,18 @@ public class AccountFragment extends Fragment {
                 public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                     Log.d("response code", response.code() + "");
                     if (response.isSuccessful()) {
-                        Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
+                        Toasty.success(getActivity(), "success", Toast.LENGTH_SHORT).show();
                         Log.d("success", response.message());
+                        hud.dismiss();
                     }else {
-                        Toast.makeText(getActivity(), "else", Toast.LENGTH_SHORT).show();
-
+                        Toasty.error(getActivity(), "else", Toast.LENGTH_SHORT).show();
+                        hud.dismiss();
                     }
                 }
                 @Override
                 public void onFailure(Call<RegisterResponse> call, Throwable t) {
                     Log.d("error", t.getMessage() + "");
+                    hud.dismiss();
                 }
             });
         }
@@ -356,19 +367,12 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
 
                 Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
-                dialog.setContentView(R.layout.layout_custom_dialog);
+                dialog.setContentView(R.layout.layout_custom_dialog3);
 
                 dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
 
                 Button btnClose = dialog.findViewById(R.id.cancel);
                 Button btnClear = dialog.findViewById(R.id.clear);
-                TextView title = dialog.findViewById(R.id.text_view15);
-                TextView body = dialog.findViewById(R.id.textView17);
-                ImageView image = dialog.findViewById(R.id.imageView4);
-
-//                title.setText("Log Out!");
-//                body.setText("Are You Sure You Want to Log Out ?");
-                btnClear.setText("Log Out");
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -394,7 +398,7 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
 
                 Dialog dialog = new Dialog(getActivity(), R.style.DialogStyle);
-                dialog.setContentView(R.layout.layout_custom_dialog);
+                dialog.setContentView(R.layout.layout_custom_dialog3);
 
                 dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
 
@@ -404,10 +408,6 @@ public class AccountFragment extends Fragment {
                 TextView body = dialog.findViewById(R.id.textView17);
                 ImageView image = dialog.findViewById(R.id.imageView4);
 
-                dialog.
-//                title.setText("Log Out!");
-//                body.setText("Are You Sure You Want to Log Out ?");
-                btnClear.setText("Log Out");
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -432,7 +432,7 @@ public class AccountFragment extends Fragment {
     private void ifIsOnLine(){
         if (!isOnLine()) {
             if (isConnected) {
-                Toast.makeText(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(), "Connected", Toast.LENGTH_SHORT).show();
             } else {
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);

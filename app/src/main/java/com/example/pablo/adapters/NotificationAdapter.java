@@ -20,6 +20,8 @@ import com.example.pablo.model.notification.NotificationData;
 
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
@@ -70,7 +72,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, list.get(position).getStatus(), Toast.LENGTH_SHORT).show();
+                    Toasty.info(context, list.get(position).getStatus(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

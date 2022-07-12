@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.pablo.activity.NoInternetConnection;
@@ -38,6 +39,7 @@ import com.example.pablo.databinding.FragmentChurchesBinding;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -113,9 +115,13 @@ public class ChurchesFragment extends Fragment {
             }
         });
 
+        binding.searchView3.setQueryHint("Search");
+
         binding.searchView3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 search(query);
                 return true;
             }
@@ -141,7 +147,6 @@ public class ChurchesFragment extends Fragment {
             public void onResponse(Call<AllChurches> call, Response<AllChurches> response) {
 
                 if (response.isSuccessful()) {
-//                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     binding.recyclerview.startLayoutAnimation();
 
                     stopShimmer();
@@ -152,7 +157,7 @@ public class ChurchesFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<AllChurches> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
         });
@@ -168,7 +173,6 @@ public class ChurchesFragment extends Fragment {
             public void onResponse(Call<List<TopChurches>> call, Response<List<TopChurches>> response) {
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), response.message()+"", Toast.LENGTH_LONG).show();
                     stopShimmer();
                     binding.recyclerview2.startLayoutAnimation();
 
@@ -179,9 +183,8 @@ public class ChurchesFragment extends Fragment {
             }
             @Override
             public void onFailure(Call<List<TopChurches>> call, Throwable t) {
-                Toast.makeText(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
+                Toasty.error(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 call.cancel();
             }
         });
@@ -237,7 +240,7 @@ public class ChurchesFragment extends Fragment {
     private void checkInternetConnection(){
         if (!isOnLine()){
             if (isConnected){
-                Toast.makeText(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
+                Toasty.success(getActivity(),"Connected",Toast.LENGTH_SHORT).show();
             }else{
 
                 Intent i = new Intent(getActivity(), NoInternetConnection.class);
