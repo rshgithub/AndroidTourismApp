@@ -104,75 +104,81 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
             }
         });
 
-        holder.binding.delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("code", list.get(position).getId() + "");
+        if (!list.get(position).getStatus().equals("approved")){
+            holder.binding.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.e("code", list.get(position).getId() + "");
 
-                if(list.get(position).getStatus().equals("rejected")||list.get(position).getStatus().equals("approved")){
+                    if(list.get(position).getStatus().equals("rejected")||list.get(position).getStatus().equals("approved")){
 
-                Dialog dialog = new Dialog(context, R.style.DialogStyle);
-                dialog.setContentView(R.layout.layout_custom_dialog2);
+                        Dialog dialog = new Dialog(context, R.style.DialogStyle);
+                        dialog.setContentView(R.layout.layout_custom_dialog2);
 
-                dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
 
-                Button btnClose = dialog.findViewById(R.id.cancel);
-                Button btnClear = dialog.findViewById(R.id.clear);
+                        Button btnClose = dialog.findViewById(R.id.cancel);
+                        Button btnClear = dialog.findViewById(R.id.clear);
 
-                btnClose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        btnClear.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.e("code", list.get(position).getId() + "");
+
+                                Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                                String token = Login.SP.getString(TokenKey, "");
+                                delete(list.get(position).getId(),token,dialog,position);
+
+                            }
+                        });
+                        dialog.show();
                     }
-                });
+                    else {
 
-                btnClear.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.e("code", list.get(position).getId() + "");
+                        Dialog dialog = new Dialog(context, R.style.DialogStyle);
+                        dialog.setContentView(R.layout.layout_custom_dialog2);
 
-                        Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                        String token = Login.SP.getString(TokenKey, "");
-                        delete(list.get(position).getId(),token,dialog,position);
+                        dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
 
+                        Button btnClose = dialog.findViewById(R.id.cancel);
+                        Button btnClear = dialog.findViewById(R.id.clear);
+                        TextView text = dialog.findViewById(R.id.textView17);
+                        text.setText("Are you sure you want to delete this order ? , its still pending if you want to delete it , will refund your money");
+
+                        btnClose.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        btnClear.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                                String token = Login.SP.getString(TokenKey, "");
+                                Log.e("code", list.get(position).getId() + "");
+                                Log.e("token", token + "");
+                                delete(list.get(position).getId(),token,dialog,position);
+                            }
+                        });
+                        dialog.show();
                     }
-                });
-                dialog.show();
                 }
-                else {
+            });
 
-                    Dialog dialog = new Dialog(context, R.style.DialogStyle);
-                    dialog.setContentView(R.layout.layout_custom_dialog2);
-
-                    dialog.getWindow().setBackgroundDrawableResource(R.drawable.dialog);
-
-                    Button btnClose = dialog.findViewById(R.id.cancel);
-                    Button btnClear = dialog.findViewById(R.id.clear);
-                    TextView text = dialog.findViewById(R.id.textView17);
-                    text.setText("Are you sure you want to delete this order ? , its still pending if you want to delete it , will refund your money");
-
-                    btnClose.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
-
-                    btnClear.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-                            Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                            String token = Login.SP.getString(TokenKey, "");
-                            Log.e("code", list.get(position).getId() + "");
-                            Log.e("token", token + "");
-                            delete(list.get(position).getId(),token,dialog,position);
-                        }
-                    });
-                    dialog.show();
-                }
-            }
-        });
+        }
+        else {
+            holder.binding.delete.setVisibility(View.GONE);
+        }
 
 
 
