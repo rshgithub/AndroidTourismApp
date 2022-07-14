@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -69,12 +70,13 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
+import static com.example.pablo.activity.Signup.USERKey;
 
 public class AccountFragment extends Fragment {
 
     FragmentAccountBinding binding;
     Service service;
-    NewtonCradleLoading newtonCradleLoading;
     boolean isConnected = false;
     ConnectivityManager connectivityManager;
     File file;
@@ -84,7 +86,8 @@ public class AccountFragment extends Fragment {
     KProgressHUD hud;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public static SharedPreferences SP;    // to read from SharedPreferences
+    public static SharedPreferences.Editor EDIT; // to write in / edit SharedPreferences
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -132,10 +135,9 @@ public class AccountFragment extends Fragment {
 
 
     private void getAccountData() {
-
-        Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
-        Long AccountId = Login.SP.getLong(Login.USERKey, -1);
+        SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+        String token = SP.getString(TokenKey, "");//"No name defined" is the default value.
+        Long AccountId = SP.getLong(USERKey, -1);
 
         service.getUserDetails(AccountId, token).enqueue(new Callback<UsersExample>() {
             @Override
@@ -168,21 +170,28 @@ public class AccountFragment extends Fragment {
     }
 
     private void getLogout() {
-
+        String TokenKey = "Token_K";
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.logOutUser(token).enqueue(new Callback<LogOutExample>() {
             @Override
             public void onResponse(Call<LogOutExample> call, Response<LogOutExample> response) {
                 Log.e("response code", response.code() + "");
+                SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+                EDIT = SP.edit();
 
                 if (response.isSuccessful()) {
+
+
+                    EDIT.putString(TokenKey, "");
                     Intent intent = new Intent(getActivity(), Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    EDIT.apply();
                     Toasty.success(getActivity(), response.message(), Toast.LENGTH_LONG).show();
-
+                    Log.e("token",SP.getString(TokenKey,""));
 
                 } else {
                     String errorMessage = parseError(response);
@@ -313,7 +322,7 @@ public class AccountFragment extends Fragment {
 
     private void updateUserImage(){
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");
+        String token = Login.SP.getString(TokenKey, "");
 
         MultipartBody.Part body = null;
         if (file != null) {

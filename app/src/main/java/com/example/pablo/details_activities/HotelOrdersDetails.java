@@ -40,6 +40,7 @@ import retrofit2.Response;
 
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 import static com.example.pablo.adapters.HotelsOrderAdapter.ORDERDETAILS;
 import static com.example.pablo.fcm.MyFirebaseMessagingService.ORDER_ID;
 
@@ -94,7 +95,7 @@ public class HotelOrdersDetails extends AppCompatActivity {
     private void getOrderDetails() {
 
         Login.SP = getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");
+        String token = Login.SP.getString(TokenKey, "");
 
         service.getHotelOrdersDetails(orderId,token).enqueue(new Callback<OrderDetailsExample>() {
             @Override
@@ -109,12 +110,17 @@ public class HotelOrdersDetails extends AppCompatActivity {
                     binding.status.setText(response.body().getData().getStatus()+"");
                     if(response.body().getData().getStatus().equals("rejected")){
                         binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.red));
+                        binding.status.setBackgroundResource(R.drawable.rejected_background);
                     }else if (response.body().getData().getStatus().equals("pending")){//Checkout !!
                         binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.yellow));
+                        binding.status.setBackgroundResource(R.drawable.pending_background);
                     }else if (response.body().getData().getStatus().equals("approved")){
                         binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.green));
+                        binding.status.setBackgroundResource(R.drawable.approved_background);
                     }else{
                         binding.status.setTextColor(getBaseContext().getResources().getColor(R.color.red));
+                        binding.status.setBackgroundResource(R.drawable.rejected_background);
+
                     }
                     Glide.with(getBaseContext()).load(response.body().getData().getHotel_image())
                             .error(R.drawable.bed1).skipMemoryCache(true)

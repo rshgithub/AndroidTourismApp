@@ -45,6 +45,7 @@ import retrofit2.Response;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class BookingInfo extends AppCompatActivity {
     Long sum = Long.valueOf(1);
@@ -127,7 +128,7 @@ public class BookingInfo extends AppCompatActivity {
         hud.setProgress(90);
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         String check_in = binding.chikinDate.getText().toString();
         String checkout = binding.chikoutDate.getText().toString();
@@ -171,7 +172,7 @@ public class BookingInfo extends AppCompatActivity {
     private void getRoomDetails(Long roomId) {
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getRoomDetails(roomId, token).enqueue(new Callback<RoomsExample>() {
             @SuppressLint("SetTextI18n")
@@ -473,7 +474,7 @@ public class BookingInfo extends AppCompatActivity {
         binding.progress.setIndeterminate(true);
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
 
         String count = binding.count.getText().toString();
@@ -718,7 +719,7 @@ public class BookingInfo extends AppCompatActivity {
     private void getEditOrderDetails() {
 
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getEditOrdersDetails(orderId, token).enqueue(new Callback<EditOrderDetails>() {
             @SuppressLint("SetTextI18n")

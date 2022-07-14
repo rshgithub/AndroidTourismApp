@@ -47,6 +47,7 @@ import retrofit2.Response;
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Signup.PREF_NAME;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class ChurchesFragment extends Fragment {
 
@@ -140,7 +141,7 @@ public class ChurchesFragment extends Fragment {
     private void getChurches() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getChurches(token).enqueue(new Callback<AllChurches>() {
             @Override
@@ -166,7 +167,7 @@ public class ChurchesFragment extends Fragment {
     private void getPopularChurches() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getTopChurches(token).enqueue(new Callback<List<TopChurches>>() {
             @Override
@@ -314,7 +315,7 @@ public class ChurchesFragment extends Fragment {
 
     private void search(String name) {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         String search = binding.searchView3.getQuery().toString();
 

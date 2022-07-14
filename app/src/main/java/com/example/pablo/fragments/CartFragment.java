@@ -50,6 +50,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class CartFragment extends Fragment {
 
@@ -132,7 +133,7 @@ public class CartFragment extends Fragment {
     private void getRoomsCart() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
         service.getCart(token).enqueue(new Callback<CartExample>() {
             @Override
             public void onResponse(Call<CartExample> call, Response<CartExample> response) {
@@ -286,7 +287,7 @@ public class CartFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
                         clear(token);
                         if (list != null)
                             list.clear();
@@ -385,7 +386,7 @@ public class CartFragment extends Fragment {
                             @Override
                             public void onClick(View view) {
                                 Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                                String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
                                 delete(list.get(position).getId(), token);
                                 adapter.notifyDataSetChanged();
                                 dialog.dismiss();

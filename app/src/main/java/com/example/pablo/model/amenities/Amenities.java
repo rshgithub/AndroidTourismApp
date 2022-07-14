@@ -1,68 +1,38 @@
+
 package com.example.pablo.model.amenities;
 
+import com.example.pablo.model.churchesdetails.Data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Amenities implements Serializable
 {
 
-    @SerializedName("id")
+    @SerializedName("message")
     @Expose
-    private Long id;
-    @SerializedName("name")
+    private String message;
+    @SerializedName("data")
     @Expose
-    private String name;
-    @SerializedName("color")
-    @Expose
-    private String color;
-    @SerializedName("icon")
-    @Expose
-    private String icon;
-    @SerializedName("hotel_id")
-    @Expose
-    private Long hotelId;
-    private final static long serialVersionUID = 7540949269169979528L;
+    private List<AmenitiesData> data;
+    private final static long serialVersionUID = 260295002170889547L;
 
-    public Long getId() {
-        return id;
+    public String getMessage() {
+        return message;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getName() {
-        return name;
+    public List<AmenitiesData> getData() {
+        return data;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
-
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setData(List<AmenitiesData> data) {
+        this.data = data;
     }
 
 }

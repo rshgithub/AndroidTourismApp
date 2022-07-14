@@ -34,6 +34,7 @@ import retrofit2.Callback;
 
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class Payment extends AppCompatActivity {
     static Service service;
@@ -112,7 +113,7 @@ public class Payment extends AppCompatActivity {
 
     public void payment() {
         Login.SP = this.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");
+        String token = Login.SP.getString(TokenKey, "");
 
 
         Long number = Long.valueOf(binding.tvCardNumber.getText().toString());

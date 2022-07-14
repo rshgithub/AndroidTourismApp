@@ -40,6 +40,7 @@ import retrofit2.Response;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class MosqueDetails extends AppCompatActivity {
      ActivityMosqueDetailsBinding binding;
@@ -83,7 +84,7 @@ public class MosqueDetails extends AppCompatActivity {
     private void getMosqueDetails() {
 
         Login.SP = this.getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
 
         service.getMosqueDetails(mosqueId,token).enqueue(new Callback<MosqueDetailsExample>() {

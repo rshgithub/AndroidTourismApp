@@ -33,15 +33,15 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.example.pablo.activity.Login.TokenKey;
-import static com.example.pablo.activity.Login.USERKey;
+import static com.example.pablo.activity.Login.UserNameKey;
 
 
 public class Signup extends AppCompatActivity {
 
     public static final String PREF_NAME = "RegisterPrefrences";
     ActivitySignupBinding binding;
+    public static final String TokenKey = "Token_K";
+    public static final String USERKey = "USER_K";
     String Input_Name, Input_Email, Input_Address, Input_Password;
     public static final String FullNameKey = "FullName_K", EmailKey = "Email_K", PassKey = "Pass_K", AddressKey = "Address_K";
     public static SharedPreferences SP;    // to read from SharedPreferences
@@ -115,13 +115,12 @@ public class Signup extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 binding.progress.setVisibility(View.GONE);
 
-                                EDIT.putLong("userId", response.body().getData().getUser().getId());
-                                EDIT.putString(FullNameKey, response.body().getData().getUser().getName());
-                                EDIT.putString(EmailKey, response.body().getData().getUser().getEmail());
-                                EDIT.putString(AddressKey, response.body().getData().getUser().getAddress());
                                 EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
+                                EDIT.putLong(USERKey, response.body().getData().getUser().getId());
+                                EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
+                                EDIT.putString(AddressKey, String.valueOf(response.body().getData().getUser().getAddress()));
+                                EDIT.putString(EmailKey, String.valueOf(response.body().getData().getUser().getEmail()));
                                 EDIT.apply();
-
                                 Intent intent = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                                 startActivity(intent);
 

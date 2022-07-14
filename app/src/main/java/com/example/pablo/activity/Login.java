@@ -39,6 +39,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.pablo.activity.Signup.PREF_NAME;
+import static com.example.pablo.activity.Signup.TokenKey;
+import static com.example.pablo.activity.Signup.USERKey;
 
 
 public class Login extends AppCompatActivity {
@@ -46,8 +48,8 @@ public class Login extends AppCompatActivity {
     ActivityLoginBinding binding;
     public static SharedPreferences SP;    // to read from SharedPreferences
     public static SharedPreferences.Editor EDIT; // to write in / edit SharedPreferences
-    public static final String TokenKey = "Token_K";
-    public static final String USERKey = "USER_K";
+//    public static final String TokenKey = "Token_K";
+//    public static final String USERKey = "USER_K";
     public static final String UserNameKey = "UserName_K";
     public static final String AddressKey = "AddressKey_K";
     public static final String EmailKey = "EmailKey_K";

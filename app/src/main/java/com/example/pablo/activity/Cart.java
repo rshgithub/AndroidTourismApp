@@ -38,6 +38,7 @@ import retrofit2.Response;
 
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class Cart extends AppCompatActivity {
 
@@ -92,7 +93,7 @@ public class Cart extends AppCompatActivity {
     private void getRoomsCart() {
 
         Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
         service.getCart(token).enqueue(new Callback<CartExample>() {
             @Override
             public void onResponse(Call<CartExample> call, Response<CartExample> response) {
@@ -207,7 +208,7 @@ public class Cart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
                 clear(token);
                 if (list != null)
                     list.clear();
@@ -271,7 +272,7 @@ public class Cart extends AppCompatActivity {
                 switch (direction){
                     case ItemTouchHelper.LEFT:
                         Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+                        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
                         delete(list.get(position).getId(), token);
                         adapter.notifyDataSetChanged();
                         list.remove(position);

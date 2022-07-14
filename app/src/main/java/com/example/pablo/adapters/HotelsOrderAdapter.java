@@ -40,6 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Login.parseError;
 import static com.example.pablo.activity.Signup.PREF_NAME;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 
 public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter.ViewHolder> {
@@ -68,7 +69,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
 
         holder.binding.date.setText(list.get(position).getTimeCount()+"");
         holder.binding.price.setText(list.get(position).getTotalPrice()+"$");
-        holder.binding.count.setText(list.get(position).getOrderItemsCount()+"");
+        holder.binding.count.setText(list.get(position).getOrderItemsCount()+"  Room Count");
         holder.binding.hotelName.setText(list.get(position).getHotelName());
         holder.binding.status.setText(list.get(position).getStatus());
         Glide.with(context).load(list.get(position).getHotel_image())
@@ -79,12 +80,16 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
 
         if(list.get(position).getStatus().equals("rejected")){
             holder.binding.status.setTextColor(context.getResources().getColor(R.color.red));
+            holder.binding.status.setBackgroundResource(R.drawable.rejected_background);
         }else if (list.get(position).getStatus().equals("pending")){//Checkout !!
             holder.binding.status.setTextColor(context.getResources().getColor(R.color.yellow));
+            holder.binding.status.setBackgroundResource(R.drawable.pending_background);
         }else if (list.get(position).getStatus().equals("approved")){
             holder.binding.status.setTextColor(context.getResources().getColor(R.color.green));
+            holder.binding.status.setBackgroundResource(R.drawable.approved_background);
         }else{
             holder.binding.status.setTextColor(context.getResources().getColor(R.color.red));
+            holder.binding.status.setBackgroundResource(R.drawable.rejected_background);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +132,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
                         Log.e("code", list.get(position).getId() + "");
 
                         Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                        String token = Login.SP.getString(Login.TokenKey, "");
+                        String token = Login.SP.getString(TokenKey, "");
                         delete(list.get(position).getId(),token,dialog,position);
 
                     }
@@ -158,7 +163,7 @@ public class HotelsOrderAdapter  extends RecyclerView.Adapter<HotelsOrderAdapter
                         public void onClick(View view) {
 
                             Login.SP = context.getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-                            String token = Login.SP.getString(Login.TokenKey, "");
+                            String token = Login.SP.getString(TokenKey, "");
                             Log.e("code", list.get(position).getId() + "");
                             Log.e("token", token + "");
                             delete(list.get(position).getId(),token,dialog,position);

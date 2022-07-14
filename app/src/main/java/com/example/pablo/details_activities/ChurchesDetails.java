@@ -34,6 +34,7 @@ import retrofit2.Response;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class ChurchesDetails extends AppCompatActivity {
     ActivityChurchesDetailsBinding binding;
@@ -81,7 +82,7 @@ public class ChurchesDetails extends AppCompatActivity {
     private void getChurchesDetails() {
 
         Login.SP = this.getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getChurchesDetails(ChurchesId,token).enqueue(new Callback<ChurchesDetailsExample>() {
             @Override

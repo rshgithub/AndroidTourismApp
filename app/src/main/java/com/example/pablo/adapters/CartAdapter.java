@@ -61,7 +61,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                 .circleCrop()
                 .apply(new RequestOptions().transform(new RoundedCorners(10))
                         .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                .error(R.drawable.annie_spratt_vg5lwaykixy_unsplash).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.binding.imageView6);
 
 
@@ -74,18 +74,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         myInterface.totalPriceOnItemClick(c);
         myInterface.countOnItemClick(Long.valueOf(list.size()));
 
-        if(getItemCount()==0)
-        {
-//            holder.binding.empty.setVisibility(View.GONE);
-//            holder.binding.imageView26.setVisibility(View.GONE);
-        }else {
 
-//            holder.binding.empty.setVisibility(View.VISIBLE);
-//            holder.binding.empty.setText("There's No Orders For You");
-//            holder.binding.imageView26.setVisibility(View.VISIBLE);
-////            holder.binding.container.setVisibility(View.GONE);
-//            holder.binding.imageView26.setImageResource(R.drawable.undraw_empty_cart_co35);
-        }
     }
 
 

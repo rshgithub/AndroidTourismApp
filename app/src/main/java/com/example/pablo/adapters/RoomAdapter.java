@@ -79,15 +79,15 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
         List<String> imgeList = list.get(position).getRoomImages();
         switch (imgeList.size()) {
             case 1:
-                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.amer_mughawish_gwqj2yezxeu_unsplash).into(holder.binding.img1);
                 break;
             case 2:
-                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
-                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.bed1).into(holder.binding.img2);
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.amer_mughawish_gwqj2yezxeu_unsplash).into(holder.binding.img1);
+                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.amer_mughawish_gwqj2yezxeu_unsplash).into(holder.binding.img2);
                 break;
             case 3:
-                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.bed1).into(holder.binding.img1);
-                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.bed1).into(holder.binding.img2);
+                Glide.with(context).load(imgeList.get(0)).placeholder(R.drawable.amer_mughawish_gwqj2yezxeu_unsplash).into(holder.binding.img1);
+                Glide.with(context).load(imgeList.get(1)).placeholder(R.drawable.amer_mughawish_gwqj2yezxeu_unsplash).into(holder.binding.img2);
                 Glide.with(context).load(list.get(position).getRoomImages().get(2)).placeholder(R.drawable.bed1).into(holder.binding.img3);
 
         }

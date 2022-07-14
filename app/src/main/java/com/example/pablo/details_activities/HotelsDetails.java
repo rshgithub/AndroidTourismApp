@@ -19,14 +19,13 @@ import com.bumptech.glide.Glide;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.RoomsBottomSheet;
 import com.example.pablo.activity.Login;
-import com.example.pablo.adapters.AllHotelsAdapter;
 import com.example.pablo.adapters.AmenitiesAdapter;
-import com.example.pablo.adapters.ChurchesAdapter;
-import com.example.pablo.adapters.PopularChurchesAdapter;
-import com.example.pablo.adapters.PopularHotelsAdapter;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.ActivityHotelsDetailsBinding;
 import com.example.pablo.model.amenities.Amenities;
+import com.example.pablo.model.amenities.AmenitiesData;
+import com.example.pablo.model.hotel.HotelAdvantage;
+import com.example.pablo.model.hotel.Hotels;
 import com.example.pablo.model.hotel.HotelsData;
 import com.example.pablo.model.hotels.HotelsExample;
 
@@ -40,7 +39,7 @@ import retrofit2.Response;
 
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
-import static com.example.pablo.adapters.AllHotelsAdapter.HOTELS_ID;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet.BottomSheetListener{
 
@@ -49,7 +48,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
     Service service;
     boolean isConnected = false;
     AmenitiesAdapter amenitiesAdapter;
-    List<Amenities>list;
+    List<HotelAdvantage>list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +74,8 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         getHotelData();
         mapLocation();
         adapter();
-        getAmenities();
 
 
-
-   //   receiveData();
     }
     private void receiveData(){
         if (getIntent() != null) {
@@ -94,7 +90,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
     private void getHotelData() {
 
         Login.SP = this.getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getHotelsDetails(HotelId,token).enqueue(new Callback<HotelsExample>() {
             @Override
@@ -107,6 +103,8 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                     binding.details.setText( response.body().getData().getDetails());
                     Glide.with(HotelsDetails.this).load(response.body().getData().getHotelImage())
                             .into(binding.hotelImg);
+                    list = response.body().getData().getHotelAdvantages();
+                    amenitiesAdapter.setData(list);
                     //rooms
                     binding.button.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -129,38 +127,6 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
             }
             @Override
             public void onFailure(Call<HotelsExample> call, Throwable t) {
-                t.printStackTrace();
-                Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
-
-            }
-
-        });
-
-
-    }
-
-    private void getAmenities() {
-
-        Login.SP = this.getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");
-
-        service.getAmenitiesData(token).enqueue(new Callback<List<Amenities>>() {
-            @Override
-            public void onResponse(Call<List<Amenities>> call, Response<List<Amenities>> response) {
-                if (response.isSuccessful()){
-                    stopShimmer();
-                    list = response.body();
-                    amenitiesAdapter.setData(list);
-
-                }else {
-                    String errorMessage = parseError(response);
-                    Log.e("errorMessage", errorMessage + "");
-                    Log.e("code", response.code() + "");
-                    Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
-                }
-            }
-            @Override
-            public void onFailure(Call<List<Amenities>> call, Throwable t) {
                 t.printStackTrace();
                 Toasty.error(getApplicationContext(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
@@ -260,7 +226,6 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                 getHotelData();
                 mapLocation();
                 adapter();
-                getAmenities();
             },1000);
         });
     }

@@ -1,6 +1,7 @@
 package com.example.pablo.interfaces;
 
 import com.example.pablo.model.amenities.Amenities;
+import com.example.pablo.model.amenities.AmenitiesData;
 import com.example.pablo.model.bookingInfo.CartExample;
 import com.example.pablo.model.churches.AllChurches;
 import com.example.pablo.model.churches.TopChurches;
@@ -225,7 +226,7 @@ public interface Service {
 
     //get AmenitiesData
     @GET("hotel_advantages")
-    Call<List<Amenities>> getAmenitiesData(@Header("Authorization") String token);
+    Call<HotelsData> getAmenitiesData(@Header("Authorization") String token);
 
     //getFavourites
     @GET("favourite")

@@ -49,6 +49,7 @@ import retrofit2.Response;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class ActivityNotification extends AppCompatActivity {
     static Service service;
@@ -74,7 +75,7 @@ public class ActivityNotification extends AppCompatActivity {
     private void getNotification() {
 
         Login.SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
         service.getNotification(token).enqueue(new Callback<Notification>() {
             @Override
             public void onResponse(Call<Notification> call, Response<Notification> response) {

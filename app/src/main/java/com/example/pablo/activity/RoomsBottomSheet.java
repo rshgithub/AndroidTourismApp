@@ -46,6 +46,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Signup.PREF_NAME;
 import static com.example.pablo.activity.Login.parseError;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private BottomSheetListener mListener;
@@ -84,7 +85,7 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private void getRoomDetails() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getRoom(token).enqueue(new Callback<List<Data>>() {
             @Override

@@ -2,16 +2,9 @@ package com.example.pablo.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,17 +12,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.pablo.R;
 import com.example.pablo.databinding.AmenitiesBinding;
-import com.example.pablo.databinding.MosquesItemBinding;
-import com.example.pablo.details_activities.HotelsDetails;
-import com.example.pablo.model.amenities.Amenities;
-import com.example.pablo.model.hotels.Data;
+import com.example.pablo.model.amenities.AmenitiesData;
+import com.example.pablo.model.hotel.HotelAdvantage;
 
 import java.util.List;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.ViewHolder> {
-    private List<Amenities> list;
+    private List<HotelAdvantage> list;
     Context context;
 
     public AmenitiesAdapter(Context context) {
@@ -37,7 +28,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.View
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setData(List<Amenities> list) {
+    public void setData(List<HotelAdvantage> list) {
         this.list = list;
         notifyDataSetChanged();
     }

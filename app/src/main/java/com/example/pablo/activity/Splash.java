@@ -15,8 +15,8 @@ import com.example.pablo.details_activities.HotelOrdersDetails;
 import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.onbording_1.IntroActivity;
 
-import static com.example.pablo.activity.Login.SP;
 import static com.example.pablo.activity.Signup.PREF_NAME;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class Splash extends AppCompatActivity {
 
@@ -40,16 +40,16 @@ public class Splash extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                String token = SP.getString(Login.TokenKey, "");
+                String token = SP.getString(TokenKey, "");
 
                 //check if first time
-                boolean isFirsttime = SP.getBoolean("firsttime", true);
+                boolean isFirstTime = SP.getBoolean("firsttime", true);
 
-                if (!isFirsttime && Login.TokenKey != null &&  EDIT != null) {
+                if (!isFirstTime && !token.equals("")) {
                     Intent i = new Intent(getBaseContext(), BottomNavigationBarActivity.class);
                     startActivity(i);
                     finish();
-                } else if (isFirsttime) {
+                } else if (isFirstTime) {
                     SharedPreferences.Editor EDIT = SP.edit();
                     EDIT.putBoolean("firsttime", false);
                     EDIT.commit();

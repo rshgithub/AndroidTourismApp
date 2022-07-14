@@ -58,6 +58,7 @@ import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.example.pablo.activity.Login.parseError;
 import static com.example.pablo.activity.Signup.PREF_NAME;
+import static com.example.pablo.activity.Signup.TokenKey;
 
 public class HotelsFragment extends Fragment {
     FragmentHotelsBinding binding;
@@ -155,7 +156,7 @@ public class HotelsFragment extends Fragment {
     private void getHotel() {
         isLoading = true;
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
 
         service.getHotels(token, limit, page).enqueue(new Callback<Hotels>() {
@@ -218,7 +219,7 @@ public class HotelsFragment extends Fragment {
     private void getPopularHotel() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         service.getPopularHotels(token).enqueue(new Callback<List<HotelsData>>() {
             @Override
@@ -361,7 +362,7 @@ public class HotelsFragment extends Fragment {
 
     private void search(String c) {
         Login.SP = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        String token = Login.SP.getString(Login.TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
 
         String search = binding.searchView3.getQuery().toString();
 
