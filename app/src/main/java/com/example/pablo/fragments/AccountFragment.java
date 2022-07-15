@@ -185,11 +185,15 @@ public class AccountFragment extends Fragment {
 
 
                     EDIT.putString(TokenKey, "");
+                    EDIT.apply();
                     Intent intent = new Intent(getActivity(), Login.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    EDIT.apply();
+                    getActivity().finish();
+
+
+
                     Toasty.success(getActivity(), response.message(), Toast.LENGTH_LONG).show();
                     Log.e("token",SP.getString(TokenKey,""));
 
@@ -413,10 +417,6 @@ public class AccountFragment extends Fragment {
 
                 Button btnClose = dialog.findViewById(R.id.cancel);
                 Button btnClear = dialog.findViewById(R.id.clear);
-                TextView title = dialog.findViewById(R.id.text_view15);
-                TextView body = dialog.findViewById(R.id.textView17);
-                ImageView image = dialog.findViewById(R.id.imageView4);
-
 
                 btnClose.setOnClickListener(new View.OnClickListener() {
                     @Override

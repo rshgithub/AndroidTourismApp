@@ -324,6 +324,7 @@ public class CartFragment extends Fragment {
                             Intent intent = new Intent(getActivity(), Payment.class);
                             intent.putExtra("price", price);
                             startActivity(intent);
+                            getActivity().finish();
                         }
 
 

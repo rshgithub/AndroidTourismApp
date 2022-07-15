@@ -40,7 +40,7 @@ import java.util.List;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
-    private List<Data> list  ;
+    private List<HotelRoom> list  ;
     Context context;
     private RoomsInterface listener ;
 
@@ -114,7 +114,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
     }
 
 
-    public void setData(List<Data> list) {
+    public void setData(List<HotelRoom> list) {
         this.list = list;
         notifyDataSetChanged();
     }

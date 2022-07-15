@@ -21,13 +21,18 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.pablo.R;
 import com.example.pablo.adapters.RoomAdapter;
+import com.example.pablo.details_activities.HotelsDetails;
 import com.example.pablo.fragments.BottomNavigationBarActivity;
 import com.example.pablo.fragments.CartFragment;
 import com.example.pablo.interfaces.RoomsInterface;
 import com.example.pablo.interfaces.Service;
 import com.example.pablo.model.hotel.HotelRoom;
+import com.example.pablo.model.hotel.Hotels;
+import com.example.pablo.model.hotel.HotelsData;
+import com.example.pablo.model.hotels.HotelsExample;
 import com.example.pablo.model.rooms.Data;
 import com.example.pablo.model.rooms.RoomsExample;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -50,22 +55,30 @@ import static com.example.pablo.activity.Signup.TokenKey;
 
 public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private BottomSheetListener mListener;
-    List<Data> list ;
+    List<HotelRoom> list ;
     RoomAdapter adapter;
     Service service;
     RecyclerView recyclerView;
     ImageView cart;
-    TextView rooms_count;
+    TextView roomCount;
     boolean isConnected = false;
+    Long HotelId ;
+
+    public RoomsBottomSheet(Long i) {
+        HotelId=i;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_room, container, false);
+
+
         list =new ArrayList<>();
         recyclerView = v.findViewById(R.id.recyclerview);
+        roomCount = v.findViewById(R.id.rooms_count);
         cart = v.findViewById(R.id.cart);
-//        rooms_count = v.findViewById(R.id.rooms_count);
 
         checkInternetConnection();
 
@@ -85,15 +98,22 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
     private void getRoomDetails() {
 
         Login.SP = getActivity().getSharedPreferences(PREF_NAME ,MODE_PRIVATE);
-        String token = Login.SP.getString(TokenKey, "");//"No name defined" is the default value.
+        String token = Login.SP.getString(TokenKey, "");
 
-        service.getRoom(token).enqueue(new Callback<List<Data>>() {
+        service.getHotelsDetails(HotelId,token).enqueue(new Callback<HotelsExample>() {
             @Override
-            public void onResponse(Call<List<Data>> call, Response<List<Data>> response) {
-
-                if (response.isSuccessful()) {
-                    list = (List<Data>) response.body();
+            public void onResponse(Call<HotelsExample> call, Response<HotelsExample> response) {
+                if (response.isSuccessful()){
+                    list = response.body().getData().getHotelRooms();
                     adapter.setData(list);
+                    if (response.body().getData().getAvailableRoomsCount()==null){
+                        roomCount.setText("0");
+
+                    }else{
+                        roomCount.setText(response.body().getData().getAvailableRoomsCount()+"");
+
+                    }
+
 
                 }else {
 
@@ -103,18 +123,18 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
                 }
             }
-
-
-
             @Override
-            public void onFailure(Call<List<Data>> call, Throwable t) {
-
-                Toasty.error(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("error", t.getMessage());
+            public void onFailure(Call<HotelsExample> call, Throwable t) {
+                t.printStackTrace();
+                Toasty.error(getActivity(), t.getMessage()+"", Toast.LENGTH_LONG).show();
 
             }
+
         });
+
+
     }
+
 
     public interface BottomSheetListener {
         void onButtonClicked(String text);

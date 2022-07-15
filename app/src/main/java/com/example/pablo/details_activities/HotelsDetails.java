@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.pablo.R;
 import com.example.pablo.activity.NoInternetConnection;
 import com.example.pablo.activity.RoomsBottomSheet;
 import com.example.pablo.activity.Login;
@@ -105,12 +106,12 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                             .into(binding.hotelImg);
                     list = response.body().getData().getHotelAdvantages();
                     amenitiesAdapter.setData(list);
+                    binding.amenitiesCount.setText(response.body().getData().getAdvantagesCount()+"");
                     //rooms
                     binding.button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-                            RoomsBottomSheet bottomSheet = new RoomsBottomSheet();
+                            RoomsBottomSheet bottomSheet = new RoomsBottomSheet(HotelId);
                             bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
 
                         }
@@ -159,6 +160,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.det.setVisibility(View.GONE);
         binding.imageView8.setVisibility(View.GONE);
         binding.location.setVisibility(View.GONE);
+        binding.amenitiesCount.setVisibility(View.GONE);
         binding.shimmerLayout.setVisibility(View.VISIBLE);
     }
 
@@ -172,6 +174,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.det.setVisibility(View.VISIBLE);
         binding.imageView8.setVisibility(View.VISIBLE);
         binding.location.setVisibility(View.VISIBLE);
+        binding.amenitiesCount.setVisibility(View.VISIBLE);
         binding.shimmerLayout.setVisibility(View.GONE);
     }
 

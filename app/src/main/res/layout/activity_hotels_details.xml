@@ -192,11 +192,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/details"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="@dimen/_20sdp"
-            android:layout_marginLeft="@dimen/_20sdp"
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="13dp"
+            android:layout_toEndOf="@+id/amenities_count"
             android:fontFamily="@font/montserrat"
             android:text="@string/amenities"
             android:textColor="#001327"
@@ -244,6 +243,27 @@
             android:layout_marginStart="21dp"
             android:layout_marginTop="9dp"
             app:srcCompat="@drawable/ic_baseline_location_on_24" />
+
+        <TextView
+            android:id="@+id/amenities_count"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:layout_below="@+id/details"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/room_count"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="8sp"
+            app:layout_constraintEnd_toStartOf="@+id/text_view25"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
     </RelativeLayout>
 
             </ScrollView>

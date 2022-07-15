@@ -2,6 +2,8 @@
 package com.example.pablo.model.hotel;
 
 import java.io.Serializable;
+import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -35,6 +37,9 @@ public class HotelRoom implements Serializable
     @SerializedName("room_hotel_name")
     @Expose
     private String roomHotelName;
+    @SerializedName("room_images")
+    @Expose
+    private List<String> roomImages = null;
     private final static long serialVersionUID = -7585160805451966869L;
 
     public Long getId() {
@@ -43,6 +48,14 @@ public class HotelRoom implements Serializable
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<String> getRoomImages() {
+        return roomImages;
+    }
+
+    public void setRoomImages(List<String> roomImages) {
+        this.roomImages = roomImages;
     }
 
     public String getName() {

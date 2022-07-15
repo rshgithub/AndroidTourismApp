@@ -23,6 +23,7 @@ import com.example.pablo.interfaces.Service;
 import com.example.pablo.databinding.ActivitySignupBinding;
 import com.example.pablo.model.register.Example;
 import com.google.gson.Gson;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -46,7 +47,7 @@ public class Signup extends AppCompatActivity {
     public static final String FullNameKey = "FullName_K", EmailKey = "Email_K", PassKey = "Pass_K", AddressKey = "Address_K";
     public static SharedPreferences SP;    // to read from SharedPreferences
     public static SharedPreferences.Editor EDIT; // to write in / edit SharedPreferences
-    Service service;
+    KProgressHUD hud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,25 +55,8 @@ public class Signup extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.progress.setVisibility(View.GONE);
-        if (!isOnLine()){
-            Dialog dialog = new Dialog(getBaseContext(), R.style.NoInternet);
-            dialog.setContentView(R.layout.no_internet);
-            dialog.show();
 
-            Button retry;
-            retry = dialog.findViewById(R.id.retry);
-            retry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if(isOnLine()){
-                        dialog.dismiss();
-                    }
 
-                }
-            });
-
-        }
 
         SP = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         EDIT = SP.edit();
@@ -85,13 +69,20 @@ public class Signup extends AppCompatActivity {
         binding.login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hud = KProgressHUD.create(Signup.this)
+                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                        .setLabel("Please wait")
+                        .setCancellable(true)
+                        .setAnimationSpeed(2)
+                        .setDimAmount(0.5f)
+                        .show();
+                hud.setProgress(90);
+
+
                 Input_Name = binding.fullName.getText().toString();
                 Input_Email = binding.email.getText().toString();
                 Input_Password = binding.password.getText().toString();
                 Input_Address = binding.address.getText().toString();
-
-                binding.progress.setVisibility(View.VISIBLE);
-                binding.progress.setIndeterminate(true);
 
                 if (!Input_Name.isEmpty() && !Input_Email.isEmpty() && !Input_Password.isEmpty() && !Input_Address.isEmpty()) {
                     String fcm_token = SP.getString(MyFirebaseMessagingService.fcmToken,"");
@@ -113,8 +104,7 @@ public class Signup extends AppCompatActivity {
                         public void onResponse(Call<Example> call, retrofit2.Response<Example> response) {
                             Log.e("response code", response.code() + "");
                             if (response.isSuccessful()) {
-                                binding.progress.setVisibility(View.GONE);
-
+                                hud.dismiss();
                                 EDIT.putString(TokenKey, "Bearer " + response.body().getData().getToken());
                                 EDIT.putLong(USERKey, response.body().getData().getUser().getId());
                                 EDIT.putString(UserNameKey, String.valueOf(response.body().getData().getUser().getName()));
@@ -128,7 +118,7 @@ public class Signup extends AppCompatActivity {
                                 Log.e("Success", new Gson().toJson(response.body()));
                                 finish();
                             }else {
-                                binding.progress.setVisibility(View.GONE);
+                                hud.dismiss();
                                 String errorMessage = parseError(response);
                                 Log.e("errorMessage", errorMessage + "");
                                 Toasty.error(getBaseContext(), response.message()+"", Toast.LENGTH_LONG).show();
@@ -141,10 +131,10 @@ public class Signup extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<Example> call, Throwable t) {
+                            hud.dismiss();
                             t.printStackTrace();
                             Toasty.error(getBaseContext(), t.getMessage() , Toast.LENGTH_SHORT).show();
                             call.cancel();
-                            binding.progress.setVisibility(View.GONE);
                         }
                     });
 
@@ -178,7 +168,7 @@ public class Signup extends AppCompatActivity {
         if (Full == null && address == null && Email == null && Pass == null) {
             Toasty.info(getApplicationContext(), " you Didn't sign up yet ", Toast.LENGTH_SHORT).show();
         } else if (Full != null && Email != null && Pass != null && address != null) {
-            Toasty.info(getApplicationContext(), "you already signed up ", Toast.LENGTH_SHORT).show();
+//            Toasty.info(getApplicationContext(), "you already signed up ", Toast.LENGTH_SHORT).show();
         }
     }
 

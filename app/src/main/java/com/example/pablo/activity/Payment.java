@@ -154,6 +154,8 @@ public class Payment extends AppCompatActivity {
 
                     String errorMessage = parseError(response);
                     Log.e("errorMessage", errorMessage + "");
+                    Toasty.error(Payment.this, errorMessage, Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -162,7 +164,7 @@ public class Payment extends AppCompatActivity {
                 t.printStackTrace();
                 hud.dismiss();
 
-//                Toasty.error(Payment.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toasty.error(Payment.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

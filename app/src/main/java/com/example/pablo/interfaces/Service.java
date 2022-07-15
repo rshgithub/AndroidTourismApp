@@ -91,8 +91,8 @@ public interface Service {
     Call<HotelsExample> getHotelsDetails(@Path("id") Long id, @Header("Authorization") String token);
 
     //room
-    @GET("hotel_rooms")
-    Call<List<com.example.pablo.model.rooms.Data>> getRoom(@Header("Authorization") String token);
+    @GET("hotels")
+    Call<HotelsData> getRoom(@Header("Authorization") String token);
 
     //room
     @GET("hotel_rooms/{id}")

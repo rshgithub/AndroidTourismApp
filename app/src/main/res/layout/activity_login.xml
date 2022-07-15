@@ -10,31 +10,27 @@
 
     <View
         android:id="@+id/view3"
-        android:layout_width="@dimen/_105sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="160dp"
+        android:layout_height="38dp"
         android:layout_marginStart="@dimen/_27sdp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/group_39"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.094"
-        android:layout_marginLeft="@dimen/_27sdp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_30sdp"
-        android:layout_marginEnd="@dimen/_150sdp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="39dp"
         android:fontFamily="@font/baloo_bhai"
-        android:text="@string/pablo"
+        android:text="GazaGuide"
         android:textColor="#C3D61B"
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/view3"
         tools:ignore="RtlCompat" />
@@ -61,22 +57,22 @@
         android:id="@+id/password"
         android:layout_width="@dimen/_266sdp"
         android:layout_height="@dimen/_38sdp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/shadow"
         android:ems="10"
         android:hint="@string/enter_your_password"
         android:inputType="textPassword"
         android:padding="@dimen/_10sdp"
         android:textSize="@dimen/_11ssp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:background="@drawable/skip"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
@@ -87,12 +83,10 @@
         android:textSize="@dimen/_11ssp"
         android:textStyle="bold"
         android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.226" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <View
         android:id="@+id/view6"
@@ -122,14 +116,13 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="40dp"
         android:text="@string/or"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view5"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toEndOf="@+id/view6"
-        app:layout_constraintTop_toBottomOf="@+id/login"
-        app:layout_constraintVertical_bias="0.005" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView4"
@@ -168,32 +161,28 @@
         android:layout_width="@dimen/_110sdp"
         android:layout_height="@dimen/_1sdp"
         android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="8dp"
         android:background="#B7393939"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263"
-        android:layout_marginLeft="@dimen/_25sdp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/login"
         android:layout_width="@dimen/_265sdp"
         android:layout_height="@dimen/_40sdp"
-        android:layout_marginBottom="116dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/splash_btn"
-        android:fontFamily="@font/montserrat"
 
+        android:fontFamily="@font/montserrat"
         android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.262" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textView6"
