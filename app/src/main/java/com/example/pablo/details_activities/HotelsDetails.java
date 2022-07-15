@@ -117,6 +117,14 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                         }
                     });
 
+                    binding.call.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            String phone = (String) response.body().getData().getPhoneNumber();
+//                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+//                            startActivity(intent);
+                        }
+                    });
 
                 }else {
 
@@ -161,6 +169,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.imageView8.setVisibility(View.GONE);
         binding.location.setVisibility(View.GONE);
         binding.amenitiesCount.setVisibility(View.GONE);
+        binding.call.setVisibility(View.GONE);
         binding.shimmerLayout.setVisibility(View.VISIBLE);
     }
 
@@ -175,6 +184,7 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
         binding.imageView8.setVisibility(View.VISIBLE);
         binding.location.setVisibility(View.VISIBLE);
         binding.amenitiesCount.setVisibility(View.VISIBLE);
+        binding.call.setVisibility(View.VISIBLE);
         binding.shimmerLayout.setVisibility(View.GONE);
     }
 

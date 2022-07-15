@@ -1,8 +1,10 @@
 package com.example.pablo.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -58,6 +60,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
         return new ViewHolder(binding);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(RoomAdapter.ViewHolder holder, int position) {
 
@@ -70,6 +73,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder>{
         if (list.get(position).getAvailableRooms()==0){
             holder.binding.book.setEnabled(false);
             holder.binding.book.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.disable_button));
+            holder.binding.availableRoom.setTextColor(Color.parseColor("#C10025"));
+            holder.binding.textView14.setTextColor(Color.parseColor("#C10025"));
         }else{
             holder.binding.book.setEnabled(true);
             holder.binding.book.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.booknow));
