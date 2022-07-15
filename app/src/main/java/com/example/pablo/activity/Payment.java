@@ -143,7 +143,6 @@ public class Payment extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     hud.dismiss();
                     Toasty.success(Payment.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    //open order fragment
                     Intent intent=new Intent(getBaseContext(),BottomNavigationBarActivity.class);
                     intent.putExtra("order","order");
                     startActivity(intent);

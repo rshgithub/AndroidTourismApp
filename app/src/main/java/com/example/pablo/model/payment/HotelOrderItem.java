@@ -37,16 +37,16 @@ public class HotelOrderItem implements Serializable
     private Long totalNights;
     @SerializedName("room_price_per_night")
     @Expose
-    private Long roomPricePerNight;
+    private Double roomPricePerNight;
     @SerializedName("room_has_offer")
     @Expose
     private Long roomHasOffer;
     @SerializedName("savings_per_room")
     @Expose
-    private Long savingsPerRoom;
+    private Double savingsPerRoom;
     @SerializedName("order_total_price")
     @Expose
-    private Long orderTotalPrice;
+    private Double orderTotalPrice;
     private final static long serialVersionUID = 3147614202124648815L;
 
     public Long getId() {
@@ -121,11 +121,11 @@ public class HotelOrderItem implements Serializable
         this.totalNights = totalNights;
     }
 
-    public Long getRoomPricePerNight() {
+    public Double getRoomPricePerNight() {
         return roomPricePerNight;
     }
 
-    public void setRoomPricePerNight(Long roomPricePerNight) {
+    public void setRoomPricePerNight(Double roomPricePerNight) {
         this.roomPricePerNight = roomPricePerNight;
     }
 
@@ -137,19 +137,19 @@ public class HotelOrderItem implements Serializable
         this.roomHasOffer = roomHasOffer;
     }
 
-    public Long getSavingsPerRoom() {
+    public Double getSavingsPerRoom() {
         return savingsPerRoom;
     }
 
-    public void setSavingsPerRoom(Long savingsPerRoom) {
+    public void setSavingsPerRoom(Double savingsPerRoom) {
         this.savingsPerRoom = savingsPerRoom;
     }
 
-    public Long getOrderTotalPrice() {
+    public Double getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(Long orderTotalPrice) {
+    public void setOrderTotalPrice(Double orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 

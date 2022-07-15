@@ -40,8 +40,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.Payment"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.Cart"
-            android:screenOrientation="portrait" />
         <activity android:name=".activity.BookingInfo"
             android:screenOrientation="portrait" />
         <activity android:name=".details_activities.ChurchesDetails"

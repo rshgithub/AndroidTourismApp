@@ -113,7 +113,6 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                         public void onClick(View view) {
                             RoomsBottomSheet bottomSheet = new RoomsBottomSheet(HotelId);
                             bottomSheet.show(getSupportFragmentManager(), "exampleBottomSheet");
-
                         }
                     });
 

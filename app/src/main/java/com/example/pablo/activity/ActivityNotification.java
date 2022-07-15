@@ -1,47 +1,24 @@
 package com.example.pablo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.pablo.activity.BookingInfo;
-import com.example.pablo.activity.Cart;
-import com.example.pablo.activity.Login;
-import com.example.pablo.activity.Payment;
-import com.example.pablo.adapters.CartAdapter;
 import com.example.pablo.adapters.NotificationAdapter;
 import com.example.pablo.databinding.ActivityNotificationBinding;
-import com.example.pablo.databinding.ActivityPaymentBinding;
-import com.example.pablo.interfaces.BookingInterface;
 import com.example.pablo.interfaces.Service;
-import com.example.pablo.model.cart.CartExample;
-import com.example.pablo.model.cart.HotelOrderItem;
 import com.example.pablo.model.notification.Notification;
 import com.example.pablo.model.notification.NotificationData;
-import com.example.pablo.model.reservations.Datum;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

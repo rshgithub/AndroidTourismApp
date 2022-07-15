@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/booking_info"
+            android:text="Booking Info"
             android:textColor="#001327"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"

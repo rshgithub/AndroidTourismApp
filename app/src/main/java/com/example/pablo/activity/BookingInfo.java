@@ -224,7 +224,7 @@ public class BookingInfo extends AppCompatActivity {
                     if (response.body().getData().getHasOffer() == null) {
                         binding.offer.setText("0");
                     } else {
-                        binding.offer.setText(response.body().getData().getHasOffer() + "");
+                        binding.offer.setText(response.body().getData().getHasOffer() + " %");
                     }
 
 
@@ -739,7 +739,7 @@ public class BookingInfo extends AppCompatActivity {
                     binding.chikoutDate.setText(response.body().getData().getCheckOut()+"");
                     binding.dayCount.setText(response.body().getData().getTotalNights()+"");
                     binding.roomPrice.setText(response.body().getData().getRoomPricePerNight()+"");
-                    binding.offer.setText(response.body().getData().getRoomHasOffer()+"");
+                    binding.offer.setText(response.body().getData().getRoomHasOffer()+" %");
                     binding.personNum.setText(response.body().getData().getAvailableRooms()+"");
                     Glide.with(getBaseContext()).load(response.body().getData().getRoomImage())
                             .error(R.drawable.bed1).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -855,19 +855,6 @@ public class BookingInfo extends AppCompatActivity {
             }
         });
 
-
-    }
-
-
-    private void cart(){
-        binding.cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), Cart.class);
-                startActivity(intent);
-//                finish();
-            }
-        });
 
     }
 
