@@ -111,6 +111,8 @@ public class RoomsBottomSheet extends BottomSheetDialogFragment {
 
                     }else{
                         roomCount.setText(response.body().getData().getAvailableRoomsCount()+"");
+                        Log.e("count",response.body().getData().getRoomsCount()+"");
+                        Log.e("count",response.body().getData().getAvailableRoomsCount()+"");
 
                     }
 

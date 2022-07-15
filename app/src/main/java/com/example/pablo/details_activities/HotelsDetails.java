@@ -120,9 +120,9 @@ public class HotelsDetails extends AppCompatActivity implements RoomsBottomSheet
                     binding.call.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-//                            String phone = (String) response.body().getData().getPhoneNumber();
-//                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
-//                            startActivity(intent);
+                            String phone = (String) response.body().getData().getPhone_number();
+                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null));
+                            startActivity(intent);
                         }
                     });
 

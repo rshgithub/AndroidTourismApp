@@ -27,10 +27,13 @@ public class HotelsData implements Serializable
     @SerializedName("map")
     @Expose
     private String map;
+    @SerializedName("phone_number")
+    @Expose
+    private String phone_number;
     @SerializedName("rooms_count")
     @Expose
     private Long roomsCount;
-    @SerializedName("available_rooms_count")
+    @SerializedName("available_rooms")
     @Expose
     private Long availableRoomsCount;
     @SerializedName("advantages_count")
@@ -143,4 +146,11 @@ public class HotelsData implements Serializable
         this.hotelAdvantages = hotelAdvantages;
     }
 
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
 }

@@ -69,8 +69,8 @@
 
         <ImageView
             android:id="@+id/map"
-            android:layout_width="24dp"
-            android:layout_height="22dp"
+            android:layout_width="30dp"
+            android:layout_height="28dp"
             android:layout_below="@+id/view12"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -262,6 +262,17 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view12"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="83dp"
+            android:tint="@color/purple_500"
+            app:srcCompat="@drawable/ic_baseline_call_24" />
 
 
     </RelativeLayout>

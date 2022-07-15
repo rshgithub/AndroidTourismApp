@@ -49,7 +49,7 @@ public class AmenitiesAdapter extends RecyclerView.Adapter<AmenitiesAdapter.View
 
             Glide.with(context).load(list.get(position).getIcon())
                     .transition(withCrossFade())
-                    .error(R.drawable.apple).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .error(R.drawable.ic_baseline_wifi_24).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
                     .into(holder.binding.image);
         }
 
