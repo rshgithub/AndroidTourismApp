@@ -36,6 +36,7 @@ This Android application provides a comprehensive solution for exploring tourist
 ![Adobe XD](https://img.shields.io/badge/Adobe%20XD-v34.0.12-blueviolet)
 ![Postman](https://img.shields.io/badge/Postman-API%20Testing-orange)
 ![Amazon AWS](https://img.shields.io/badge/Amazon%20AWS-Cloud%20Services-yellow)
+![Stripe](https://img.shields.io/badge/Stripe-Payment%20Gateway-blue)
 
 - **Android Studio:** The project is developed using the Android Studio integrated development environment.
 
@@ -49,6 +50,8 @@ This Android application provides a comprehensive solution for exploring tourist
 
 - **Amazon AWS:** loud services for scalable and reliable infrastructure , used to deploy our API on the server.
 
+- **Stripe:** Payment Gateway for secure and convenient electronic payments. 
+ 
 ## Getting Started:
 
 1. **Clone the Repository:**
