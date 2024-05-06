@@ -1,6 +1,6 @@
-# Gaza Guid - Tourism Exploration App for Android
-
-This Android application provides a comprehensive solution for exploring tourist and archaeological sites in the Gaza Strip. It serves as a user-friendly guide, offering detailed information on significant locations such as mosques, churches, and hotels. The app empowers users with insights into available services, pricing details, and the latest discounts, enhancing their overall travel experience.
+<h1 align="center">Welcome to Gaza Tourism Android Application 👋</h1>
+ 
+> Tourism application designed to explore tourist and archaeological places such as mosques and churches around the Gaza Strip. It also displays available hotels along with their services, prices, latest discounts, room availability, and reservation management functionalities.
 
 
 ![Screenshot (480)](https://github.com/rshgithub/AndroidTourismApp/assets/29553481/fdab9d52-c99a-469b-8c08-4dcbf984c3f1)
@@ -43,7 +43,7 @@ This Android application provides a comprehensive solution for exploring tourist
 
 - **Responsive Design:** The application boasts a responsive design, ensuring compatibility with various Android screen sizes.
 
-## Technologies Used: 
+## Technologies Used for project :
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-v4.2.2-green)
 ![Java](https://img.shields.io/badge/Java-v1.8-orange)
 ![PHP](https://img.shields.io/badge/PHP-v7.4.3-blue)
@@ -57,42 +57,53 @@ This Android application provides a comprehensive solution for exploring tourist
 ![Amazon AWS](https://img.shields.io/badge/Amazon%20AWS-Cloud%20Services-yellow)
 ![Stripe](https://img.shields.io/badge/Stripe-Payment%20Gateway-blue)
 
-- **Android Studio:** The project is developed using the Android Studio integrated development environment.
 
-- **Programming Languages:** Java for Android app development, PHP with Laravel framework for the backend, HTML, CSS, and Bootstrap5 for the control panel.
+## ✨ Features
 
-- **Restful API:** Utilizes Restful API for efficient data retrieval.
+- Explore tourist and archaeological places
+- Display available hotels and their services
+- View prices and latest discounts
+- Review available rooms and manage reservations
+- Admin control panel for easy management
+- Fit app to all screens
+- Image slider with animations
+- "See more" functionality for long text
+- Network monitoring and alerting for no internet connection
+- Gif support
+- Swipe gestures for easy navigation
+- Zoom functionality for images
+- Material search view for easy searching
+- Loader animations
+- Toast notifications for user feedback
 
-- **Adobe XD Integration:** The design has been converted seamlessly from an Adobe XD file, ensuring a visually appealing user interface.
+## 🛠️ Tools
 
-- *Postman:** API testing for ensuring reliability and efficiency.
+- ![Android Studio Icon](https://img.icons8.com/color/32/000000/android-studio--v3.png) **Development Environment:** Android Studio
+- **Platform:** Android
+- ![Java Icon](https://img.icons8.com/color/32/000000/java-coffee-cup-logo.png) **Programming Language:** Java
+- ![Adobe XD Icon](https://img.icons8.com/color/32/000000/adobe-xd.png) **Design:** Adobe XD
+- ![UX Icon](https://img.icons8.com/dusk/32/000000/easy-to-use.png) **User Experience:** Smooth and easy-to-use interface
+- ![Microphone Icon](https://img.icons8.com/ios/32/000000/microphone.png) **Voice Search:** Google Speech to Text recognition
+- ![Firebase Icon](https://img.icons8.com/color/32/000000/firebase.png) **Database:** Firebase Firestore
+- ![Authentication Icon](https://img.icons8.com/color/32/000000/lock.png) **Authentication:** Firebase Authentication
 
-- **Amazon AWS:** loud services for scalable and reliable infrastructure , used to deploy our API on the server.
+## 🚀 Getting Started
 
-- **Stripe:** Payment Gateway for secure and convenient electronic payments. 
- 
-## Getting Started:
+1. **Download:** [Download the APK file from here](https://drive.google.com/file/d/1TDXRHH5-wovgfL-H-UeanPD959ERjj7I/view?usp=sharing)
+2. **Installation:** Install the APK file on your Android device.
+3. **Configuration:** Follow on-screen instructions to set up your account and preferences.
+4. **Running:** Open the application on your Android device and start exploring tourist places and hotels.
 
-1. **Clone the Repository:**
-   ```
-   git clone https://github.com/your-username/tourism-exploration-app.git
-   ```
+## 🤝 Contributing
 
-2. **Open in Android Studio:**
-   - Open Android Studio.
-   - Select "Open an existing Android Studio project" and choose the cloned repository.
+Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/yourusername/yourproject/issues) if you want to contribute. Check the [contributing guide](./CONTRIBUTING.md).
 
-3. **Run the App:**
-   - Connect an Android device or use an emulator.
-   - Click on the "Run" button in Android Studio.
+## 📝 License
 
-## Contribution Guidelines:
+This project is [MIT](https://github.com/yourusername/yourproject/blob/master/LICENSE) licensed.
 
-Contributions to enhance the application are welcome. Please follow the [contribution guidelines](CONTRIBUTING.md).
+---
 
-## License:
-
-This project is licensed under the [MIT License](LICENSE.md). Feel free to use, modify, and distribute as per the terms.
-
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
 
  
