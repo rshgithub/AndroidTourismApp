@@ -21,27 +21,6 @@
 
 
 
-## Key Features:
-
-- **Detailed Information:** Access comprehensive details on mosques, churches, and hotels within the Gaza Strip.
-  
-- **Dynamic Pricing:** Stay updated on services, prices, and the latest discounts for a variety of establishments.
-
-- **Effortless Reservations:** Users can seamlessly review available hotel rooms, make reservations, and manage bookings efficiently.
-
-- **Admin Control Panel:** An intuitive control panel facilitates easy administration of the application, ensuring smooth operation.
-
-- **Place Owners Management:** Place owners can effortlessly track reservations and continuously update information through a dedicated control panel.
-
-- **Map Integration:** Enhance user experience by providing services such as locating places on the map and calculating transportation time.
-
-- **Direct Communication:** Enable users to communicate directly with place owners via telephone inquiries.
-
-- **Firebase Notifications:** Stay informed in real-time with Firebase Notifications, receiving updates and alerts promptly.
-
-- **Electronic Payment:** Facilitate electronic payments securely using the Stripe payment gateway for added convenience.
-
-- **Responsive Design:** The application boasts a responsive design, ensuring compatibility with various Android screen sizes.
 
 ## Technologies Used for project :
 ![Android Studio](https://img.shields.io/badge/Android%20Studio-v4.2.2-green)
@@ -55,7 +34,6 @@
 ![Adobe XD](https://img.shields.io/badge/Adobe%20XD-v34.0.12-blueviolet)
 ![Postman](https://img.shields.io/badge/Postman-API%20Testing-orange)
 ![Amazon AWS](https://img.shields.io/badge/Amazon%20AWS-Cloud%20Services-yellow)
-![Stripe](https://img.shields.io/badge/Stripe-Payment%20Gateway-blue)
 
 
 ## ✨ Features
@@ -75,6 +53,11 @@
 - Material search view for easy searching
 - Loader animations
 - Toast notifications for user feedback
+- Direct Communication
+- Firebase Notifications
+- Electronic Payment
+- Responsive Design
+
 
 ## 🛠️ Tools
 
