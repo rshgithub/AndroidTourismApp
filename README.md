@@ -62,13 +62,12 @@
 ## 🛠️ Tools
 
 - ![Android Studio Icon](https://img.icons8.com/color/32/000000/android-studio--v3.png) **Development Environment:** Android Studio
-- **Platform:** Android
 - ![Java Icon](https://img.icons8.com/color/32/000000/java-coffee-cup-logo.png) **Programming Language:** Java
 - ![Adobe XD Icon](https://img.icons8.com/color/32/000000/adobe-xd.png) **Design:** Adobe XD
-- ![UX Icon](https://img.icons8.com/dusk/32/000000/easy-to-use.png) **User Experience:** Smooth and easy-to-use interface
-- ![Microphone Icon](https://img.icons8.com/ios/32/000000/microphone.png) **Voice Search:** Google Speech to Text recognition
+- ![Microphone Icon](https://img.icons8.com/ios/32/ffffff/microphone.png) **Voice Search:** Google Speech to Text recognition
 - ![Firebase Icon](https://img.icons8.com/color/32/000000/firebase.png) **Database:** Firebase Firestore
 - ![Authentication Icon](https://img.icons8.com/color/32/000000/lock.png) **Authentication:** Firebase Authentication
+- **User Experience:** Smooth and easy-to-use interface
 
 ## 🚀 Getting Started
 
